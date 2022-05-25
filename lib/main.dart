@@ -89,9 +89,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   bool _anistart = true;
 
   //authentication
-  bool _isAuthenticating = false;
-  final LocalAuthentication auth = LocalAuthentication();
-  String _authorized = "";
 
   //App Wide
   bool _keyboardVisible = false;
