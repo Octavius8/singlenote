@@ -93,6 +93,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   Note note = new Note(Config.OVI_NOTE_ID);
   String noteString = "";
   bool _anistart = true;
+  bool _noteEditMode = false;
 
   //authentication
 
@@ -313,7 +314,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                                 setState(() {});
                                               },
                                               child: Icon(Icons.refresh,
-                                                  color: Color(0xFF898989),
+                                                  color: Config.COLOR_LIGHTGRAY,
                                                   size: 24))),
 
                                       //Save Button
@@ -322,6 +323,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                           bool status = await note.saveNote(
                                               _noteTextController.text);
                                           if (status) {
+                                            _noteEditMode = false;
                                             _animationController.reset();
                                             _animationController.forward();
                                             setState(() {});
@@ -342,8 +344,14 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                   // Text Area
                                   Stack(children: [
                                     //Note Area
-                                    NoteTextArea(
-                                        textController: _noteTextController)
+                                    GestureDetector(
+                                        onDoubleTap: () {
+                                          _noteEditMode = true;
+                                          setState(() {});
+                                        },
+                                        child: NoteTextArea(
+                                            textController: _noteTextController,
+                                            editMode: _noteEditMode))
                                   ])
                                 ])),
                       )),
@@ -458,19 +466,21 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       onTap: () {
                         String logPrefix = "SideMenu | onTap()";
                         String noteID = "";
-                        _menuIndex = itemIndex;
 
-                        if (_menuIndex == Config.MENU_NOTEINDEX)
+                        if (itemIndex == Config.MENU_NOTEINDEX)
                           noteID = Config.OVI_NOTE_ID;
-                        if (_menuIndex == Config.MENU_JOURNALINDEX)
+                        if (itemIndex == Config.MENU_JOURNALINDEX)
                           noteID = Config.OVI_JOURNAL_ID;
-                        if (_menuIndex == Config.MENU_SHORTCUTSINDEX)
+                        if (itemIndex == Config.MENU_SHORTCUTSINDEX)
                           noteID = Config.OVI_SHORTCUTS_ID;
 
                         log.info(logPrefix,
                             "_menuIndex=$_menuIndex, noteID=$noteID");
                         setNote(noteID);
                         setNoteString();
+
+                        _noteEditMode = false;
+                        _menuIndex = itemIndex;
                         setState(() {});
                       },
                       child: Text(
