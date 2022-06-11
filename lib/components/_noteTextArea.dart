@@ -80,6 +80,7 @@ class NoteTextAreaState extends State<NoteTextArea> {
       !widget.editMode
           ? Container(
               width: double.infinity,
+              padding: EdgeInsets.only(top: 5),
               height: MediaQuery.of(context).size.height - 100,
               child: SingleChildScrollView(
                   child: RichText(
@@ -92,6 +93,7 @@ class NoteTextAreaState extends State<NoteTextArea> {
           //Editing Screen
           SingleChildScrollView(
               child: Container(
+                  padding: EdgeInsets.only(top: 5),
                   height: _keyboardVisible
                       ? 400
                       : MediaQuery.of(context).size.height - 100,
