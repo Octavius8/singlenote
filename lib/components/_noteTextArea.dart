@@ -68,13 +68,13 @@ class NoteTextAreaState extends State<NoteTextArea> {
       !widget.editMode
           ?
           //Viewing Screen
-          Container(width: double.infinity, padding: EdgeInsets.only(top: 5, left: 10, right: 10), height: MediaQuery.of(context).size.height - 100, child: SingleChildScrollView(child: RichText(text: TextSpan(style: TextStyle(color: Config.COLOR_PRIMARY), children: stringToTextSpanList(widget.textController.text)))))
+          Container(width: double.infinity, padding: EdgeInsets.only(top: 10, left: 10, right: 10), height: MediaQuery.of(context).size.height - 100, child: SingleChildScrollView(child: RichText(text: TextSpan(style: TextStyle(color: Config.COLOR_PRIMARY), children: stringToTextSpanList(widget.textController.text)))))
           :
 
           //Editing Screen
           SingleChildScrollView(
               child: Container(
-                  padding: EdgeInsets.only(top: 5, left: 10, right: 10),
+                  padding: EdgeInsets.only(top: 10, left: 10, right: 10),
                   height: _keyboardVisible ? 400 : MediaQuery.of(context).size.height - 100,
                   child: TextField(
                     maxLines: null,
