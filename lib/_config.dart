@@ -29,5 +29,5 @@ class Config {
   static final int MENU_SHORTCUTSINDEX = 2;
 
   //Logs
-  static final bool LOG_DEBUG_ENABLED = false;
+  static final bool LOG_DEBUG_ENABLED = true;
 }
