@@ -39,7 +39,7 @@ class Note {
         body: payload,
       );
 
-      log.info(logPrefix, "Response: ${response.body}");
+      log.debug(logPrefix, "Response: ${response.body}");
       Map<String, dynamic> jsontemp = jsonDecode(response.body);
 
       this.noteTags = jsontemp["data"]["note_tags"];
@@ -48,7 +48,7 @@ class Note {
       finalString = this.noteContent;
       errorMessage = formattedDate + "-" + response.statusCode.toString();
     } catch (ex) {
-      log.debug(logPrefix, formattedDate + "-" + ex.toString());
+      log.error(logPrefix, formattedDate + "-" + ex.toString());
     }
 
     return finalString;
