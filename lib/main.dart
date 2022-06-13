@@ -175,7 +175,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                 children: [
                                   //Widget Menu
 
-                                  Icon(Icons.more_vert_sharp, color: Config.COLOR_LIGHTGRAY),
+                                  Icon(Icons.more_vert, color: Config.COLOR_LIGHTGRAY),
                                   //Primary Weather
                                   Expanded(
                                       flex: 3,
