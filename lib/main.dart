@@ -173,7 +173,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
                               Row(
                                 children: [
-                                  Icon(Icons.more_horiz),
+                                  Icon(Icons.more_vert),
                                   //Primary Weather
                                   Expanded(
                                       flex: 3,
