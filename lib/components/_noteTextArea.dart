@@ -74,7 +74,7 @@ class NoteTextAreaState extends State<NoteTextArea> {
           //Editing Screen
           SingleChildScrollView(
               child: Container(
-                  padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+                  padding: EdgeInsets.only(top: 10, left: 15, right: 15),
                   height: _keyboardVisible ? 400 : MediaQuery.of(context).size.height - 100,
                   child: TextField(
                     maxLines: null,
