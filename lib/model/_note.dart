@@ -5,11 +5,7 @@ import '../_config.dart';
 import '_log.dart';
 
 class Note {
-  String errorMessage = "",
-      noteTags = "",
-      noteTitle = "",
-      noteContent = "",
-      noteID = "";
+  String errorMessage = "", noteTags = "", noteTitle = "", noteContent = "", noteID = "";
 
   Log log = new Log();
 
@@ -43,8 +39,8 @@ class Note {
         'note_id': noteID,
         'user_id': Config.OVI_USER_ID
       });
-      log.info(logPrefix, "Payload sent: $payload");
-      log.info(logPrefix, "Response: ${response.body}");
+      log.debug(logPrefix, "Payload sent: $payload");
+      log.debug(logPrefix, "Response: ${response.body}");
       Map<String, dynamic> jsontemp = jsonDecode(response.body);
 
       this.noteTags = jsontemp["data"]["note_tags"];
@@ -54,6 +50,7 @@ class Note {
       errorMessage = formattedDate + "-" + response.statusCode.toString();
     } catch (ex) {
       this.errorMessage = formattedDate + "-" + ex.toString();
+      log.error(logPrefix, this.errorMessage);
     }
 
     return finalString;
@@ -91,8 +88,7 @@ class Note {
 
       Map<String, dynamic> jsontemp = jsonDecode(response.body);
       if (response.statusCode == 200) finalString = true;
-      errorMessage =
-          formattedDate + "-" + response.body + response.statusCode.toString();
+      errorMessage = formattedDate + "-" + response.body + response.statusCode.toString();
     } catch (ex) {
       this.errorMessage = formattedDate + "-" + ex.toString();
     }
