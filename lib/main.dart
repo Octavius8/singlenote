@@ -161,7 +161,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 children: [
                   //Notepad
                   Positioned(
-                      right: 10,
+                      right: 5,
                       child: SingleChildScrollView(
                         child: Container(
                             height: MediaQuery.of(context).size.height,
