@@ -265,7 +265,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                             getWeatherDetails();
                                             setState(() {});
                                           },
-                                          child: Icon(Icons.edit_note, color: _noteEditMode ? Config.COLOR_PRIMARY : Config.COLOR_LIGHTGRAY, size: 24))),
+                                          child: Icon(Icons.edit_note_rounded, color: _noteEditMode ? Config.COLOR_HIGHLIGHT : Config.COLOR_LIGHTGRAY, size: 24))),
 
                                   //Save Button
                                   GestureDetector(
