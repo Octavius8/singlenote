@@ -22,24 +22,21 @@ class Note {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
     try {
-      var response = await http.post(
-        Uri.parse(Config.OVI_API_URL),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
-          'method': "getNote",
-          'note_id': noteID,
-          'user_id': Config.OVI_USER_ID
-        }),
-      );
-
       String payload = jsonEncode(<String, String>{
         'method': "getNote",
         'note_id': noteID,
         'user_id': Config.OVI_USER_ID
       });
-      log.debug(logPrefix, "Payload sent: $payload");
+
+      log.debug(logPrefix, "Payload being sent: $payload");
+      var response = await http.post(
+        Uri.parse(Config.OVI_API_URL),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: payload,
+      );
+
       log.debug(logPrefix, "Response: ${response.body}");
       Map<String, dynamic> jsontemp = jsonDecode(response.body);
 
