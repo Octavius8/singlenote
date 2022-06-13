@@ -28,7 +28,9 @@ class Note {
         'user_id': Config.OVI_USER_ID
       });
 
+      log.debug(logPrefix, "URL: " + Config.OVI_API_URL);
       log.debug(logPrefix, "Payload being sent: $payload");
+
       var response = await http.post(
         Uri.parse(Config.OVI_API_URL),
         headers: <String, String>{
@@ -37,7 +39,7 @@ class Note {
         body: payload,
       );
 
-      log.debug(logPrefix, "Response: ${response.body}");
+      log.info(logPrefix, "Response: ${response.body}");
       Map<String, dynamic> jsontemp = jsonDecode(response.body);
 
       this.noteTags = jsontemp["data"]["note_tags"];
@@ -47,7 +49,6 @@ class Note {
       errorMessage = formattedDate + "-" + response.statusCode.toString();
     } catch (ex) {
       this.errorMessage = formattedDate + "-" + ex.toString();
-      log.error(logPrefix, this.errorMessage);
     }
 
     return finalString;
