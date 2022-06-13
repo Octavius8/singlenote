@@ -48,7 +48,7 @@ class Note {
       finalString = this.noteContent;
       errorMessage = formattedDate + "-" + response.statusCode.toString();
     } catch (ex) {
-      this.errorMessage = formattedDate + "-" + ex.toString();
+      log.debug(logPrefix, formattedDate + "-" + ex.toString());
     }
 
     return finalString;
