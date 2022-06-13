@@ -30,24 +30,13 @@ class NoteTextAreaState extends State<NoteTextArea> {
   bool _copyPopupVisible = false;
 
   void showCopyPopup(TapDownDetails details) {
-    log.info(
-        "NoteTextArea | showCopyPopup()",
-        "Initial (Raw) Y value=" +
-            details.globalPosition.dy.toString() +
-            " | X value=" +
-            details.globalPosition.dx.toString());
+    log.info("NoteTextArea | showCopyPopup()", "Initial (Raw) Y value=" + details.globalPosition.dy.toString() + " | X value=" + details.globalPosition.dx.toString());
     _copyPopupX = details.globalPosition.dx - 40;
     _copyPopupY = details.globalPosition.dy - 110;
     _copyPopupVisible = true;
     if (_copyPopupY < 0) _copyPopupY = (_copyPopupY * -1) - 16;
-    if (_copyPopupX > MediaQuery.of(context).size.width - 175)
-      _copyPopupX = MediaQuery.of(context).size.width - 175;
-    log.info(
-        "NoteTextArea | showCopyPopup()",
-        "Y value=" +
-            _copyPopupY.toString() +
-            " | X value=" +
-            _copyPopupX.toString());
+    if (_copyPopupX > MediaQuery.of(context).size.width - 175) _copyPopupX = MediaQuery.of(context).size.width - 175;
+    log.info("NoteTextArea | showCopyPopup()", "Y value=" + _copyPopupY.toString() + " | X value=" + _copyPopupX.toString());
 
     setState(() {});
   }
@@ -56,8 +45,7 @@ class NoteTextAreaState extends State<NoteTextArea> {
   void initState() {
     var keyboardVisibilityController = KeyboardVisibilityController();
     _keyboardVisible = keyboardVisibilityController.isVisible;
-    keyboardSubscription =
-        keyboardVisibilityController.onChange.listen((bool visible) {
+    keyboardSubscription = keyboardVisibilityController.onChange.listen((bool visible) {
       _keyboardVisible = visible;
     });
   }
@@ -78,25 +66,14 @@ class NoteTextAreaState extends State<NoteTextArea> {
     return Stack(children: [
       //View Screen
       !widget.editMode
-          ? Container(
-              width: double.infinity,
-              padding: EdgeInsets.only(top: 5),
-              height: MediaQuery.of(context).size.height - 100,
-              child: SingleChildScrollView(
-                  child: RichText(
-                      text: TextSpan(
-                          style: TextStyle(color: Config.COLOR_PRIMARY),
-                          children: stringToTextSpanList(
-                              widget.textController.text)))))
+          ? Container(width: double.infinity, padding: EdgeInsets.only(top: 5, left: 5, right: 5), height: MediaQuery.of(context).size.height - 100, child: SingleChildScrollView(child: RichText(text: TextSpan(style: TextStyle(color: Config.COLOR_PRIMARY), children: stringToTextSpanList(widget.textController.text)))))
           :
 
           //Editing Screen
           SingleChildScrollView(
               child: Container(
-                  padding: EdgeInsets.only(top: 5),
-                  height: _keyboardVisible
-                      ? 400
-                      : MediaQuery.of(context).size.height - 100,
+                  padding: EdgeInsets.only(top: 5, left: 5, right: 5),
+                  height: _keyboardVisible ? 400 : MediaQuery.of(context).size.height - 100,
                   child: TextField(
                     maxLines: null,
                     minLines: 60,
@@ -135,27 +112,23 @@ class NoteTextAreaState extends State<NoteTextArea> {
                                   closePopups();
                                   toast("Openning ...");
                                 },
-                                child: Icon(Icons.open_in_browser,
-                                    size: 18, color: Config.COLOR_LIGHTGRAY)))),
+                                child: Icon(Icons.open_in_browser, size: 18, color: Config.COLOR_LIGHTGRAY)))),
                     Expanded(
                         child: Container(
                             child: GestureDetector(
                                 onTap: () {
-                                  Clipboard.setData(
-                                      ClipboardData(text: _copyString));
+                                  Clipboard.setData(ClipboardData(text: _copyString));
                                   closePopups();
                                   toast("Copied to Clipboard ... ");
                                 },
-                                child: Icon(Icons.copy,
-                                    size: 18, color: Config.COLOR_LIGHTGRAY)))),
+                                child: Icon(Icons.copy, size: 18, color: Config.COLOR_LIGHTGRAY)))),
                     Expanded(
                         child: Container(
                             child: GestureDetector(
                                 onTap: () {
                                   closePopups();
                                 },
-                                child: Icon(Icons.close,
-                                    size: 18, color: Config.COLOR_LIGHTGRAY))))
+                                child: Icon(Icons.close, size: 18, color: Config.COLOR_LIGHTGRAY))))
                   ])))
           : SizedBox.shrink(),
     ]);
@@ -185,10 +158,7 @@ class NoteTextAreaState extends State<NoteTextArea> {
     /*final websiteCheck = RegExp(
         r'^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$');*/
     final websiteCheck = RegExp(r'(^(http[s]?:\/{2})|(^www))(\S*|.*)');
-    log.debug(
-        logPrefix,
-        "word is: $word. isWebsite response is " +
-            websiteCheck.hasMatch(word).toString());
+    log.debug(logPrefix, "word is: $word. isWebsite response is " + websiteCheck.hasMatch(word).toString());
     return websiteCheck.hasMatch(word);
   }
 
@@ -200,8 +170,7 @@ class NoteTextAreaState extends State<NoteTextArea> {
             showCopyPopup(details);
           },
         text: word + " ",
-        style: TextStyle(
-            fontWeight: FontWeight.bold, color: Config.COLOR_HYPERLINK));
+        style: TextStyle(fontWeight: FontWeight.bold, color: Config.COLOR_HYPERLINK));
   }
 
   void _launchUrl(String _url) async {
