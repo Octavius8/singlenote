@@ -12,13 +12,11 @@ class Weather {
   Future<String> getTime(String town) async {
     String logPrefix = "Weather | getTime() | ";
     String finalResponse = "";
-    String url =
-        "http://api.weatherapi.com/v1/forecast.json?key=$weatherKey%20&q=$town&days=1&aqi=no&alerts=no";
+    String url = "https://api.weatherapi.com/v1/forecast.json?key=$weatherKey%20&q=$town&days=1&aqi=no&alerts=no";
     try {
       var response = await http.get(Uri.parse(url));
       Map<String, dynamic> jsontemp = jsonDecode(response.body);
-      finalResponse = jsontemp["current"]["last_updated"]
-          .substring(jsontemp["current"]["last_updated"].length - 5);
+      finalResponse = jsontemp["current"]["last_updated"].substring(jsontemp["current"]["last_updated"].length - 5);
     } catch (ex) {
       log.error(logPrefix, ex.toString());
     }
@@ -28,8 +26,7 @@ class Weather {
   Future<String> getTemperature(String town) async {
     String logPrefix = "Weather | getTemperature() | ";
     String finalResponse = "";
-    String url =
-        "http://api.weatherapi.com/v1/forecast.json?key=$weatherKey%20&q=$town&days=1&aqi=no&alerts=no";
+    String url = "http://api.weatherapi.com/v1/forecast.json?key=$weatherKey%20&q=$town&days=1&aqi=no&alerts=no";
     try {
       var response = await http.get(Uri.parse(url));
       Map<String, dynamic> jsontemp = jsonDecode(response.body);
@@ -44,8 +41,7 @@ class Weather {
   Future<String> getCondition(String town) async {
     String logPrefix = "Weather | getCondition() | ";
     String finalResponse = "";
-    String url =
-        "http://api.weatherapi.com/v1/forecast.json?key=$weatherKey%20&q=$town&days=1&aqi=no&alerts=no";
+    String url = "http://api.weatherapi.com/v1/forecast.json?key=$weatherKey%20&q=$town&days=1&aqi=no&alerts=no";
     try {
       var response = await http.get(Uri.parse(url));
       Map<String, dynamic> jsontemp = jsonDecode(response.body);

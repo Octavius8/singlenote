@@ -16,7 +16,7 @@ class Note {
   }
 
   Future<String> getNote() async {
-    String logPrefix = "Log | getNote()";
+    String logPrefix = "Note | getNote()";
     log.info(logPrefix, "Starting getNote() function...");
     String finalString = "";
     DateTime now = DateTime.now();
