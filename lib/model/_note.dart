@@ -55,7 +55,7 @@ class Note {
   }
 
   Future<bool> saveNote(String text) async {
-    String logPrefix = "Log | saveNote()";
+    String logPrefix = "Note | saveNote()";
     log.info(logPrefix, "Starting saveNote() function...");
     bool finalString = false;
     DateTime now = DateTime.now();
