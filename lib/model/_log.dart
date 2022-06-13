@@ -22,7 +22,7 @@ class Log {
 
   void debug(String logPrefix, String message) {
     DateTime now = DateTime.now();
-    String formattedDate = DateFormat('YYY-MM-dd kk:mm:ss').format(now);
+    String formattedDate = DateFormat('YYYY-MM-dd kk:mm:ss').format(now);
     this.logString = "\n" + formattedDate + "| DEBUG | " + logPrefix + " | " + message;
     if (debugEnabled) storeLog();
   }
