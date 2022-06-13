@@ -14,7 +14,7 @@ class Config {
   static final String ALTCITY2 = "Kyoto";
 
   //Ovi API
-  static final String OVI_API_URL = "http://notes.ovidware.com/core/api.php";
+  static final String OVI_API_URL = "https://notes.ovidware.com/core/api.php";
   static final String OVI_USER_ID = "1";
   static final String OVI_NOTE_ID = "590";
   static final String OVI_JOURNAL_ID = "591";
@@ -29,5 +29,5 @@ class Config {
   static final int MENU_SHORTCUTSINDEX = 2;
 
   //Logs
-  static final bool LOG_DEBUG_ENABLED = false;
+  static final bool LOG_DEBUG_ENABLED = true;
 }
