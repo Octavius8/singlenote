@@ -8,6 +8,10 @@ class Config {
   static final Color COLOR_HYPERLINK = Colors.blue;
   static final Color COLOR_LIGHTGRAY = Color(0xFF898989);
 
+  //Toast Narrations
+  static final String TOAST_NARRATION_EDITMODE = "Edit Mode";
+  static final String TOAST_NARRATION_NOTESAVED = "Saved!";
+
   //Cities
   static final String MAINCITY = "Lusaka";
   static final String ALTCITY1 = "Mumbai";
