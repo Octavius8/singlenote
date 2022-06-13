@@ -131,9 +131,15 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   }
 
   void toast(String message) {
+    Log log=new Log();
+    try{
+    Scaffold.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(message),duration:Duration(seconds:2)
     ));
+    }catch(ex){
+      log.error("Toast","Toast Failed:"+ex.toString());
+    }
   }
 
   @override
