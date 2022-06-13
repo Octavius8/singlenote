@@ -10,7 +10,7 @@ class Weather {
   Weather({required this.log});
 
   Future<String> getTime(String town) async {
-    String logPrefix = "Weather | getTime() | ";
+    String logPrefix = "Weather | getTime()";
     String finalResponse = "";
     String url = "https://api.weatherapi.com/v1/forecast.json?key=$weatherKey%20&q=$town&days=1&aqi=no&alerts=no";
     try {
@@ -24,7 +24,7 @@ class Weather {
   }
 
   Future<String> getTemperature(String town) async {
-    String logPrefix = "Weather | getTemperature() | ";
+    String logPrefix = "Weather | getTemperature()";
     String finalResponse = "";
     String url = "https://api.weatherapi.com/v1/forecast.json?key=$weatherKey%20&q=$town&days=1&aqi=no&alerts=no";
     try {
@@ -39,7 +39,7 @@ class Weather {
   }
 
   Future<String> getCondition(String town) async {
-    String logPrefix = "Weather | getCondition() | ";
+    String logPrefix = "Weather | getCondition()";
     String finalResponse = "";
     String url = "https://api.weatherapi.com/v1/forecast.json?key=$weatherKey%20&q=$town&days=1&aqi=no&alerts=no";
     try {
