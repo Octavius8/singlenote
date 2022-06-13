@@ -161,7 +161,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 children: [
                   //Notepad
                   Positioned(
-                      right: 5,
+                      right: 10,
                       child: SingleChildScrollView(
                         child: Container(
                             height: MediaQuery.of(context).size.height,
@@ -169,7 +169,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             constraints: BoxConstraints(
                               maxHeight: MediaQuery.of(context).size.height,
                             ),
-                            width: MediaQuery.of(context).size.width - 70,
+                            width: MediaQuery.of(context).size.width - 50,
                             child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
                               Row(
                                 children: [
