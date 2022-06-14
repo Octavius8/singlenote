@@ -160,12 +160,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
                                   Icon(Icons.more_vert, color: Config.COLOR_LIGHTGRAY),
                                   //Primary Weather
-                                  ListView(scrollDirection: Axis.horizontal, children: [
-                                    Text("Hey")
-                                  ]),
-                                  Expanded(child: InternationalClock(city: "Lusaka"), flex: 2),
-                                  Expanded(child: InternationalClock(city: "Nairobi"), flex: 2),
-                                  Expanded(child: InternationalClock(city: "Kyoto"), flex: 2),
+                                  SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(children: [
+                                        Expanded(child: InternationalClock(city: "Lusaka"), flex: 2),
+                                        Expanded(child: InternationalClock(city: "Nairobi"), flex: 2),
+                                        Expanded(child: InternationalClock(city: "Kyoto"), flex: 2),
+                                      ])),
 
                                   //Spacer
                                   //Expanded(flex: 1, child: Text("")),
