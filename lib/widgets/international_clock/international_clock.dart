@@ -35,22 +35,26 @@ class InternationalClockState extends State<InternationalClock> {
   }
 
   void updateData() async {
+    String logPrefix="InternationalClock | updateData()";
+    log.debug(logPrefix,"starting updateData function..");
     bool status = await weatherObject?.getData(widget.city) ?? false;
     primaryTime = weatherObject?.time ?? "";
     primaryCondition = weatherObject?.condition ?? "";
     primaryTemperature = weatherObject?.temperature ?? "";
+    log.debug(logPrefix,"Completed fetching data for ${widget.city}. time=$primaryTime, temp=$primaryTemperature, condition=$condition");
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.symmetric(horizontal: 7),
-        child: GestureDetector(
+    return GestureDetector(
             onTap: () {
               updateData();
             },
-            child: Column(children: [
+            child: Container(
+      width:80,
+        padding: EdgeInsets.symmetric(horizontal: 7),
+        child: Column(children: [
               Text("${widget.city[0].toUpperCase()}${widget.city.substring(1).toLowerCase()}", style: TextStyle(fontSize: 8)),
               Text(primaryTime,
                   style: TextStyle(

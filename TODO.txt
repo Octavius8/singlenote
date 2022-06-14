@@ -1,0 +1,1 @@
+- Reduce file size of white_noise assets
