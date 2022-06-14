@@ -50,7 +50,7 @@ class InternationalClockState extends State<InternationalClock> {
             flex: 3,
             //Future Builder
             child: Column(children: [
-              Text(Config.MAINCITY, style: TextStyle(fontSize: 8)),
+              Text("${widget.city[0].toUpperCase()}${widget.city.substring(1).toLowerCase()}", style: TextStyle(fontSize: 8)),
               Text(primaryTime,
                   style: TextStyle(
                     color: Color(0xFF62d9b5),
