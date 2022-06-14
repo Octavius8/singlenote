@@ -78,9 +78,11 @@ class NoteTextAreaState extends State<NoteTextArea> {
     return Stack(children: [
       //View Screen
       !widget.editMode
-          ? Container(
+          ?
+          //Viewing Screen
+          Container(
               width: double.infinity,
-              padding: EdgeInsets.only(top: 5),
+              padding: EdgeInsets.only(top: 10, left: 15, right: 10),
               height: MediaQuery.of(context).size.height - 100,
               child: SingleChildScrollView(
                   child: RichText(
@@ -93,14 +95,16 @@ class NoteTextAreaState extends State<NoteTextArea> {
           //Editing Screen
           SingleChildScrollView(
               child: Container(
-                  padding: EdgeInsets.only(top: 5),
+                  padding: EdgeInsets.only(top: 10, left: 15, right: 10),
                   height: _keyboardVisible
                       ? 400
                       : MediaQuery.of(context).size.height - 100,
                   child: TextField(
+                    decoration: null,
                     maxLines: null,
                     minLines: 60,
-                    style: TextStyle(fontSize: 13),
+                    style:
+                        TextStyle(fontSize: 13, color: Config.COLOR_HIGHLIGHT),
                     keyboardType: TextInputType.multiline,
                     controller: widget.textController,
                   ))),

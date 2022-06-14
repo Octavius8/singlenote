@@ -5,11 +5,7 @@ import '../_config.dart';
 import '_log.dart';
 
 class Note {
-  String errorMessage = "",
-      noteTags = "",
-      noteTitle = "",
-      noteContent = "",
-      noteID = "";
+  String errorMessage = "", noteTags = "", noteTitle = "", noteContent = "", noteID = "";
 
   Log log = new Log();
 
@@ -20,31 +16,30 @@ class Note {
   }
 
   Future<String> getNote() async {
-    String logPrefix = "Log | getNote()";
+    String logPrefix = "Note | getNote()";
     log.info(logPrefix, "Starting getNote() function...");
     String finalString = "";
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
     try {
-      var response = await http.post(
-        Uri.parse(Config.OVI_API_URL),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
-          'method': "getNote",
-          'note_id': noteID,
-          'user_id': Config.OVI_USER_ID
-        }),
-      );
-
       String payload = jsonEncode(<String, String>{
         'method': "getNote",
         'note_id': noteID,
         'user_id': Config.OVI_USER_ID
       });
-      log.info(logPrefix, "Payload sent: $payload");
-      log.info(logPrefix, "Response: ${response.body}");
+
+      log.debug(logPrefix, "URL: " + Config.OVI_API_URL);
+      log.debug(logPrefix, "Payload being sent: $payload");
+
+      var response = await http.post(
+        Uri.parse(Config.OVI_API_URL),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: payload,
+      );
+
+      log.debug(logPrefix, "Response: ${response.body}");
       Map<String, dynamic> jsontemp = jsonDecode(response.body);
 
       this.noteTags = jsontemp["data"]["note_tags"];
@@ -53,14 +48,14 @@ class Note {
       finalString = this.noteContent;
       errorMessage = formattedDate + "-" + response.statusCode.toString();
     } catch (ex) {
-      this.errorMessage = formattedDate + "-" + ex.toString();
+      log.error(logPrefix, formattedDate + "-" + ex.toString());
     }
 
     return finalString;
   }
 
   Future<bool> saveNote(String text) async {
-    String logPrefix = "Log | saveNote()";
+    String logPrefix = "Note | saveNote()";
     log.info(logPrefix, "Starting saveNote() function...");
     bool finalString = false;
     DateTime now = DateTime.now();
@@ -91,8 +86,7 @@ class Note {
 
       Map<String, dynamic> jsontemp = jsonDecode(response.body);
       if (response.statusCode == 200) finalString = true;
-      errorMessage =
-          formattedDate + "-" + response.body + response.statusCode.toString();
+      errorMessage = formattedDate + "-" + response.body + response.statusCode.toString();
     } catch (ex) {
       this.errorMessage = formattedDate + "-" + ex.toString();
     }
