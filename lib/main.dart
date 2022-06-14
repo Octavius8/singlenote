@@ -163,7 +163,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                   Expanded(
                                       flex: 6,
                                       child: SingleChildScrollView(
-                                          scrollDirection: Axis.vertical,
+                                          scrollDirection: Axis.horizontal,
                                           child: Row(children: [
                                             InternationalClock(city: "Lusaka"),
                                             InternationalClock(city: "Nairobi"),
