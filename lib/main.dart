@@ -16,6 +16,7 @@ import 'components/_noteTextArea.dart';
 
 //widgets
 import 'widgets/international_clock/international_clock.dart';
+import 'widgets/white_noise/white_noise.dart';
 
 void main() => runApp(MyApp());
 
@@ -106,7 +107,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     Log log = new Log();
     try {
       Scaffold.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message), duration: Duration(seconds: 2)));
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(message), duration: Duration(seconds: 2)));
     } catch (ex) {
       log.error("Toast", "Toast Failed:" + ex.toString());
     }
@@ -153,50 +155,64 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                               maxHeight: MediaQuery.of(context).size.height,
                             ),
                             width: MediaQuery.of(context).size.width - 50,
-                            child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                              Row(
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  //Widget Menu
+                                  Row(
+                                    children: [
+                                      //Widget Menu
 
-                                  Icon(Icons.more_vert, color: Config.COLOR_LIGHTGRAY),
-                                  //Scrollable section
-                                  Expanded(
-                                      flex: 6,
-                                      child: SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Row(children: [
-                                            InternationalClock(city: "Lusaka"),
-                                            InternationalClock(city: "Nairobi"),
-                                            InternationalClock(city: "Kyoto"),
-                                            InternationalClock(city: "Sidney"),
-                                            InternationalClock(city: "Texas"),
-                                            InternationalClock(city: "Tokyo"),
-                                          ]))),
+                                      Icon(Icons.more_vert,
+                                          color: Config.COLOR_LIGHTGRAY),
+                                      //Scrollable section
+                                      Expanded(
+                                          flex: 6,
+                                          child: SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: Row(children: [
+                                                InternationalClock(
+                                                    city: "Lusaka"),
+                                                InternationalClock(
+                                                    city: "Nairobi"),
+                                                InternationalClock(
+                                                    city: "Kyoto"),
+                                                WhiteNoise(
+                                                    audioFile: AudioFile.waves),
+                                              ]))),
 
-                                  //Spacer
-                                  //Expanded(flex: 1, child: Text("")),
+                                      //Spacer
+                                      //Expanded(flex: 1, child: Text("")),
 
-                                  //Reload
-                                  Expanded(
-                                      child: GestureDetector(
-                                          onTap: () async {
-                                            if (_noteEditMode) {
-                                              toast("Saving...");
-                                              bool status = await note.saveNote(_noteTextController.text);
-                                              if (status) {
-                                                _noteEditMode = false;
-                                                setState(() {});
-                                              }
-                                            } else {
-                                              _noteEditMode = true;
-                                              toast(Config.TOAST_NARRATION_EDITMODE);
-                                              setState(() {});
-                                            }
-                                          },
-                                          child: Icon(Icons.edit_note_rounded, color: _noteEditMode ? Config.COLOR_HIGHLIGHT : Config.COLOR_LIGHTGRAY, size: 32))),
+                                      //Reload
+                                      Expanded(
+                                          child: GestureDetector(
+                                              onTap: () async {
+                                                if (_noteEditMode) {
+                                                  toast("Saving...");
+                                                  bool status =
+                                                      await note.saveNote(
+                                                          _noteTextController
+                                                              .text);
+                                                  if (status) {
+                                                    _noteEditMode = false;
+                                                    setState(() {});
+                                                  }
+                                                } else {
+                                                  _noteEditMode = true;
+                                                  toast(Config
+                                                      .TOAST_NARRATION_EDITMODE);
+                                                  setState(() {});
+                                                }
+                                              },
+                                              child: Icon(
+                                                  Icons.edit_note_rounded,
+                                                  color: _noteEditMode
+                                                      ? Config.COLOR_HIGHLIGHT
+                                                      : Config.COLOR_LIGHTGRAY,
+                                                  size: 32))),
 
-                                  //Save Button
-                                  /* GestureDetector(
+                                      //Save Button
+                                      /* GestureDetector(
                                         onTap: () async {
                                           bool status = await note.saveNote(
                                               _noteTextController.text);
@@ -216,39 +232,41 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                           ),
                                         ),
                                       )*/
-                                ],
-                              ),
+                                    ],
+                                  ),
 
-                              // Text Area
-                              Stack(children: [
-                                //Note Area
-                                GestureDetector(
-                                    onDoubleTap: () {
-                                      _noteEditMode = true;
-                                      toast(Config.TOAST_NARRATION_EDITMODE);
-                                      setState(() {});
-                                    },
-                                    child: NoteTextArea(textController: _noteTextController, editMode: _noteEditMode))
-                              ])
-                            ])),
+                                  // Text Area
+                                  Stack(children: [
+                                    //Note Area
+                                    GestureDetector(
+                                        onDoubleTap: () {
+                                          _noteEditMode = true;
+                                          toast(
+                                              Config.TOAST_NARRATION_EDITMODE);
+                                          setState(() {});
+                                        },
+                                        child: NoteTextArea(
+                                            textController: _noteTextController,
+                                            editMode: _noteEditMode))
+                                  ])
+                                ])),
                       )),
 
                   //Side Menu
 
                   Column(children: [
-                    SideMenu(items: [
-                      "NOTE",
-                      "JOURNAL",
-                      "TRACKERS",
-                      "TOOLKIT"
-                    ], index: _menuIndex)
+                    SideMenu(
+                        items: ["NOTE", "JOURNAL", "TRACKERS", "TOOLKIT"],
+                        index: _menuIndex)
                   ]),
 
                   //Fingerprint Scanner
                   AnimatedPositioned(
                     duration: Duration(milliseconds: 500),
-                    width: _lockedScreen ? MediaQuery.of(context).size.width : 40,
-                    height: _lockedScreen ? MediaQuery.of(context).size.height : 40,
+                    width:
+                        _lockedScreen ? MediaQuery.of(context).size.width : 40,
+                    height:
+                        _lockedScreen ? MediaQuery.of(context).size.height : 40,
                     bottom: _lockedScreen ? 0 : 50,
                     left: 0,
                     child: GestureDetector(
@@ -259,34 +277,56 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       child: Container(
                           width: double.infinity,
                           height: MediaQuery.of(context).size.height,
-                          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                            false ? Text("NOTE | 29", style: TextStyle(fontSize: 32, color: Color(0xFF888888))) : SizedBox.shrink(),
-                            //Text(_authorized),
-                            GestureDetector(
-                                onTap: () {
-                                  //_authenticateWithBiometrics();
-                                  if (_lockedScreen)
-                                    _lockedScreen = false;
-                                  else
-                                    _lockedScreen = true;
-                                  setState(() {});
-                                },
-                                child: AnimatedContainer(
-                                  duration: Duration(milliseconds: 500),
-                                  margin: false ? EdgeInsets.all(30) : EdgeInsets.only(right: 5),
-                                  padding: _lockedScreen ? EdgeInsets.all(30) : EdgeInsets.all(2),
-                                  child: AnimatedSize(
-                                      duration: Duration(milliseconds: 600),
-                                      child: Icon(
-                                        Icons.lock,
-                                        color: _lockedScreen ? Color(0xFF888888) : Colors.white,
-                                        size: _lockedScreen ? 48 : 12,
-                                      )),
-                                  decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: Color(0xFF888888))),
-                                  //: Lottie.asset('assets/fingerprint.json'),
-                                ))
-                          ]),
-                          decoration: BoxDecoration(color: _lockedScreen ? Color(0xFFffffff) : Color(0xFF242728), borderRadius: BorderRadius.only(topRight: Radius.circular(30), bottomRight: Radius.circular(30)))),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                false
+                                    ? Text("NOTE | 29",
+                                        style: TextStyle(
+                                            fontSize: 32,
+                                            color: Color(0xFF888888)))
+                                    : SizedBox.shrink(),
+                                //Text(_authorized),
+                                GestureDetector(
+                                    onTap: () {
+                                      //_authenticateWithBiometrics();
+                                      if (_lockedScreen)
+                                        _lockedScreen = false;
+                                      else
+                                        _lockedScreen = true;
+                                      setState(() {});
+                                    },
+                                    child: AnimatedContainer(
+                                      duration: Duration(milliseconds: 500),
+                                      margin: false
+                                          ? EdgeInsets.all(30)
+                                          : EdgeInsets.only(right: 5),
+                                      padding: _lockedScreen
+                                          ? EdgeInsets.all(30)
+                                          : EdgeInsets.all(2),
+                                      child: AnimatedSize(
+                                          duration: Duration(milliseconds: 600),
+                                          child: Icon(
+                                            Icons.lock,
+                                            color: _lockedScreen
+                                                ? Color(0xFF888888)
+                                                : Colors.white,
+                                            size: _lockedScreen ? 48 : 12,
+                                          )),
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                              color: Color(0xFF888888))),
+                                      //: Lottie.asset('assets/fingerprint.json'),
+                                    ))
+                              ]),
+                          decoration: BoxDecoration(
+                              color: _lockedScreen
+                                  ? Color(0xFFffffff)
+                                  : Color(0xFF242728),
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(30),
+                                  bottomRight: Radius.circular(30)))),
                     ),
                     //End of Container
                   ),
@@ -304,7 +344,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     List<String> itemList = items;
     List<Widget> menuItems = [];
     double menuHeight = 500;
-    double identifierLocation = (((index + 1) * (menuHeight / itemList.length.round()).toDouble()) - ((menuHeight / itemList.length.round()).toDouble()) / 2) - (index * 20);
+    double identifierLocation =
+        (((index + 1) * (menuHeight / itemList.length.round()).toDouble()) -
+                ((menuHeight / itemList.length.round()).toDouble()) / 2) -
+            (index * 20);
 
     itemList.asMap().forEach((itemIndex, itemName) {
       menuItems.add(Container(
@@ -320,11 +363,15 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         String logPrefix = "SideMenu | onTap()";
                         String noteID = "";
 
-                        if (itemIndex == Config.MENU_NOTEINDEX) noteID = Config.OVI_NOTE_ID;
-                        if (itemIndex == Config.MENU_JOURNALINDEX) noteID = Config.OVI_JOURNAL_ID;
-                        if (itemIndex == Config.MENU_SHORTCUTSINDEX) noteID = Config.OVI_SHORTCUTS_ID;
+                        if (itemIndex == Config.MENU_NOTEINDEX)
+                          noteID = Config.OVI_NOTE_ID;
+                        if (itemIndex == Config.MENU_JOURNALINDEX)
+                          noteID = Config.OVI_JOURNAL_ID;
+                        if (itemIndex == Config.MENU_SHORTCUTSINDEX)
+                          noteID = Config.OVI_SHORTCUTS_ID;
 
-                        log.info(logPrefix, "_menuIndex=$_menuIndex, noteID=$noteID");
+                        log.info(logPrefix,
+                            "_menuIndex=$_menuIndex, noteID=$noteID");
                         setNote(noteID);
                         setNoteString();
 
@@ -334,13 +381,22 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       },
                       child: Text(
                         itemName,
-                        style: TextStyle(fontSize: 12, color: itemIndex == index ? Colors.white : Color(0xFFbbbbbb)),
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: itemIndex == index
+                                ? Colors.white
+                                : Color(0xFFbbbbbb)),
                       ))))));
     });
 
     return Container(
       child: Stack(children: [
-        Container(decoration: BoxDecoration(color: Color(0xFF242728), borderRadius: BorderRadius.only(bottomRight: Radius.circular(30))), child: Column(children: menuItems)),
+        Container(
+            decoration: BoxDecoration(
+                color: Color(0xFF242728),
+                borderRadius:
+                    BorderRadius.only(bottomRight: Radius.circular(30))),
+            child: Column(children: menuItems)),
         //Selector
         AnimatedPositioned(
             top: identifierLocation,
@@ -351,7 +407,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 child: Container(
                   height: 20,
                   width: 20,
-                  decoration: BoxDecoration(color: Color(0xFFfafafa), borderRadius: BorderRadius.circular(5)),
+                  decoration: BoxDecoration(
+                      color: Color(0xFFfafafa),
+                      borderRadius: BorderRadius.circular(5)),
 
                   //Tiny dot
                 )))

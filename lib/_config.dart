@@ -34,4 +34,9 @@ class Config {
 
   //Logs
   static final bool LOG_DEBUG_ENABLED = true;
+
+  //Widgets
+  static final double WIDGET_FONTSIZE = 8;
+  static final double WIDGET_WIDTH = 80;
+  static final double WIDGET_HEIGHT = 40;
 }

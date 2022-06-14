@@ -35,32 +35,37 @@ class InternationalClockState extends State<InternationalClock> {
   }
 
   void updateData() async {
-    String logPrefix="InternationalClock | updateData()";
-    log.debug(logPrefix,"starting updateData function..");
+    String logPrefix = "InternationalClock | updateData()";
+    log.debug(logPrefix, "starting updateData function..");
     bool status = await weatherObject?.getData(widget.city) ?? false;
-    primaryTime = weatherObject?.time ?? "";
-    primaryCondition = weatherObject?.condition ?? "";
-    primaryTemperature = weatherObject?.temperature ?? "";
-    log.debug(logPrefix,"Completed fetching data for ${widget.city}. time=$primaryTime, temp=$primaryTemperature, condition=$condition");
+    primaryTime = "12:30"; //weatherObject?.time ?? "";
+    primaryCondition = "Clear"; // weatherObject?.condition ?? "";
+    primaryTemperature = "27"; //weatherObject?.temperature ?? "";
+    log.debug(logPrefix,
+        "Completed fetching data for ${widget.city}. time=$primaryTime, temp=$primaryTemperature, condition=$primaryCondition");
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-            onTap: () {
-              updateData();
-            },
-            child: Container(
-      width:80,
-        padding: EdgeInsets.symmetric(horizontal: 7),
-        child: Column(children: [
-              Text("${widget.city[0].toUpperCase()}${widget.city.substring(1).toLowerCase()}", style: TextStyle(fontSize: 8)),
+        onTap: () {
+          updateData();
+        },
+        child: Container(
+            width: Config.WIDGET_WIDTH,
+            padding: EdgeInsets.symmetric(horizontal: 7),
+            child: Column(children: [
+              Text(
+                  "${widget.city[0].toUpperCase()}${widget.city.substring(1).toLowerCase()}",
+                  style: TextStyle(fontSize: Config.WIDGET_FONTSIZE)),
               Text(primaryTime,
                   style: TextStyle(
                     color: Color(0xFF62d9b5),
                   )),
-              Text("$primaryCondition $primaryTemperature°", textAlign: TextAlign.center, style: TextStyle(fontSize: 8)),
+              Text("$primaryCondition $primaryTemperature°",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: Config.WIDGET_FONTSIZE)),
             ])));
   }
 }
