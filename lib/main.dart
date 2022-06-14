@@ -160,9 +160,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
                                   Icon(Icons.more_vert, color: Config.COLOR_LIGHTGRAY),
                                   //Primary Weather
-                                  Expanded(child: InternationalClock(city: "Kitwe")),
-                                  Expanded(child: InternationalClock(city: "Nairobi")),
-                                  Expanded(child: InternationalClock(city: "Kyoto")),
+                                  Expanded(child: InternationalClock(city: "Kitwe"), flex: 2),
+                                  Expanded(child: InternationalClock(city: "Nairobi"), flex: 2),
+                                  Expanded(child: InternationalClock(city: "Kyoto"), flex: 2),
 
                                   //Spacer
                                   Expanded(flex: 1, child: Text("")),

@@ -24,6 +24,7 @@ class InternationalClockState extends State<InternationalClock> {
   void initState() {
     super.initState();
     weatherObject = new Weather(log: log);
+    updateData();
     timer = Timer.periodic(Duration(minutes: 5), (Timer t) => updateData());
   }
 
