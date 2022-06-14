@@ -41,29 +41,33 @@ class InternationalClockState extends State<InternationalClock> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        flex: 3,
-        //Future Builder
-        child: FutureBuilder<String>(
-            future: primaryCondition,
-            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-              if (snapshot.hasData && snapshot.connectionState != ConnectionState.waiting) {
-                return Column(children: [
-                  Text(Config.MAINCITY, style: TextStyle(fontSize: 8)),
-                  Text(primaryTime,
-                      style: TextStyle(
-                        color: Color(0xFF62d9b5),
-                      )),
-                  Text("${snapshot.data} $primaryTemperature°", style: TextStyle(fontSize: 8)),
-                ]);
-              }
-              return Center(
-                child: SizedBox(
-                  width: 30,
-                  height: 30,
-                  child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF62d9b5))),
-                ),
-              );
-            }));
+    return GestureDetector(
+        onTap: () {
+          updateData();
+        },
+        child: Expanded(
+            flex: 3,
+            //Future Builder
+            child: FutureBuilder<String>(
+                future: primaryCondition,
+                builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                  if (snapshot.hasData && snapshot.connectionState != ConnectionState.waiting) {
+                    return Column(children: [
+                      Text(Config.MAINCITY, style: TextStyle(fontSize: 8)),
+                      Text(primaryTime,
+                          style: TextStyle(
+                            color: Color(0xFF62d9b5),
+                          )),
+                      Text("${snapshot.data} $primaryTemperature°", style: TextStyle(fontSize: 8)),
+                    ]);
+                  }
+                  return Center(
+                    child: SizedBox(
+                      width: 30,
+                      height: 30,
+                      child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF62d9b5))),
+                    ),
+                  );
+                })));
   }
 }
