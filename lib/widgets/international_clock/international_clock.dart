@@ -17,7 +17,7 @@ class InternationalClockState extends State<InternationalClock> {
   Log log = new Log();
   String primaryTime = "";
   String primaryTemperature = "";
-  Future<String>? primaryCondition;
+  String primaryCondition = "";
   Timer? timer;
 
   @override
@@ -34,9 +34,10 @@ class InternationalClockState extends State<InternationalClock> {
 
   void updateData() async {
     weatherObject = new Weather(log: log);
-    primaryTime = await weatherObject.getTime(widget.city);
-    primaryCondition = weatherObject.getCondition(widget.city);
-    primaryTemperature = await weatherObject.getTemperature(widget.city);
+    bool status = await weatherObject.getData(widget.city);
+    primaryTime = weatherObject.time;
+    primaryCondition = weatherObject.condition;
+    primaryTemperature = weatherObject.temperature;
   }
 
   @override
