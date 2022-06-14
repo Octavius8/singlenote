@@ -53,7 +53,7 @@ class InternationalClockState extends State<InternationalClock> {
               style: TextStyle(
                 color: Color(0xFF62d9b5),
               )),
-          Text("$primaryCondition $primaryTemperature°", style: TextStyle(fontSize: 8)),
+          Text("$primaryCondition $primaryTemperature°", textAlign: TextAlign.center, style: TextStyle(fontSize: 8)),
         ]));
   }
 }
