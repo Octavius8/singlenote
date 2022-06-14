@@ -38,6 +38,7 @@ class InternationalClockState extends State<InternationalClock> {
     primaryTime = weatherObject?.time ?? "";
     primaryCondition = weatherObject?.condition ?? "";
     primaryTemperature = weatherObject?.temperature ?? "";
+    setState(() {});
   }
 
   @override
