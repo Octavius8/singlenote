@@ -43,18 +43,17 @@ class InternationalClockState extends State<InternationalClock> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: GestureDetector(
-            onTap: () {
-              updateData();
-            },
-            child: Column(children: [
-              Text("${widget.city[0].toUpperCase()}${widget.city.substring(1).toLowerCase()}", style: TextStyle(fontSize: 8)),
-              Text(primaryTime,
-                  style: TextStyle(
-                    color: Color(0xFF62d9b5),
-                  )),
-              Text("$primaryCondition $primaryTemperature°", style: TextStyle(fontSize: 8)),
-            ])));
+    return GestureDetector(
+        onTap: () {
+          updateData();
+        },
+        child: Column(children: [
+          Text("${widget.city[0].toUpperCase()}${widget.city.substring(1).toLowerCase()}", style: TextStyle(fontSize: 8)),
+          Text(primaryTime,
+              style: TextStyle(
+                color: Color(0xFF62d9b5),
+              )),
+          Text("$primaryCondition $primaryTemperature°", style: TextStyle(fontSize: 8)),
+        ]));
   }
 }
