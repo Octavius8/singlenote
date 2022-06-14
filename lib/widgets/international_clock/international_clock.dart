@@ -18,11 +18,18 @@ class InternationalClockState extends State<InternationalClock> {
   String primaryTime = "";
   String primaryTemperature = "";
   Future<String>? primaryCondition;
+  Timer? timer;
 
   @override
   void initState() {
     super.initState();
-    Timer timer = Timer.periodic(Duration(minutes: 5), (Timer t) => updateData());
+    timer = Timer.periodic(Duration(minutes: 5), (Timer t) => updateData());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    timer?.cancel();
   }
 
   void updateData() async {
