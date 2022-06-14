@@ -163,9 +163,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                   Expanded(
                                       flex: 6,
                                       child: ListView(children: [
-                                        Expanded(child: InternationalClock(city: "Lusaka"), flex: 2),
-                                        Expanded(child: InternationalClock(city: "Nairobi"), flex: 2),
-                                        Expanded(child: InternationalClock(city: "Kyoto"), flex: 2),
+                                        InternationalClock(city: "Lusaka"),
+                                        InternationalClock(city: "Nairobi"),
+                                        InternationalClock(city: "Kyoto"),
                                       ])),
 
                                   //Spacer
