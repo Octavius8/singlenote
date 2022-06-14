@@ -168,6 +168,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                             InternationalClock(city: "Lusaka"),
                                             InternationalClock(city: "Nairobi"),
                                             InternationalClock(city: "Kyoto"),
+                                            InternationalClock(city: "Lusaka"),
+                                            InternationalClock(city: "Nairobi"),
+                                            InternationalClock(city: "Kyoto"),
                                           ]))),
 
                                   //Spacer
