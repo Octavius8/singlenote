@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
-import '_config.dart';
+import '../_config.dart';
 import '_log.dart';
 
 class Weather {
