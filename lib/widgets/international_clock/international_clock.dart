@@ -45,7 +45,7 @@ class InternationalClockState extends State<InternationalClock> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.symmetric(horizontal: 7),
         child: GestureDetector(
             onTap: () {
               updateData();
