@@ -47,16 +47,15 @@ class InternationalClockState extends State<InternationalClock> {
         onTap: () {
           updateData();
         },
-        child: Expanded(
-            flex: 3,
+        child: Container(
             //Future Builder
             child: Column(children: [
-              Text("${widget.city[0].toUpperCase()}${widget.city.substring(1).toLowerCase()}", style: TextStyle(fontSize: 8)),
-              Text(primaryTime,
-                  style: TextStyle(
-                    color: Color(0xFF62d9b5),
-                  )),
-              Text("$primaryCondition $primaryTemperature°", style: TextStyle(fontSize: 8)),
-            ])));
+          Text("${widget.city[0].toUpperCase()}${widget.city.substring(1).toLowerCase()}", style: TextStyle(fontSize: 8)),
+          Text(primaryTime,
+              style: TextStyle(
+                color: Color(0xFF62d9b5),
+              )),
+          Text("$primaryCondition $primaryTemperature°", style: TextStyle(fontSize: 8)),
+        ])));
   }
 }
