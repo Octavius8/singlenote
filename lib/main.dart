@@ -1,14 +1,18 @@
+/*
+ * @author: John Lusumpa
+ * @date: 25 May 2022
+ *
+ */
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:lottie/lottie.dart';
-import '_note.dart';
-import '_weather.dart';
+import 'model/_note.dart';
+import 'model/_weather.dart';
 import '_config.dart';
 import 'dart:async';
-import '_log.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'model/_log.dart';
 import 'package:flutter/services.dart';
-import 'package:local_auth/local_auth.dart';
+import 'components/_noteTextArea.dart';
 
 void main() => runApp(MyApp());
 
@@ -83,20 +87,18 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   }
 
   //Note
-  TextEditingController _textController = new TextEditingController();
+  TextEditingController _noteTextController = new TextEditingController();
+  TextEditingController _journalTextController = new TextEditingController();
   late final AnimationController _animationController;
-  Note note = new Note();
+  Note note = new Note(Config.OVI_NOTE_ID);
   String noteString = "";
   bool _anistart = true;
+  bool _noteEditMode = false;
 
   //authentication
-  bool _isAuthenticating = false;
-  final LocalAuthentication auth = LocalAuthentication();
-  String _authorized = "";
 
   //App Wide
-  bool _keyboardVisible = false;
-  late StreamSubscription<bool> keyboardSubscription;
+
   void initState() {
     super.initState();
     _animationController = AnimationController(vsync: this);
@@ -106,18 +108,18 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     getWeatherDetails();
     timer =
         Timer.periodic(Duration(minutes: 5), (Timer t) => getWeatherDetails());
+    setNote(Config.OVI_NOTE_ID);
     setNoteString();
-    var keyboardVisibilityController = KeyboardVisibilityController();
-    _keyboardVisible = keyboardVisibilityController.isVisible;
-    keyboardSubscription =
-        keyboardVisibilityController.onChange.listen((bool visible) {
-      _keyboardVisible = visible;
-    });
+  }
+
+  void setNote(note_id) {
+    note.noteID = note_id;
+    setState(() {});
   }
 
   void setNoteString() async {
     noteString = await note.getNote();
-    _textController.text = noteString; // + "\nLog:\n" + log.logString;
+    _noteTextController.text = noteString; // + "\nLog:\n" + log.logString;
     setState(() {});
   }
 
@@ -158,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               height: MediaQuery.of(context).size.height,
               child: Stack(
                 children: [
-                  //NOtepad
+                  //Notepad
                   Positioned(
                       right: 10,
                       child: SingleChildScrollView(
@@ -312,15 +314,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                                 setState(() {});
                                               },
                                               child: Icon(Icons.refresh,
-                                                  color: Color(0xFF898989),
+                                                  color: Config.COLOR_LIGHTGRAY,
                                                   size: 24))),
 
                                       //Save Button
                                       GestureDetector(
                                         onTap: () async {
-                                          bool status = await note
-                                              .saveNote(_textController.text);
+                                          bool status = await note.saveNote(
+                                              _noteTextController.text);
                                           if (status) {
+                                            _noteEditMode = false;
                                             _animationController.reset();
                                             _animationController.forward();
                                             setState(() {});
@@ -339,21 +342,17 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                   ),
 
                                   // Text Area
-                                  SingleChildScrollView(
-                                      child: Container(
-                                          height: _keyboardVisible
-                                              ? 400
-                                              : MediaQuery.of(context)
-                                                      .size
-                                                      .height -
-                                                  100,
-                                          child: TextField(
-                                            maxLines: null,
-                                            style: TextStyle(fontSize: 13),
-                                            keyboardType:
-                                                TextInputType.multiline,
-                                            controller: _textController,
-                                          )))
+                                  Stack(children: [
+                                    //Note Area
+                                    GestureDetector(
+                                        onDoubleTap: () {
+                                          _noteEditMode = true;
+                                          setState(() {});
+                                        },
+                                        child: NoteTextArea(
+                                            textController: _noteTextController,
+                                            editMode: _noteEditMode))
+                                  ])
                                 ])),
                       )),
 
@@ -465,6 +464,22 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   quarterTurns: -1,
                   child: GestureDetector(
                       onTap: () {
+                        String logPrefix = "SideMenu | onTap()";
+                        String noteID = "";
+
+                        if (itemIndex == Config.MENU_NOTEINDEX)
+                          noteID = Config.OVI_NOTE_ID;
+                        if (itemIndex == Config.MENU_JOURNALINDEX)
+                          noteID = Config.OVI_JOURNAL_ID;
+                        if (itemIndex == Config.MENU_SHORTCUTSINDEX)
+                          noteID = Config.OVI_SHORTCUTS_ID;
+
+                        log.info(logPrefix,
+                            "_menuIndex=$_menuIndex, noteID=$noteID");
+                        setNote(noteID);
+                        setNoteString();
+
+                        _noteEditMode = false;
                         _menuIndex = itemIndex;
                         setState(() {});
                       },
@@ -504,43 +519,5 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 )))
       ]),
     );
-  }
-
-  Future<void> _authenticateWithBiometrics() async {
-    bool authenticated = false;
-    try {
-      setState(() {
-        _isAuthenticating = true;
-        _authorized = 'Authenticating';
-      });
-      authenticated = await auth.authenticate(
-        localizedReason:
-            'Scan your fingerprint (or face or whatever) to authenticate',
-        options: const AuthenticationOptions(
-          useErrorDialogs: true,
-          stickyAuth: true,
-          biometricOnly: true,
-        ),
-      );
-      setState(() {
-        _isAuthenticating = false;
-        _authorized = 'Authenticating';
-      });
-    } on PlatformException catch (e) {
-      print(e);
-      setState(() {
-        _isAuthenticating = false;
-        _authorized = 'Error - ${e.message}';
-      });
-      return;
-    }
-    if (!mounted) {
-      return;
-    }
-
-    final String message = authenticated ? 'Authorized' : 'Not Authorized';
-    setState(() {
-      _authorized = message;
-    });
   }
 }
