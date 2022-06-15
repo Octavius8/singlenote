@@ -74,7 +74,7 @@ class WhiteNoiseState extends State<WhiteNoise> {
       } catch (ex) {
         log.error(logPrefix, ex.toString());
       }
-      playing = true;
+
       log.debug(logPrefix, "Completed player.start function & Changed status of playing to true.");
     }
 
