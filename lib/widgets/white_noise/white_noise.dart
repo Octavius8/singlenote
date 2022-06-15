@@ -57,7 +57,7 @@ class WhiteNoiseState extends State<WhiteNoise> {
     String logPrefix = "WhiteNoise | toggleState";
     log.info(logPrefix, "Entered toggle state function. Current Playing State:${playing.toString()}");
 
-    if (playing) {
+    if (player.isPlaying) {
       log.debug(logPrefix, "Attempting to Stop the player...");
       playing = false;
       try {
