@@ -53,7 +53,7 @@ class User {
         log.debug("logPrefix", "Test, name is " + data?['name']);
       } else {
         log.debug(logPrefix, "This is a browser. Proceeding to load test data.");
-        contents = "{'name':'Boss'}";
+        contents = "{\"name\":\"Boss\"}";
         data = json.decode(contents.trim());
       }
 
