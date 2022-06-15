@@ -5,11 +5,11 @@ import 'package:just_audio/just_audio.dart';
 import 'dart:async';
 
 class WhiteNoise extends StatefulWidget {
-  String narration = "White Noise";
+  String narration;
   String audioFile;
 
   //Constructor
-  WhiteNoise({this.audioFile = ""});
+  WhiteNoise({this.audioFile = "", this.narration = "White Noise"});
 
   @override
   WhiteNoiseState createState() => WhiteNoiseState();
