@@ -167,23 +167,22 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                   Expanded(flex: 1, child: Text("")),
 
                                   //Reload
-                                  Expanded(
-                                      child: GestureDetector(
-                                          onTap: () async {
-                                            if (_noteEditMode) {
-                                              toast("Saving...");
-                                              bool status = await note.saveNote(_noteTextController.text);
-                                              if (status) {
-                                                _noteEditMode = false;
-                                                setState(() {});
-                                              }
-                                            } else {
-                                              _noteEditMode = true;
-                                              toast(Config.TOAST_NARRATION_EDITMODE);
-                                              setState(() {});
-                                            }
-                                          },
-                                          child: Icon(Icons.edit_note_rounded, color: _noteEditMode ? Config.COLOR_HIGHLIGHT : Config.COLOR_LIGHTGRAY, size: 32))),
+                                  GestureDetector(
+                                      onTap: () async {
+                                        if (_noteEditMode) {
+                                          toast("Saving...");
+                                          bool status = await note.saveNote(_noteTextController.text);
+                                          if (status) {
+                                            _noteEditMode = false;
+                                            setState(() {});
+                                          }
+                                        } else {
+                                          _noteEditMode = true;
+                                          toast(Config.TOAST_NARRATION_EDITMODE);
+                                          setState(() {});
+                                        }
+                                      },
+                                      child: Icon(Icons.edit_note_rounded, color: _noteEditMode ? Config.COLOR_HIGHLIGHT : Config.COLOR_LIGHTGRAY, size: 32)),
 
                                   //Save Button
                                   /* GestureDetector(
