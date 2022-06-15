@@ -9,6 +9,10 @@ class User {
   Log log = new Log();
   Map<String, dynamic>? data;
 
+  User() {
+    readUserData();
+  }
+
   Future<bool> saveUserData() async {
     String logPrefix = "User | saveUserData";
     log.info(logPrefix, "Starting saveUserData function");
@@ -38,7 +42,8 @@ class User {
       final file = await File('$path/userprofile.txt');
 
       // Read the file
-      final contents = await file.readAsString();
+      final contents = "{'name':'Boss'}";
+      //final contents = await file.readAsString();
       data = json.decode(contents.trim());
 
       return int.parse(contents);

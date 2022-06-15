@@ -76,7 +76,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     _animationController.forward();
     setNote(Config.OVI_NOTE_ID);
     setNoteString();
-    user.saveUserData();
   }
 
   void setNote(note_id) {
@@ -159,7 +158,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                       child: SingleChildScrollView(
                                           scrollDirection: Axis.horizontal,
                                           child: Row(children: [
-                                            InternationalClock(city: "Lusaka"),
+                                            InternationalClock(city: user.data?['name'] ?? "Lusaka"),
                                             InternationalClock(city: "Mumbai"),
                                             WhiteNoise(audioFile: AudioFile.waves),
                                           ]))),
