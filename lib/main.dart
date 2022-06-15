@@ -4,15 +4,16 @@
  *
  */
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
+import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
-import 'model/_note.dart';
-import 'widgets/international_clock/international_clock.dart';
-import '_config.dart';
+import 'dart:math' as math;
 import 'dart:async';
 import 'model/_log.dart';
-import 'package:flutter/services.dart';
+import 'model/_note.dart';
+import 'model/_user.dart';
+import '_config.dart';
 import 'components/_noteTextArea.dart';
+import 'widgets/international_clock/international_clock.dart';
 
 //widgets
 import 'widgets/international_clock/international_clock.dart';
@@ -62,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   String noteString = "";
   bool _anistart = true;
   bool _noteEditMode = false;
-
+  User user = new User();
   //authentication
 
   //App Wide
@@ -75,6 +76,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     _animationController.forward();
     setNote(Config.OVI_NOTE_ID);
     setNoteString();
+    user.saveUserData();
   }
 
   void setNote(note_id) {
