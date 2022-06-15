@@ -26,4 +26,12 @@ class PrimaryWidgetAreaState extends State<PrimaryWidgetArea> {
               WhiteNoise(audioFile: AudioFile.waves),
             ])));
   }
+
+  List<Widget> compileListOfWidgets() {
+    List<Widget> finalList = [];
+    widget.user.data?['primaryWidgets'].forEach((widget) {
+      if (widget["type"] == "InternationalClock") {}
+    });
+    return finalList;
+  }
 }
