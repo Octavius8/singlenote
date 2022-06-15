@@ -152,8 +152,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
                                   Icon(Icons.more_vert, color: Config.COLOR_LIGHTGRAY),
                                   //Scrollable section
-                                  Expanded(
-                                      flex: 6,
+                                  Container(
+                                      width: 3 * Config.WIDGET_WIDTH,
                                       child: SingleChildScrollView(
                                           scrollDirection: Axis.horizontal,
                                           child: Row(children: [
