@@ -29,7 +29,7 @@ class PrimaryWidgetAreaState extends State<PrimaryWidgetArea> {
 
       //White Noise Widgets
       if (widget["type"] == "white_noise") {
-        finalList.add(WhiteNoise(audioFile: widget["audioFile"]));
+        finalList.add(WhiteNoise(audioFile: widget["audioFile"], narration: widget["narration"]));
       }
     });
     return finalList;
