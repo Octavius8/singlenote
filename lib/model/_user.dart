@@ -8,7 +8,7 @@ import '../model/_log.dart';
 class User {
   Log log = new Log();
   Map<String, dynamic>? data;
-  String testContent = '{ "name": "Boss", "primaryWidgets": [{ "type": "international_clock", "city": "Kyoto" }, { "type": "international_clock", "city": "Mumbai" },{ "type": "white_noise", "audioFile": "fan" } ] }';
+  String testContent = '{ "name": "Boss", "primaryWidgets": [{ "type": "international_clock", "city": "Kyoto" }, { "type": "international_clock", "city": "Mumbai" },{ "type": "white_noise", "audioFile": "wave","narration":"Waves" } ] }';
 
   User() {
     log.debug("User | Constructor", "Starting Constructor");
