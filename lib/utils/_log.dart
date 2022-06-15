@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:intl/intl.dart';
-import '../_config.dart';
+import '_config.dart';
 
 class Log {
   bool debugEnabled = Config.LOG_DEBUG_ENABLED;
@@ -9,21 +9,24 @@ class Log {
   void error(String logPrefix, String message) {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('kk:mm:ss EEE d MMM').format(now);
-    this.logString = "\n" + formattedDate + "| ERROR | " + logPrefix + " | " + message;
+    this.logString =
+        "\n" + formattedDate + "| ERROR | " + logPrefix + " | " + message;
     storeLog();
   }
 
   void info(String logPrefix, String message) {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('kk:mm:ss EEE d MMM').format(now);
-    this.logString = "\n" + formattedDate + "| INFO | " + logPrefix + " | " + message;
+    this.logString =
+        "\n" + formattedDate + "| INFO | " + logPrefix + " | " + message;
     storeLog();
   }
 
   void debug(String logPrefix, String message) {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd kk:mm:ss').format(now);
-    this.logString = "\n" + formattedDate + "| DEBUG | " + logPrefix + " | " + message;
+    this.logString =
+        "\n" + formattedDate + "| DEBUG | " + logPrefix + " | " + message;
     if (debugEnabled) storeLog();
   }
 

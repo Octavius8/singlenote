@@ -47,8 +47,9 @@ flutter:
   assets:
   - assets/fingerprint.json
   - assets/savebutton.json
-  # assets/widgets/white_noise/fan.mp3
-  # assets/widgets/white_noise/waves.mp3
+  - assets/ca/lets-encrypt-r3.pem
+  - assets/widgets/white_noise/fan.mp3
+  - assets/widgets/white_noise/waves.mp3
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

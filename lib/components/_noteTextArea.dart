@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'dart:async';
-import '../_config.dart';
-import '../model/_log.dart';
+import '../utils/_config.dart';
+import '../utils/_log.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
@@ -189,10 +189,10 @@ class NoteTextAreaState extends State<NoteTextArea> {
     /*final websiteCheck = RegExp(
         r'^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$');*/
     final websiteCheck = RegExp(r'(^(http[s]?:\/{2})|(^www))(\S*|.*)');
-    log.debug(
+    /*log.debug(
         logPrefix,
         "word is: $word. isWebsite response is " +
-            websiteCheck.hasMatch(word).toString());
+            websiteCheck.hasMatch(word).toString());*/
     return websiteCheck.hasMatch(word);
   }
 

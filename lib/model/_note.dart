@@ -1,11 +1,15 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
-import '../_config.dart';
-import '_log.dart';
+import '../utils/_config.dart';
+import '../utils/_log.dart';
 
 class Note {
-  String errorMessage = "", noteTags = "", noteTitle = "", noteContent = "", noteID = "";
+  String errorMessage = "",
+      noteTags = "",
+      noteTitle = "",
+      noteContent = "",
+      noteID = "";
 
   Log log = new Log();
 
@@ -86,7 +90,8 @@ class Note {
 
       Map<String, dynamic> jsontemp = jsonDecode(response.body);
       if (response.statusCode == 200) finalString = true;
-      errorMessage = formattedDate + "-" + response.body + response.statusCode.toString();
+      errorMessage =
+          formattedDate + "-" + response.body + response.statusCode.toString();
     } catch (ex) {
       this.errorMessage = formattedDate + "-" + ex.toString();
     }
