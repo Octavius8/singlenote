@@ -60,7 +60,7 @@ class InternationalClockState extends State<InternationalClock> {
               Text("${widget.city[0].toUpperCase()}${widget.city.substring(1).toLowerCase()}", style: TextStyle(fontSize: Config.WIDGET_FONTSIZE)),
               Text(primaryTime,
                   style: TextStyle(
-                    color: Color(int.parse("FF" + widget.user.data?["color_highlight"] ?? "00FF00", radix: 16)),
+                    color: Color(int.parse("FFFF0000", radix: 16)),
                   )),
               Text("$primaryCondition $primaryTemperature°", textAlign: TextAlign.center, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE)),
             ])));
