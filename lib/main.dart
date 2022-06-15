@@ -11,13 +11,11 @@ import 'dart:async';
 import 'model/_log.dart';
 import 'model/_note.dart';
 import 'model/_user.dart';
+import 'components/_primaryWidgetArea.dart';
 import '_config.dart';
 import 'components/_noteTextArea.dart';
-import 'widgets/international_clock/international_clock.dart';
 
 //widgets
-import 'widgets/international_clock/international_clock.dart';
-import 'widgets/white_noise/white_noise.dart';
 
 void main() => runApp(MyApp());
 
@@ -152,16 +150,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                   //Widget Menu
 
                                   Icon(Icons.more_vert, color: Config.COLOR_LIGHTGRAY),
-                                  //Scrollable section
-                                  Container(
-                                      width: Config.WIDGET_NUMBER_TO_DISPLAY * Config.WIDGET_WIDTH,
-                                      child: SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Row(children: [
-                                            InternationalClock(city: user.data?['name'] ?? "Lusaka"),
-                                            InternationalClock(city: "Mumbai"),
-                                            WhiteNoise(audioFile: AudioFile.waves),
-                                          ]))),
+                                  //Primary Widget Area
+                                  PrimaryWidgetArea(user: user),
 
                                   //Spacer
                                   Expanded(flex: 1, child: Text("")),
