@@ -51,6 +51,7 @@ class User {
 
       return int.parse(contents);
     } catch (e) {
+      log.error(logPrefix, e.toString());
       // If encountering an error, return 0
       return 0;
     }
