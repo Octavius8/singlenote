@@ -39,4 +39,5 @@ class Config {
   static final double WIDGET_FONTSIZE = 8;
   static final double WIDGET_WIDTH = 80;
   static final double WIDGET_HEIGHT = 40;
+  static final int WIDGET_NUMBER_TO_DISPLAY = 3;
 }
