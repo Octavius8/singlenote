@@ -44,8 +44,10 @@ class User {
 
       // Read the file
       final contents = "{'name':'Boss'}";
+
       //final contents = await file.readAsString();
       data = json.decode(contents.trim());
+      log.debug("logPrefix", "Test, name is " + data?['name']);
 
       return int.parse(contents);
     } catch (e) {
