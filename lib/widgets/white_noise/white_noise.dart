@@ -42,9 +42,7 @@ class WhiteNoiseState extends State<WhiteNoise> {
 
   void setAudioWeb() async {
     String logPrefix = "WhiteNoise | setAudio";
-    //if(widget.audioFile==audioFile.fan)
-    audioFilePath = "https://www.ovidware.com/random/fan.mp3";
-    if (widget.audioFile == AudioFile.waves) audioFilePath = "https://www.ovidware.com/random/waves.mp3";
+    audioFilePath = "https://www.ovidware.com/random/${widget.audioFile}.mp3";
     log.debug(logPrefix, "audioFilePath: $audioFilePath");
 
     var duration = await player.setUrl(audioFilePath);
