@@ -57,26 +57,28 @@ class WhiteNoiseState extends State<WhiteNoise> {
     String logPrefix = "WhiteNoise | toggleState";
     log.info(logPrefix, "Entered toggle state function. Current Playing State:${playing.toString()}");
 
-    if (player.isPlaying) {
-      log.debug(logPrefix, "Attempting to Stop the player...");
-      playing = false;
-      try {
-        await player.stop();
-      } catch (ex) {
-        log.error(logPrefix, ex.toString());
+    player.playerStateStream.listen((state) async {
+      if (state.playing) {
+        log.debug(logPrefix, "Attempting to Stop the player...");
+        playing = false;
+        try {
+          await player.stop();
+        } catch (ex) {
+          log.error(logPrefix, ex.toString());
+        }
+        log.debug(logPrefix, "Completed player.stop function & Changed status of playing to false.");
+      } else {
+        log.debug(logPrefix, "Attempting to Start the player...");
+        playing = true;
+        try {
+          await player.play();
+        } catch (ex) {
+          log.error(logPrefix, ex.toString());
+        }
+        playing = true;
+        log.debug(logPrefix, "Completed player.start function & Changed status of playing to true.");
       }
-      log.debug(logPrefix, "Completed player.stop function & Changed status of playing to false.");
-    } else {
-      log.debug(logPrefix, "Attempting to Start the player...");
-      playing = true;
-      try {
-        await player.play();
-      } catch (ex) {
-        log.error(logPrefix, ex.toString());
-      }
-      playing = true;
-      log.debug(logPrefix, "Completed player.start function & Changed status of playing to true.");
-    }
+    });
 
     setState(() {});
   }
