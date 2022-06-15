@@ -164,7 +164,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                           ]))),
 
                                   //Spacer
-                                  //Expanded(flex: 1, child: Text("")),
+                                  Expanded(flex: 1, child: Text("")),
 
                                   //Reload
                                   Expanded(
