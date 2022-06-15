@@ -159,7 +159,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                           child: Row(children: [
                                             InternationalClock(city: "Lusaka"),
                                             InternationalClock(city: "Mumbai"),
-                                            InternationalClock(city: "Kyoto"),
                                             WhiteNoise(audioFile: AudioFile.waves),
                                           ]))),
 
