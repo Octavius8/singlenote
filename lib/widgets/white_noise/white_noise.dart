@@ -6,10 +6,10 @@ import 'dart:async';
 
 class WhiteNoise extends StatefulWidget {
   String narration = "White Noise";
-  int audioFile;
+  String audioFile;
 
   //Constructor
-  WhiteNoise({this.audioFile = 0});
+  WhiteNoise({this.audioFile = ""});
 
   @override
   WhiteNoiseState createState() => WhiteNoiseState();
@@ -32,9 +32,8 @@ class WhiteNoiseState extends State<WhiteNoise> {
 
   void setAudio() async {
     String logPrefix = "WhiteNoise | setAudio";
-    //if(widget.audioFile==audioFile.fan)
-    audioFilePath = "assets/widgets/white_noise/fan.mp3";
-    if (widget.audioFile == AudioFile.waves) audioFilePath = "widgets/white_noise/waves.mp3";
+
+    audioFilePath = "assets/widgets/white_noise/${widget.audioFile}.mp3";
     log.debug(logPrefix, "audioFilePath: $audioFilePath");
 
     var duration = await player.setAsset(audioFilePath);
