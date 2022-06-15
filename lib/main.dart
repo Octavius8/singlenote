@@ -158,7 +158,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                           scrollDirection: Axis.horizontal,
                                           child: Row(children: [
                                             InternationalClock(city: "Lusaka"),
-                                            InternationalClock(city: "Nairobi"),
+                                            InternationalClock(city: "Mumbai"),
+                                            InternationalClock(city: "Kyoto"),
                                             WhiteNoise(audioFile: AudioFile.waves),
                                           ]))),
 
