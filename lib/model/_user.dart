@@ -8,6 +8,7 @@ import '../model/_log.dart';
 class User {
   Log log = new Log();
   Map<String, dynamic>? data;
+  String testContent = '{ "name": "Boss", "primaryWidgets": [{ "international_clock": [{ "city": "Kyoto" }] },{ "international_clock": [{ "city": "Kitwe" }] }, ] }';
 
   User() {
     log.debug("User | Constructor", "Starting Constructor");
@@ -53,7 +54,7 @@ class User {
         log.debug("logPrefix", "Test, name is " + data?['name']);
       } else {
         log.debug(logPrefix, "This is a browser. Proceeding to load test data.");
-        contents = '{"name":"Boss"}';
+        contents = testContent;
         data = json.decode(contents.trim());
       }
 
