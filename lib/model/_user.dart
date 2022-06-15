@@ -37,19 +37,25 @@ class User {
   Future<int> readUserData() async {
     String logPrefix = "User | readUserData";
     try {
-      log.debug(logPrefix, "This is not a browser. Proceeding to read file Data.");
-      final directory = await getApplicationSupportDirectory();
-      String path = directory.path;
-      final file = await File('$path/userprofile.txt');
+      if (!kIsWeb) {
+        log.debug(logPrefix, "This is not a browser. Proceeding to read file Data.");
+        final directory = await getApplicationSupportDirectory();
+        String path = directory.path;
+        final file = await File('$path/userprofile.txt');
 
-      // Read the file
-      final contents = "{'name':'Boss'}";
+        // Read the file
+        //final contents = "{'name':'Boss'}";
 
-      //final contents = await file.readAsString();
-      data = json.decode(contents.trim());
-      log.debug("logPrefix", "Test, name is " + data?['name']);
+        final contents = await file.readAsString();
+        data = json.decode(contents.trim());
+        log.debug("logPrefix", "Test, name is " + data?['name']);
 
-      return int.parse(contents);
+        return int.parse(contents);
+      } else {
+        log.debug(logPrefix, "This is a browser. Proceeding to load test data.");
+        final contents = "{'name':'Boss'}";
+        data = json.decode(contents.trim());
+      }
     } catch (e) {
       log.error(logPrefix, e.toString());
       // If encountering an error, return 0
