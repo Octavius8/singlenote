@@ -28,7 +28,7 @@ class WhiteNoiseState extends State<WhiteNoise> {
   @override
   void initState() {
     super.initState();
-    setAudio();
+    setAudioWeb();
   }
 
   void setAudio() async {
