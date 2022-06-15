@@ -16,21 +16,15 @@ class PrimaryWidgetArea extends StatefulWidget {
 
 class PrimaryWidgetAreaState extends State<PrimaryWidgetArea> {
   Widget build(BuildContext context) {
-    return Container(
-        width: Config.WIDGET_NUMBER_TO_DISPLAY * Config.WIDGET_WIDTH,
-        child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(children: [
-              InternationalClock(city: widget.user.data?['name'] ?? "Lusaka"),
-              InternationalClock(city: "Mumbai"),
-              WhiteNoise(audioFile: AudioFile.waves),
-            ])));
+    return Container(width: Config.WIDGET_NUMBER_TO_DISPLAY * Config.WIDGET_WIDTH, child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: Row(children: compileListOfWidgets())));
   }
 
   List<Widget> compileListOfWidgets() {
     List<Widget> finalList = [];
     widget.user.data?['primaryWidgets'].forEach((widget) {
-      if (widget["type"] == "InternationalClock") {}
+      if (widget["type"] == "international_clock") {
+        finalList.add(InternationalClock(city: widget["city"]));
+      }
     });
     return finalList;
   }
