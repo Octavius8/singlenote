@@ -153,13 +153,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                   Icon(Icons.more_vert, color: Config.COLOR_LIGHTGRAY),
                                   //Scrollable section
                                   Container(
-                                      width: 3 * Config.WIDGET_WIDTH,
+                                      width: Config.WIDGET_NUMBER_TO_DISPLAY * Config.WIDGET_WIDTH,
                                       child: SingleChildScrollView(
                                           scrollDirection: Axis.horizontal,
                                           child: Row(children: [
-                                            InternationalClock(city: "Lusaka"),
-                                            InternationalClock(city: "Mumbai"),
-                                            InternationalClock(city: "Kyoto"),
+                                            //InternationalClock(city: "Lusaka"),
+                                            //InternationalClock(city: "Mumbai"),
+                                            //InternationalClock(city: "Kyoto"),
                                             WhiteNoise(audioFile: AudioFile.waves),
                                           ]))),
 
@@ -185,26 +185,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                       child: Icon(Icons.edit_note_rounded, color: _noteEditMode ? Config.COLOR_HIGHLIGHT : Config.COLOR_LIGHTGRAY, size: 32)),
 
                                   //Save Button
-                                  /* GestureDetector(
-                                        onTap: () async {
-                                          bool status = await note.saveNote(
-                                              _noteTextController.text);
-                                          if (status) {
-                                            _noteEditMode = false;
-                                            _animationController.reset();
-                                            _animationController.forward();
-                                            setState(() {});
-                                          }
-                                        },
-                                        child: Padding(
-                                          padding: EdgeInsets.all(10),
-                                          child: Lottie.asset(
-                                            'assets/savebutton.json',
-                                            height: 24,
-                                            controller: _animationController,
-                                          ),
-                                        ),
-                                      )*/
                                 ],
                               ),
 
