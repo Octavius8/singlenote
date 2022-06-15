@@ -35,18 +35,27 @@ class WhiteNoiseState extends State<WhiteNoise> {
     String logPrefix = "WhiteNoise | setAudio";
     //if(widget.audioFile==audioFile.fan)
     audioFilePath = "assets/widgets/white_noise/fan.mp3";
-    //if (widget.audioFile == AudioFile.waves)
-    // audioFilePath = "widgets/white_noise/waves.mp3";
+    if (widget.audioFile == AudioFile.waves) audioFilePath = "widgets/white_noise/waves.mp3";
     log.debug(logPrefix, "audioFilePath: $audioFilePath");
 
     var duration = await player.setAsset(audioFilePath);
     await player.setLoopMode(LoopMode.one);
   }
 
+  void setAudioWeb() async {
+    String logPrefix = "WhiteNoise | setAudio";
+    //if(widget.audioFile==audioFile.fan)
+    audioFilePath = "https://www.ovidware.com/random/fan.mp3";
+    if (widget.audioFile == AudioFile.waves) audioFilePath = "https://www.ovidware.com/random/waves.mp3";
+    log.debug(logPrefix, "audioFilePath: $audioFilePath");
+
+    var duration = await player.setUrl(audioFilePath);
+    await player.setLoopMode(LoopMode.one);
+  }
+
   void toggleState() async {
     String logPrefix = "WhiteNoise | toggleState";
-    log.info(logPrefix,
-        "Entered toggle state function. Current Playing State:${playing.toString()}");
+    log.info(logPrefix, "Entered toggle state function. Current Playing State:${playing.toString()}");
 
     if (playing) {
       log.debug(logPrefix, "Attempting to Stop the player...");
@@ -56,8 +65,7 @@ class WhiteNoiseState extends State<WhiteNoise> {
       } catch (ex) {
         log.error(logPrefix, ex.toString());
       }
-      log.debug(logPrefix,
-          "Completed player.stop function & Changed status of playing to false.");
+      log.debug(logPrefix, "Completed player.stop function & Changed status of playing to false.");
     } else {
       log.debug(logPrefix, "Attempting to Start the player...");
       playing = true;
@@ -67,8 +75,7 @@ class WhiteNoiseState extends State<WhiteNoise> {
         log.error(logPrefix, ex.toString());
       }
       playing = true;
-      log.debug(logPrefix,
-          "Completed player.start function & Changed status of playing to true.");
+      log.debug(logPrefix, "Completed player.start function & Changed status of playing to true.");
     }
 
     setState(() {});
@@ -84,16 +91,8 @@ class WhiteNoiseState extends State<WhiteNoise> {
             width: Config.WIDGET_WIDTH,
             height: Config.WIDGET_HEIGHT,
             child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-              Expanded(
-                  flex: 2,
-                  child: Icon(Icons.multitrack_audio_outlined,
-                      size: 14,
-                      color: playing ? Config.COLOR_HIGHLIGHT : null)),
-              Expanded(
-                  child: Text(widget.narration,
-                      style: TextStyle(
-                          fontSize: Config.WIDGET_FONTSIZE,
-                          color: playing ? Config.COLOR_HIGHLIGHT : null)))
+              Expanded(flex: 2, child: Icon(Icons.multitrack_audio_outlined, size: 14, color: playing ? Config.COLOR_HIGHLIGHT : null)),
+              Expanded(child: Text(widget.narration, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE, color: playing ? Config.COLOR_HIGHLIGHT : null)))
             ])));
   }
 }
