@@ -23,9 +23,9 @@ class PrimaryWidgetAreaState extends State<PrimaryWidgetArea> {
     List<Widget> finalList = [];
     widget.user.data?['primaryWidgets'].forEach((widget) {
       //International Clock Widgets
-      /*if (widget["type"] == "international_clock") {
-        finalList.add(InternationalClock(city: widget["city"], user: widget.user));
-      }*/
+      if (widget["type"] == "international_clock") {
+        finalList.add(InternationalClock(city: widget["city"]));
+      }
 
       //White Noise Widgets
       if (widget["type"] == "white_noise") {

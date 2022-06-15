@@ -7,8 +7,8 @@ import '../../_config.dart';
 
 class InternationalClock extends StatefulWidget {
   String city;
-  User user;
-  InternationalClock({required this.city, required this.user, Key? key}) : super(key: key);
+  //User user;
+  InternationalClock({required this.city, Key? key}) : super(key: key);
 
   @override
   InternationalClockState createState() => InternationalClockState();
