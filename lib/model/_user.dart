@@ -10,6 +10,7 @@ class User {
   Map<String, dynamic>? data;
 
   User() {
+    log.debug("User | Constructor", "Starting Constructor");
     readUserData();
   }
 
@@ -36,7 +37,7 @@ class User {
   Future<int> readUserData() async {
     String logPrefix = "User | readUserData";
     try {
-      log.debug(logPrefix, "This not a browser. Proceeding to read file Data.");
+      log.debug(logPrefix, "This is not a browser. Proceeding to read file Data.");
       final directory = await getApplicationSupportDirectory();
       String path = directory.path;
       final file = await File('$path/userprofile.txt');
