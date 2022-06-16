@@ -41,7 +41,7 @@ class PrimaryWidgetAreaState extends State<PrimaryWidgetArea> {
 
       //Counter Widget
       if (minwidget["type"] == "counter") {
-        finalList.add(Counter(index: index, narration: minwidget["narration"], count: minwidget["value"]));
+        finalList.add(Counter(index: index, narration: minwidget["narration"], count: minwidget["value"]), user: widget.user);
       }
 
       index++;
