@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../model/_user.dart';
 import 'widgets/international_clock/international_clock.dart';
 import 'widgets/white_noise/white_noise.dart';
+import 'widgets/counter/counter.dart';
 import '../utils/_config.dart';
 import 'dart:async';
 
@@ -40,7 +41,7 @@ class PrimaryWidgetAreaState extends State<PrimaryWidgetArea> {
 
       //Counter Widget
       if (minwidget["type"] == "counter") {
-        finalList.add(Counter(index: index, narration: minwidget["narration"], value: minwidget["value"]));
+        finalList.add(Counter(index: index, narration: minwidget["narration"], count: minwidget["value"]));
       }
 
       index++;
