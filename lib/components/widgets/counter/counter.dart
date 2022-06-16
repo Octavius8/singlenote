@@ -35,7 +35,7 @@ class CounterState extends State<Counter> {
         child: Container(
             width: Config.WIDGET_WIDTH,
             height: Config.WIDGET_HEIGHT,
-            child: Column(children: [
+            child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
               Text(widget.user.data?['primaryWidgets'][widget.index]['count'], style: TextStyle(fontSize: 15)), // style: TextStyle(color: Color(int.parse(widget.user.data?['color_highlight'], radix: 16)))),
               Text(widget.narration, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE))
             ])));
