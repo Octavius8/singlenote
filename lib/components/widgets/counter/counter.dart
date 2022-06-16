@@ -24,10 +24,17 @@ class CounterState extends State<Counter> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {},
-        child: Column(children: [
-          Text(widget.count.toString()), // style: TextStyle(color: Color(int.parse(widget.user.data?['color_highlight'], radix: 16)))),
-          Text(widget.narration, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE))
-        ]));
+        onTap: () {
+          widget.count++;
+          widget.user.data?['data']['primaryWidgets'][widget.index]["count"] = int.parse(widget.user.data?['data']['primaryWidgets'][widget.index]["count"]) + 1;
+          setState(() {});
+        },
+        child: Container(
+            width: Config.WIDGET_WIDTH,
+            height: Config.WIDGET_HEIGHT,
+            child: Column(children: [
+              Text(widget.count.toString()), // style: TextStyle(color: Color(int.parse(widget.user.data?['color_highlight'], radix: 16)))),
+              Text(widget.narration, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE))
+            ])));
   }
 }
