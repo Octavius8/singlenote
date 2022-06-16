@@ -8,8 +8,7 @@ import '../../../utils/_config.dart';
 class InternationalClock extends StatefulWidget {
   String city;
   User? user;
-  InternationalClock({required this.city, required this.user, Key? key})
-      : super(key: key);
+  InternationalClock({required this.city, required this.user, Key? key}) : super(key: key);
 
   @override
   InternationalClockState createState() => InternationalClockState();
@@ -44,8 +43,7 @@ class InternationalClockState extends State<InternationalClock> {
     primaryTime = weatherObject?.time ?? "";
     primaryCondition = weatherObject?.condition ?? "";
     primaryTemperature = weatherObject?.temperature ?? "";
-    log.debug(logPrefix,
-        "Completed fetching data for ${widget.city}. time=$primaryTime, temp=$primaryTemperature, condition=$primaryCondition");
+    log.debug(logPrefix, "Completed fetching data for ${widget.city}. time=$primaryTime, temp=$primaryTemperature, condition=$primaryCondition");
     setState(() {});
   }
 
@@ -59,19 +57,13 @@ class InternationalClockState extends State<InternationalClock> {
         child: Container(
             width: Config.WIDGET_WIDTH,
             padding: EdgeInsets.symmetric(horizontal: 7),
-            child: Column(children: [
-              Text(
-                  "${widget.city[0].toUpperCase()}${widget.city.substring(1).toLowerCase()}",
-                  style: TextStyle(fontSize: Config.WIDGET_FONTSIZE)),
+            child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+              Text("${widget.city[0].toUpperCase()}${widget.city.substring(1).toLowerCase()}", style: TextStyle(fontSize: Config.WIDGET_FONTSIZE)),
               Text(primaryTime,
                   style: TextStyle(
-                    color: Color(int.parse(
-                        "FF" + widget.user?.data?['color_highlight'],
-                        radix: 16)),
+                    color: Color(int.parse("FF" + widget.user?.data?['color_highlight'], radix: 16)),
                   )),
-              Text("$primaryCondition $primaryTemperature°",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: Config.WIDGET_FONTSIZE)),
+              Text("$primaryCondition $primaryTemperature°", textAlign: TextAlign.center, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE)),
             ])));
   }
 }
