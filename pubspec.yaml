@@ -45,7 +45,7 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
-  - assets/fingerprint.json Neeraj
+  - assets/fingerprint.json
   - assets/savebutton.json
   - assets/ca/lets-encrypt-r3.pem
   # assets/widgets/white_noise/fan.mp3
