@@ -26,7 +26,7 @@ class CounterState extends State<Counter> {
     return GestureDetector(
         onTap: () {},
         child: Column(children: [
-          Text(widget.count.toString(), style: TextStyle(color: widget.user.data?['color_highlight'])),
+          Text(widget.count.toString(), style: TextStyle(color: int.parse(widget.user.data?['color_highlight'], radix: 16))),
           Text(widget.narration, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE))
         ]));
   }
