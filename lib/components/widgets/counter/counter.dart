@@ -25,7 +25,7 @@ class CounterState extends State<Counter> {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          widget.user.data?['primaryWidgets'][widget.index]["count"] = int.parse(widget.user.data?['primaryWidgets'][widget.index]["count"]) + 1;
+          widget.user.data?['primaryWidgets'][widget.index]["count"] = (int.parse(widget.user.data?['primaryWidgets'][widget.index]["count"]) + 1).toString();
           setState(() {});
         },
         child: Container(
