@@ -5,6 +5,7 @@ import 'widgets/white_noise/white_noise.dart';
 import 'widgets/counter/counter.dart';
 import '../utils/_config.dart';
 import 'dart:async';
+import 'widgets/countdown/countdown.dart';
 
 class PrimaryWidgetArea extends StatefulWidget {
   User user;
@@ -42,6 +43,11 @@ class PrimaryWidgetAreaState extends State<PrimaryWidgetArea> {
       //Counter Widget
       if (minwidget["type"] == "counter") {
         finalList.add(Counter(index: index, narration: minwidget["narration"], count: int.parse(minwidget["count"]), user: widget.user));
+      }
+
+      //Count Down Widget
+      if (minwidget["type"] == "countdown") {
+        finalList.add(CountDown(index: index, narration: minwidget["narration"], count: int.parse(minwidget["count"]), user: widget.user));
       }
 
       index++;
