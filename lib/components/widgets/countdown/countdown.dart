@@ -10,7 +10,7 @@ class CountDown extends StatefulWidget {
   String narration;
   int seconds;
   User user;
-  CountDown({this.index = 0, this.narration = "Counter", this.seconds = 0, required this.user});
+  CountDown({this.index = 0, this.narration = "Count Down", this.seconds = 0, required this.user});
 
   @override
   CountDownState createState() => CountDownState();
@@ -21,6 +21,9 @@ class CountDown extends StatefulWidget {
 // progresses.
 
 class CountDownState extends State<CountDown> {
+  bool countingDown = false;
+  int currentCount = 0;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

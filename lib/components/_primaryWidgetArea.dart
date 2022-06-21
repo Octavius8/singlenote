@@ -47,7 +47,7 @@ class PrimaryWidgetAreaState extends State<PrimaryWidgetArea> {
 
       //Count Down Widget
       if (minwidget["type"] == "countdown") {
-        finalList.add(CountDown(index: index, narration: minwidget["narration"], count: int.parse(minwidget["count"]), user: widget.user));
+        finalList.add(CountDown(index: index, narration: minwidget["narration"], seconds: int.parse(minwidget["seconds"]), user: widget.user));
       }
 
       index++;
