@@ -8,9 +8,9 @@ import 'dart:async';
 class CountDown extends StatefulWidget {
   int index;
   String narration;
-  int count;
+  int seconds;
   User user;
-  CountDown({this.index = 0, this.narration = "Counter", this.count = 0, required this.user});
+  CountDown({this.index = 0, this.narration = "Counter", this.seconds = 0, required this.user});
 
   @override
   CountDownState createState() => CountDownState();
