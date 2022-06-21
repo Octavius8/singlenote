@@ -78,7 +78,7 @@ class WhiteNoiseState extends State<WhiteNoise> {
             width: Config.WIDGET_WIDTH,
             height: Config.WIDGET_HEIGHT,
             child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-              Expanded(flex: 2, child: Icon(Icons.multitrack_audio_outlined, size: Config.WIDGET_ICONSIZE, color: player.playing ? Color(int.parse("FF" + widget.user.data?["color_highlight"], radix: 16)) : null)),
+              Expanded(flex: 2, child: Icon(Icons.multitrack_audio_outlined, size: 14, color: player.playing ? Color(int.parse("FF" + widget.user.data?["color_highlight"], radix: 16)) : null)),
               Text(widget.narration, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE, color: player.playing ? Color(int.parse("FF" + widget.user.data?["color_highlight"], radix: 16)) : null))
             ])));
   }
