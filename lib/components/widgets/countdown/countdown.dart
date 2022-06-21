@@ -31,7 +31,7 @@ class CountDownState extends State<CountDown> {
             width: Config.WIDGET_WIDTH,
             height: Config.WIDGET_HEIGHT,
             child: Column(children: [
-              Icon(Icons.av_timer),
+              Icon(Icons.av_timer, size: Config.WIDGET_ICONSIZE),
               Text("Timer")
             ])));
   }
