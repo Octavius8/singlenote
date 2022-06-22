@@ -292,7 +292,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     //End of Container
                   ),
 
-                  Positioned(left: 0, bottom: 20, child: Padding(padding: EdgeInsets.only(left: 10), child: Icon(Icons.settings, color: Config.COLOR_LIGHTGRAY, size: 20)))
+                  Positioned(left: 0, bottom: 20, child: Padding(padding: EdgeInsets.only(left: 5), child: Icon(Icons.settings, color: Config.COLOR_LIGHTGRAY, size: 20)))
                 ],
               ),
             ),
