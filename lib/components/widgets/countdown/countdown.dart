@@ -25,12 +25,12 @@ class CountDownState extends State<CountDown> {
   int currentCount = 0;
   String narrationTime = "";
   Log log = new Log();
+  Timer? timer;
 
   @override
   void initState() {
     super.initState();
     currentCount = widget.seconds;
-    Timer.periodic(Duration(seconds: 3), (Timer t) => decrementCounter());
   }
 
   void decrementCounter() {
@@ -50,11 +50,13 @@ class CountDownState extends State<CountDown> {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          if (countingDown)
+          if (countingDown) {
             countingDown = false;
-          else {
+            timer?.cancel();
+          } else {
             currentCount = widget.seconds;
             countingDown = true;
+            timer = Timer.periodic(Duration(seconds: 1), (Timer t) => decrementCounter());
           }
           setState(() {});
         },
