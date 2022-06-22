@@ -273,7 +273,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                       duration: Duration(milliseconds: 600),
                                       child: Icon(
                                         Icons.lock,
-                                        color: _lockedScreen ? Config.COLOR_DARKGRAY : Colors.white,
+                                        color: _lockedScreen
+                                            ? correctPassword
+                                                ? Config.COLOR_DARKGRAY
+                                                : Colors.red
+                                            : Colors.white,
                                         size: _lockedScreen ? 48 : 12,
                                       )),
                                   decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: Color(0xFF888888))),
