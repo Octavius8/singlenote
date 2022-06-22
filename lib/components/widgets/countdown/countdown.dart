@@ -38,10 +38,10 @@ class CountDownState extends State<CountDown> {
       currentCount = currentCount - 1;
       int minutes = (currentCount / 60).floor();
       int seconds = (currentCount % 60);
-      narrationTime = minutes.toString() + ":" + seconds.toString();
+      narrationTime = minutes.toString().padLeft(2, "0") + ":" + seconds.toString().padLeft(2, "0");
       log.debug("CountDown | decrementCounter()", narrationTime);
     } else {
-      narrationTime = (widget.seconds / 60).floor().toString() + ":" + (widget.seconds % 60).toString();
+      narrationTime = (widget.seconds / 60).floor().toString().padLeft(2, "0") + ":" + (widget.seconds % 60).toString().padLeft(2, "0");
     }
     setState(() {});
   }
