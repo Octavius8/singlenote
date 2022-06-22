@@ -24,6 +24,7 @@ class CountDownState extends State<CountDown> {
   bool countingDown = false;
   int currentCount = 0;
   String narrationTime = "";
+  Log log = new Log();
 
   @override
   void initState() {
@@ -38,6 +39,7 @@ class CountDownState extends State<CountDown> {
       double minutes = currentCount / 60;
       double seconds = widget.seconds - (minutes / 60);
       narrationTime = minutes.toString() + ":" + seconds.toString();
+      log.debug("CountDown | decrementCounter()", narrationTime);
     }
   }
 
