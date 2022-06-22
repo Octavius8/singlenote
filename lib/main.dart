@@ -249,7 +249,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             // _lockedScreen ? Text("NOTE | 29", style: TextStyle(fontSize: 32, color: Config.COLOR_DARKGRAY)) : SizedBox.shrink(),
 
                             //Password
-                            _lockedScreen ? Padding(padding: EdgeInsets.symmetric(vertical: 20), child: SizedBox(width: 130, child: TextField(controller: _passwordController, maxLength: 4, obscureText: true, autocorrect: false, textAlign: TextAlign.center, style: TextStyle(color: Config.COLOR_DARKGRAY, letterSpacing: 14), decoration: InputDecoration(/*hintText: "****", hintStyle: TextStyle(color: Colors.white),*/ counterText: "" /*, enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0), borderSide: BorderSide(color: Config.COLOR_DARKGRAY))*/, fillColor: Colors.white, filled: true)))) : SizedBox.shrink(),
+                            _lockedScreen ? Padding(padding: EdgeInsets.symmetric(vertical: 20), child: SizedBox(width: 130, child: TextField(cursorColor: correctPassword ? Config.COLOR_DARKGRAY : Colors.red, controller: _passwordController, maxLength: 4, obscureText: true, autocorrect: false, textAlign: TextAlign.center, style: TextStyle(color: Config.COLOR_DARKGRAY, letterSpacing: 14), decoration: InputDecoration(/*hintText: "****", hintStyle: TextStyle(color: Colors.white),*/ counterText: "" /*, enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0), borderSide: BorderSide(color: Config.COLOR_DARKGRAY))*/, fillColor: Colors.white, filled: true)))) : SizedBox.shrink(),
 
                             //Text(_authorized),
                             GestureDetector(
@@ -292,7 +292,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     //End of Container
                   ),
 
-                  Positioned(left: 0, bottom: 10, child: Icon(Icons.settings))
+                  Positioned(left: 0, bottom: 20, child: Icon(Icons.settings, color: Config.COLOR_LIGHTGRAY))
                 ],
               ),
             ),
