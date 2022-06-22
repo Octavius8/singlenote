@@ -44,6 +44,7 @@ class CountDownState extends State<CountDown> {
       log.debug("CountDown | decrementCounter()", narrationTime);
     } else {
       timer?.cancel();
+      countingDown = false;
       log.debug("CountDown | decrementCounter()", "Beeping...");
       FlutterBeep.playSysSound(41);
       narrationTime = (widget.seconds / 60).floor().toString().padLeft(2, "0") + ":" + (widget.seconds % 60).toString().padLeft(2, "0");
@@ -70,9 +71,9 @@ class CountDownState extends State<CountDown> {
             width: Config.WIDGET_WIDTH,
             height: Config.WIDGET_HEIGHT,
             child: Column(children: [
-              Text(widget.narration, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE)),
+              Text(narrationTime, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE, color: countingDown ? Color(int.parse("FF" + widget.user.data?["color_highlight"], radix: 16)) : null)),
               Expanded(flex: 2, child: Icon(Icons.av_timer, size: Config.WIDGET_ICONSIZE, color: countingDown ? Color(int.parse("FF" + widget.user.data?["color_highlight"], radix: 16)) : null)),
-              Text(narrationTime, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE, color: countingDown ? Color(int.parse("FF" + widget.user.data?["color_highlight"], radix: 16)) : null))
+              Text(widget.narration, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE)),
             ])));
   }
 }
