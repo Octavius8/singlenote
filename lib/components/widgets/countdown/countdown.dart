@@ -41,7 +41,7 @@ class CountDownState extends State<CountDown> {
       narrationTime = minutes.toString() + ":" + seconds.toString();
       log.debug("CountDown | decrementCounter()", narrationTime);
     } else {
-      narrationTime = "00:00";
+      narrationTime = (widget.seconds / 60).floor().toString() + ":" + (widget.seconds % 60).toString();
     }
     setState(() {});
   }
