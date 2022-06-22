@@ -3,6 +3,7 @@ import '../../../utils/_config.dart';
 import '../../../utils/_log.dart';
 import '../../../model/_user.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:flutter_beep/flutter_beep.dart';
 import 'dart:async';
 
 class CountDown extends StatefulWidget {
@@ -41,6 +42,7 @@ class CountDownState extends State<CountDown> {
       narrationTime = minutes.toString().padLeft(2, "0") + ":" + seconds.toString().padLeft(2, "0");
       log.debug("CountDown | decrementCounter()", narrationTime);
     } else {
+      if (currentCount == 0) FlutterBeep.beep();
       narrationTime = (widget.seconds / 60).floor().toString().padLeft(2, "0") + ":" + (widget.seconds % 60).toString().padLeft(2, "0");
     }
     setState(() {});
