@@ -32,6 +32,7 @@ class CountDownState extends State<CountDown> {
   void initState() {
     super.initState();
     currentCount = widget.seconds;
+    narrationTime = (widget.seconds / 60).floor().toString().padLeft(2, "0") + ":" + (widget.seconds % 60).toString().padLeft(2, "0");
   }
 
   void decrementCounter() {
