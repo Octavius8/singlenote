@@ -16,7 +16,7 @@ import 'components/_primaryWidgetArea.dart';
 import 'utils/_config.dart';
 import 'components/_noteTextArea.dart';
 import 'package:crypto/crypto.dart' as crypto;
-import 'dart:convert';
+import 'dart:convert' show utf8;
 
 //widgets
 
@@ -65,6 +65,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   //Note
   TextEditingController _noteTextController = new TextEditingController();
   TextEditingController _journalTextController = new TextEditingController();
+  TextEditingController _passwordController = new TextEditingController();
   late final AnimationController _animationController;
   Note note = new Note(Config.OVI_NOTE_ID);
   String noteString = "";
@@ -85,9 +86,17 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     setNoteString();
   }
 
-  generateMd5(String data) {
-    var content = UTF8.encode(data);
+  String md5(String input) {
     var md5 = crypto.md5;
+    return md5.convert(utf8.encode(input)).toString();
+  }
+
+  bool validatePassword() {
+    String password = passwordController.text;
+    if (md5(password) == user.data?['password']) {
+      return true;
+    }
+    return false;
   }
 
   void setNote(note_id) {
@@ -242,9 +251,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             GestureDetector(
                                 onTap: () {
                                   //_authenticateWithBiometrics();
-                                  if (_lockedScreen)
-                                    _lockedScreen = false;
-                                  else
+                                  if (_lockedScreen) {
+                                    if (validatePassword()) {
+                                      _lockedScreen = false;
+                                      passwordController.text = "";
+                                    }
+                                  } else
                                     _lockedScreen = true;
                                   setState(() {});
                                 },
