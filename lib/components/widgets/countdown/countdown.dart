@@ -62,7 +62,7 @@ class CountDownState extends State<CountDown> {
             width: Config.WIDGET_WIDTH,
             height: Config.WIDGET_HEIGHT,
             child: Column(children: [
-              Text(widget.narration, size: Config.WIDGET_FONTSIZE),
+              Text(widget.narration, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE)),
               Expanded(flex: 2, child: Icon(Icons.av_timer, size: Config.WIDGET_ICONSIZE)),
               Text(narrationTime, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE))
             ])));
