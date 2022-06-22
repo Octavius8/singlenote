@@ -7,6 +7,7 @@ class Config {
   static final Color COLOR_TEXT = Color(0xFF242728);
   static final Color COLOR_HYPERLINK = Colors.blue;
   static final Color COLOR_LIGHTGRAY = Color(0xFF898989);
+  static final Color COLOR_DARKGRAY = Color(0xFF888888);
 
   //Toast Narrations
   static final String TOAST_NARRATION_EDITMODE = "Edit Mode";
