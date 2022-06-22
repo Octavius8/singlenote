@@ -72,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   bool _anistart = true;
   bool _noteEditMode = false;
   User user = new User();
+  bool correctPassword = true;
   //authentication
 
   //App Wide
@@ -255,6 +256,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                     if (validatePassword()) {
                                       _lockedScreen = false;
                                       _passwordController.text = "";
+                                      correctPassword = true;
+                                    } else {
+                                      //Incorrect password
+                                      correctPassword = false;
                                     }
                                   } else
                                     _lockedScreen = true;
