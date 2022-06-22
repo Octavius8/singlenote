@@ -37,7 +37,7 @@ class CountDownState extends State<CountDown> {
     if (currentCount > 0 && countingDown) {
       currentCount = currentCount - 1;
       int minutes = (currentCount / 60).floor();
-      int seconds = widget.seconds - (minutes / 60).floor();
+      int seconds = currentCount - (minutes / 60).floor();
       narrationTime = minutes.toString() + ":" + seconds.toString();
       log.debug("CountDown | decrementCounter()", narrationTime);
       setState(() {});
