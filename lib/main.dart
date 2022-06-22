@@ -94,7 +94,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   bool validatePassword() {
     String password = _passwordController.text;
-    log.debug("", "User password is " + md5(password));
     if (md5(password) == user.data?['password']) {
       return true;
     }
