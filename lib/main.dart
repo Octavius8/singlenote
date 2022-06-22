@@ -291,6 +291,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     ),
                     //End of Container
                   ),
+
+                  Positioned(left: 0, bottom: 10, child: Icon(Icons.settings))
                 ],
               ),
             ),
