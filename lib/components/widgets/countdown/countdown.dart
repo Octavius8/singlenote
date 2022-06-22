@@ -40,8 +40,10 @@ class CountDownState extends State<CountDown> {
       int seconds = currentCount - (minutes / 60).floor();
       narrationTime = minutes.toString() + ":" + seconds.toString();
       log.debug("CountDown | decrementCounter()", narrationTime);
-      setState(() {});
+    } else {
+      narrationTime = "00:00";
     }
+    setState(() {});
   }
 
   @override
@@ -60,7 +62,7 @@ class CountDownState extends State<CountDown> {
             width: Config.WIDGET_WIDTH,
             height: Config.WIDGET_HEIGHT,
             child: Column(children: [
-              Text(widget.narration),
+              Text(widget.narration, size: Config.WIDGET_FONTSIZE),
               Expanded(flex: 2, child: Icon(Icons.av_timer, size: Config.WIDGET_ICONSIZE)),
               Text(narrationTime, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE))
             ])));
