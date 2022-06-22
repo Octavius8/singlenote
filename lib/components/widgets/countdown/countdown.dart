@@ -23,16 +23,40 @@ class CountDown extends StatefulWidget {
 class CountDownState extends State<CountDown> {
   bool countingDown = false;
   int currentCount = 0;
+  String narrationTime = "";
+
+  @override
+  void initState() {
+    super.initState();
+    currentCount = widget.seconds;
+    Timer.periodic(Duration(seconds: 3), (Timer t) => decrementCounter());
+  }
+
+  void decrementCounter() {
+    if (currentCount > 0 && countingDown) {
+      currentCount -= 1;
+      double minutes = currentCount / 60;
+      double seconds = widget.seconds - (minutes / 60);
+      narrationTime = minutes.toString() + ":" + seconds.toString();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+        onTap: () {
+          if (countingDown)
+            countingDown = false;
+          else
+            countingDown = true;
+          setState(() {});
+        },
         child: Container(
             width: Config.WIDGET_WIDTH,
             height: Config.WIDGET_HEIGHT,
             child: Column(children: [
-              Expanded(flex: 2, child: Icon(Icons.av_timer, size: Config.WIDGET_ICONSIZE)),
-              Text("Timer", style: TextStyle(fontSize: Config.WIDGET_FONTSIZE))
+              Expanded(flex: 2, child: countingDown ? Text(narrationTime) : Icon(Icons.av_timer, size: Config.WIDGET_ICONSIZE)),
+              Text(widget.narration, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE))
             ])));
   }
 }
