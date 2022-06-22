@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   }
 
   bool validatePassword() {
-    String password = passwordController.text;
+    String password = _passwordController.text;
     if (md5(password) == user.data?['password']) {
       return true;
     }
@@ -254,7 +254,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                   if (_lockedScreen) {
                                     if (validatePassword()) {
                                       _lockedScreen = false;
-                                      passwordController.text = "";
+                                      _passwordController.text = "";
                                     }
                                   } else
                                     _lockedScreen = true;
