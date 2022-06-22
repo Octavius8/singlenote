@@ -45,6 +45,7 @@ class CountDownState extends State<CountDown> {
     } else {
       timer?.cancel();
       log.debug("CountDown | decrementCounter()", "Beeping...");
+      FlutterBeep.playSysSound(41);
       narrationTime = (widget.seconds / 60).floor().toString().padLeft(2, "0") + ":" + (widget.seconds % 60).toString().padLeft(2, "0");
     }
     setState(() {});
