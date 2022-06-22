@@ -226,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                           width: double.infinity,
                           height: MediaQuery.of(context).size.height,
                           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                            Text("NOTE | 29", style: TextStyle(fontSize: 32, color: Color(0xFF888888))),
+                            _lockedScreen ? Text("NOTE | 29", style: TextStyle(fontSize: 32, color: Color(0xFF888888))) : SizedBox.shrink(),
                             //Text(_authorized),
                             GestureDetector(
                                 onTap: () {
