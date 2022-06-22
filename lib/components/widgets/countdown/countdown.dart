@@ -44,7 +44,7 @@ class CountDownState extends State<CountDown> {
       log.debug("CountDown | decrementCounter()", narrationTime);
     } else {
       if (currentCount == 0 && countingDown) {
-        log.debug("CountDown | decrementCounter() ", "beeping...");
+        log.debug("CountDown | decrementCounter() ", "Beeping...");
         FlutterBeep.beep();
         countingDown = false;
         timer?.cancel();
