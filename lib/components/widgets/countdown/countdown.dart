@@ -63,8 +63,8 @@ class CountDownState extends State<CountDown> {
             height: Config.WIDGET_HEIGHT,
             child: Column(children: [
               Text(widget.narration, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE)),
-              Expanded(flex: 2, child: Icon(Icons.av_timer, size: Config.WIDGET_ICONSIZE)),
-              Text(narrationTime, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE))
+              Expanded(flex: 2, child: Icon(Icons.av_timer, size: Config.WIDGET_ICONSIZE, color: countingDown ? Color(int.parse("FF" + widget.user.data?["color_highlight"], radix: 16)) : null)),
+              Text(narrationTime, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE, color: countingDown ? Color(int.parse("FF" + widget.user.data?["color_highlight"], radix: 16)) : null))
             ])));
   }
 }
