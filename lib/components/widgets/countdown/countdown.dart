@@ -49,8 +49,10 @@ class CountDownState extends State<CountDown> {
         onTap: () {
           if (countingDown)
             countingDown = false;
-          else
+          else {
+            currentCount = widget.seconds;
             countingDown = true;
+          }
           setState(() {});
         },
         child: Container(
