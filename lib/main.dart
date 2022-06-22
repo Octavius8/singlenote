@@ -226,10 +226,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                           width: double.infinity,
                           height: MediaQuery.of(context).size.height,
                           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                            _lockedScreen ? Text("NOTE | 29", style: TextStyle(fontSize: 32, color: Config.COLOR_DARKGRAY)) : SizedBox.shrink(),
+                            // _lockedScreen ? Text("NOTE | 29", style: TextStyle(fontSize: 32, color: Config.COLOR_DARKGRAY)) : SizedBox.shrink(),
 
                             //Password
-                            SizedBox(width: 100, child: TextField(decoration: InputDecoration(fillColor: Config.COLOR_DARKGRAY, filled: true))),
+                            SizedBox(width: 130, child: TextField(decoration: InputDecoration(fillColor: Config.COLOR_DARKGRAY, filled: true))),
 
                             //Text(_authorized),
                             GestureDetector(
