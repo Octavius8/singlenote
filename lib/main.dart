@@ -87,17 +87,17 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     setNoteString();
   }
 
-  String md5(String input) {
+  String getMd5(String input) {
     var md5 = crypto.md5;
     return md5.convert(utf8.encode(input)).toString();
   }
 
   bool validatePassword() {
     String password = _passwordController.text;
-    if (md5(password) == user.data?['password']) {
+    if (getMd5(password) == user.data?['password']) {
       return true;
     }
-    log.debug("Pass", "Wrong password. Password entered is " + md5(password) + " instead of" + user.data?['password']);
+    log.debug("Pass", "Wrong password. Password entered is " + getMd5(password) + " instead of" + user.data?['password']);
     return false;
   }
 
