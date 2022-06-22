@@ -15,6 +15,8 @@ import 'model/_user.dart';
 import 'components/_primaryWidgetArea.dart';
 import 'utils/_config.dart';
 import 'components/_noteTextArea.dart';
+import 'package:crypto/crypto.dart' as crypto;
+import 'dart:convert';
 
 //widgets
 
@@ -81,6 +83,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     _animationController.forward();
     setNote(Config.OVI_NOTE_ID);
     setNoteString();
+  }
+
+  generateMd5(String data) {
+    var content = UTF8.encode(data);
+    var md5 = crypto.md5;
   }
 
   void setNote(note_id) {
