@@ -53,6 +53,7 @@ class CountDownState extends State<CountDown> {
           if (countingDown) {
             countingDown = false;
             timer?.cancel();
+            decrementCounter();
           } else {
             currentCount = widget.seconds;
             countingDown = true;
