@@ -97,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     if (md5(password) == user.data?['password']) {
       return true;
     }
+    log.debug("Pass","Wrong password. Password entered is "+md5(password)+" instead of" + user.data?['password'] )
     return false;
   }
 
