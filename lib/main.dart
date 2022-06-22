@@ -230,6 +230,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     ], index: _menuIndex)
                   ]),
 
+                  //Settings Icon
+                  Positioned(left: 0, bottom: 20, child: Padding(padding: EdgeInsets.only(left: 8), child: Icon(Icons.settings, color: Config.COLOR_LIGHTGRAY, size: 20))),
+
                   //Fingerprint Scanner
                   AnimatedPositioned(
                     duration: Duration(milliseconds: 500),
@@ -291,8 +294,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     ),
                     //End of Container
                   ),
-
-                  Positioned(left: 0, bottom: 20, child: Padding(padding: EdgeInsets.only(left: 8), child: Icon(Icons.settings, color: Config.COLOR_LIGHTGRAY, size: 20)))
                 ],
               ),
             ),
