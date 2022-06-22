@@ -280,7 +280,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                             : Colors.white,
                                         size: _lockedScreen ? 48 : 12,
                                       )),
-                                  decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: Color(0xFF888888))),
+                                  decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: correctPassword ? Config.COLOR_DARKGRAY : Colors.red)),
                                   //: Lottie.asset('assets/fingerprint.json'),
                                 ))
                           ]),
