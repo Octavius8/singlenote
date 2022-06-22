@@ -229,7 +229,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             // _lockedScreen ? Text("NOTE | 29", style: TextStyle(fontSize: 32, color: Config.COLOR_DARKGRAY)) : SizedBox.shrink(),
 
                             //Password
-                            SizedBox(width: 130, child: TextField(decoration: InputDecoration(fillColor: Config.COLOR_DARKGRAY, filled: true))),
+                            Padding(padding: EdgeInsets.symmetric(vertical: 20), child: SizedBox(width: 130, child: TextField(obscureText: true, autocorrect: false, textAlign: TextAlign.center, style: TextStyle(color: Colors.white), decoration: InputDecoration(fillColor: Config.COLOR_DARKGRAY, filled: true)))),
 
                             //Text(_authorized),
                             GestureDetector(
