@@ -231,7 +231,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   ]),
 
                   //Settings Icon
-                  Positioned(left: 0, bottom: 20, child: Padding(padding: EdgeInsets.only(left: 8), child: Icon(Icons.settings, color: Config.COLOR_LIGHTGRAY, size: 20))),
+                  //Positioned(left: 0, bottom: 20, child: Padding(padding: EdgeInsets.only(left: 8), child: Icon(Icons.settings, color: Config.COLOR_LIGHTGRAY, size: 20))),
 
                   //Fingerprint Scanner
                   AnimatedPositioned(

@@ -5,6 +5,7 @@ import '../../../model/_user.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:flutter_beep/flutter_beep.dart';
 import 'dart:async';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class CountDown extends StatefulWidget {
   int index;
@@ -47,6 +48,8 @@ class CountDownState extends State<CountDown> {
       countingDown = false;
       log.debug("CountDown | decrementCounter()", "Beeping...");
       FlutterBeep.playSysSound(41);
+      var _type = FeedbackType.impact;
+      Vibrate.feedback(_type);
       narrationTime = (widget.seconds / 60).floor().toString().padLeft(2, "0") + ":" + (widget.seconds % 60).toString().padLeft(2, "0");
     }
     setState(() {});
