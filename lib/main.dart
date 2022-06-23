@@ -264,7 +264,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                             obscureText: true,
                                             autocorrect: false,
                                             textAlign: TextAlign.center,
-                                            style: TextStyle(color: Config.COLOR_DARKGRAY, letterSpacing: 14),
+                                            style: TextStyle(color: correctPassword ? Config.COLOR_DARKGRAY : Colors.red, letterSpacing: 14),
                                             decoration: InputDecoration(
                                                 focusedBorder: UnderlineInputBorder(
                                                   borderSide: BorderSide(color: correctPassword ? Config.COLOR_DARKGRAY : Colors.red),
