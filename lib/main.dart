@@ -267,7 +267,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                             style: TextStyle(color: Config.COLOR_DARKGRAY, letterSpacing: 14),
                                             decoration: InputDecoration(
                                                 focusedBorder: UnderlineInputBorder(
-                                                  borderSide: BorderSide(color: Config.COLOR_DARKGRAY),
+                                                  borderSide: BorderSide(color: correctPassword ? Config.COLOR_DARKGRAY : Colors.red),
                                                 ),
                                                 /*hintText: "****", hintStyle: TextStyle(color: Colors.white),*/ counterText: "" /*, enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0), borderSide: BorderSide(color: Config.COLOR_DARKGRAY))*/,
                                                 fillColor: Colors.white,
