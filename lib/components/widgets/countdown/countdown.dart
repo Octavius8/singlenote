@@ -56,6 +56,7 @@ class CountDownState extends State<CountDown> {
         "name": "Google UK English Female",
         "locale": "en-GB"
       });
+      flutterTts.setPitch(0.3);
       var value = await flutterTts.speak("Countdown Complete");
 
       var _type = FeedbackType.impact;
