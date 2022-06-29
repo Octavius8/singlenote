@@ -8,8 +8,8 @@ import '../utils/_log.dart';
 class User {
   Log log = new Log();
   Map<String, dynamic>? data;
-  //String testContent = '{ "name": "Boss","password":"d93591bdf7860e1e4ee2fca799911215","color_highlight":"62d9b5","primaryWidgets": [{"type": "international_clock", "city": "Lusaka" },{ "type": "countdown", "narration":"Coffee", "seconds":"10","voicePrompt":"false"},{ "type": "countdown", "narration":"Coffee", "seconds":"240"},{ "type": "countdown", "narration":"Timer", "seconds":"300"}]}';
-  String testContent = '{"name": "Boss","password":"d93591bdf7860e1e4ee2fca799911215", "color_highlight": "62d9b5", "note":"", "Journal":"", "primaryWidgets": [{ "type": "international_clock", "city": "Lusaka" }, { "type": "international_clock", "city": "Mumbai" }, { "type": "white_noise", "audioFile": "ship", "narration": "White Noise" }, { "type": "countdown", "narration": "Coffee", "seconds": "240","voicePrompt":"true"}, { "type": "international_clock", "city": "Kyoto" }] }';
+  String testContent = '{ "name": "Boss","password":"d93591bdf7860e1e4ee2fca799911215","color_highlight":"62d9b5","primaryWidgets": [{"type": "international_clock", "city": "Lusaka" },{ "type": "countdown", "narration":"Coffee", "seconds":"10","voicePrompt":"false"},{ "type": "countdown", "narration":"Coffee", "seconds":"240"},{ "type": "countdown", "narration":"Timer", "seconds":"300"}]}';
+  //String testContent = '{"name": "Boss","password":"d93591bdf7860e1e4ee2fca799911215", "color_highlight": "62d9b5", "note":"", "Journal":"", "primaryWidgets": [{ "type": "international_clock", "city": "Lusaka" }, { "type": "international_clock", "city": "Mumbai" }, { "type": "white_noise", "audioFile": "ship", "narration": "White Noise" }, { "type": "countdown", "narration": "Coffee", "seconds": "240","voicePrompt":"true"}, { "type": "international_clock", "city": "Kyoto" }] }';
   User() {
     log.debug("User | Constructor", "Starting Constructor");
     readUserData();
