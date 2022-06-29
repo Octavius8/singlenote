@@ -226,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       "NOTE",
                       "JOURNAL",
                       "TRACKERS",
-                      "TOOLKIT"
+                      "ASSISTANT"
                     ], index: _menuIndex)
                   ]),
 

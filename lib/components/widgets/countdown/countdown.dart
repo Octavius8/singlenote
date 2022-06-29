@@ -54,6 +54,7 @@ class CountDownState extends State<CountDown> {
       //Text to Speech
       if (widget.voicePrompt) {
         late FlutterTts flutterTts = new FlutterTts();
+        flutterTts.setSpeechRate(0.5);
         flutterTts.setVoice({
           "name": "Google UK English Female",
           "locale": "en-GB"
