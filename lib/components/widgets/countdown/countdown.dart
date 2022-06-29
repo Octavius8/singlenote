@@ -52,8 +52,10 @@ class CountDownState extends State<CountDown> {
       //Text to Speech
 
       late FlutterTts flutterTts = new FlutterTts();
-      var voices = await flutterTts.getVoices;
-      log.debug("CountDown | decrementCounter()", "Voices: " + voices.toString());
+      flutterTts.setVoice({
+        "name": "Google UK English Female",
+        "locale": "en-GB"
+      });
       var value = await flutterTts.speak("Countdown Complete");
 
       var _type = FeedbackType.impact;
