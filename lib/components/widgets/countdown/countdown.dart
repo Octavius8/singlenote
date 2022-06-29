@@ -13,7 +13,9 @@ class CountDown extends StatefulWidget {
   String narration;
   int seconds;
   User user;
-  CountDown({this.index = 0, this.narration = "Count Down", this.seconds = 0, required this.user});
+  bool voicePrompt;
+
+  CountDown({this.index = 0, this.narration = "Count Down", this.seconds = 0, required this.user, this.voicePrompt = false});
 
   @override
   CountDownState createState() => CountDownState();
@@ -50,14 +52,15 @@ class CountDownState extends State<CountDown> {
       log.debug("CountDown | decrementCounter()", "Beeping...");
       FlutterBeep.playSysSound(41);
       //Text to Speech
-
-      late FlutterTts flutterTts = new FlutterTts();
-      flutterTts.setVoice({
-        "name": "Google UK English Female",
-        "locale": "en-GB"
-      });
-      flutterTts.setPitch(1.0);
-      var value = await flutterTts.speak("Excuse me sir, " + widget.narration + " countdown Complete");
+      if (widget.voicePrompt) {
+        late FlutterTts flutterTts = new FlutterTts();
+        flutterTts.setVoice({
+          "name": "Google UK English Female",
+          "locale": "en-GB"
+        });
+        flutterTts.setPitch(1.0);
+        var value = await flutterTts.speak("Excuse me sir. " + widget.narration + " countdown Complete.");
+      }
 
       var _type = FeedbackType.impact;
       Vibrate.feedback(_type);
