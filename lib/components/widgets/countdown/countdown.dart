@@ -6,6 +6,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:flutter_beep/flutter_beep.dart';
 import 'dart:async';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class CountDown extends StatefulWidget {
   int index;
@@ -36,7 +37,7 @@ class CountDownState extends State<CountDown> {
     narrationTime = (widget.seconds / 60).floor().toString().padLeft(2, "0") + ":" + (widget.seconds % 60).toString().padLeft(2, "0");
   }
 
-  void decrementCounter() {
+  void decrementCounter() async {
     if (currentCount > 0 && countingDown) {
       currentCount = currentCount - 1;
       int minutes = (currentCount / 60).floor();
@@ -48,6 +49,10 @@ class CountDownState extends State<CountDown> {
       countingDown = false;
       log.debug("CountDown | decrementCounter()", "Beeping...");
       FlutterBeep.playSysSound(41);
+      //Text to Speech
+      late FlutterTts flutterTts = new FlutterTts();
+      var value = await flutterTts.speak("Countdown Complete");
+
       var _type = FeedbackType.impact;
       Vibrate.feedback(_type);
       narrationTime = (widget.seconds / 60).floor().toString().padLeft(2, "0") + ":" + (widget.seconds % 60).toString().padLeft(2, "0");
