@@ -230,7 +230,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       duration: Duration(milliseconds: 500),
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
-                      bottom: _displaySettings ? 0 : -(MediaQuery.of(context).size.height),
+                      top: _displaySettings ? 0 : -(MediaQuery.of(context).size.height),
                       child: GestureDetector(
                           onTap: () {
                             _displaySettings = false;
