@@ -245,7 +245,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   AnimatedPositioned(
                       duration: Duration(milliseconds: 300),
                       height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width / 2,
+                      width: MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width / 3),
                       left: _displaySettings ? 0 : -(MediaQuery.of(context).size.width / 2),
                       child: Container(
                         decoration: BoxDecoration(color: Colors.white),
