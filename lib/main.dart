@@ -241,11 +241,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       duration: Duration(milliseconds: 500),
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
-                      left: _displaySettings ? 0 : -(MediaQuery.of(context).size.width / 2),
-                      child: Container(
-                        decoration: BoxDecoration(color: Color(0x77000000)),
-                        child: Text("Hey Nigger.."),
-                      )),
+                      left: _displaySettings ? 0 : -(MediaQuery.of(context).size.width),
+                      child: GestureDetector(
+                          onTap: () {
+                            _displaySettings = false;
+                            setState(() {});
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(color: Color(0x77000000)),
+                            child: Text("Hey Nigger.."),
+                          ))),
 
                   //Settings Menu
                   AnimatedPositioned(
