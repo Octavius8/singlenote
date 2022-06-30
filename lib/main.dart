@@ -58,6 +58,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   Log log = new Log();
   //LockedScreen
   bool _lockedScreen = true;
+  bool _displaySettings = false;
 
   //Menu
   int _menuIndex = 0;
@@ -230,8 +231,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     ], index: _menuIndex)
                   ]),
 
-                  //Settings Icon
-                  //Positioned(left: 0, bottom: 20, child: Padding(padding: EdgeInsets.only(left: 8), child: Icon(Icons.settings, color: Config.COLOR_LIGHTGRAY, size: 20))),
+                  //Settings
+                  AnimatedPositioned(
+                      duration: Duration(milliseconds: 500),
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width / 2,
+                      left: _displaySettings ? 0 : -(MediaQuery.of(context).size.width / 2),
+                      child: Container(
+                        decoration: BoxDecoration(color: Colors.white),
+                        child: Text("Hey Nigger.."),
+                      )),
 
                   //Fingerprint Scanner
                   AnimatedPositioned(
