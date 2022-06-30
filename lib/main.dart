@@ -224,17 +224,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             ])),
                       )),
 
-                  //Side Menu
-
-                  Column(children: [
-                    SideMenu(items: [
-                      "NOTE",
-                      "JOURNAL",
-                      "TRACKERS",
-                      "ASSISTANT"
-                    ], index: _menuIndex)
-                  ]),
-
                   //Settings
                   //Black screen
                   AnimatedPositioned(
@@ -262,6 +251,17 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         decoration: BoxDecoration(color: Colors.white),
                         child: Text("Hey Nigger.."),
                       )),
+
+                  //Side Menu
+
+                  Column(children: [
+                    SideMenu(items: [
+                      "NOTE",
+                      "JOURNAL",
+                      "TRACKERS",
+                      "ASSISTANT"
+                    ], index: _menuIndex)
+                  ]),
 
                   //Fingerprint Scanner
                   AnimatedPositioned(
