@@ -226,8 +226,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
                   //Settings
                   //Black screen
-                  AnimatedPositioned(
-                      duration: Duration(milliseconds: 300),
+                  Positioned(
+                      //duration: Duration(milliseconds: 300),
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
                       top: _displaySettings ? 0 : -(MediaQuery.of(context).size.height),
