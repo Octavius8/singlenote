@@ -176,8 +176,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                               Row(
                                 children: [
                                   //Widget Menu
-
-                                  Icon(Icons.more_vert, color: Config.COLOR_LIGHTGRAY),
+                                  GestureDetector(
+                                      onTap: () {
+                                        _displaySettings = true;
+                                        setState(() {});
+                                      },
+                                      child: Icon(Icons.more_vert, color: Config.COLOR_LIGHTGRAY)),
                                   //Primary Widget Area
                                   PrimaryWidgetArea(user: user),
 
