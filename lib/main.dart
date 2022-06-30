@@ -227,7 +227,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   //Settings
                   //Black screen
                   AnimatedPositioned(
-                      duration: Duration(milliseconds: 500),
+                      duration: Duration(milliseconds: 300),
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
                       top: _displaySettings ? 0 : -(MediaQuery.of(context).size.height),
@@ -243,7 +243,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
                   //Settings Menu
                   AnimatedPositioned(
-                      duration: Duration(milliseconds: 500),
+                      duration: Duration(milliseconds: 300),
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width / 2,
                       left: _displaySettings ? 0 : -(MediaQuery.of(context).size.width / 2),
