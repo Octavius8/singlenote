@@ -17,12 +17,12 @@ class PrimaryWidgetArea extends StatefulWidget {
 }
 
 class PrimaryWidgetAreaState extends State<PrimaryWidgetArea> {
-  UserWidgets? userWidget;
+  UserWidgetsModel? userWidgetsModel;
 
   @override
   void initState() {
     super.initState();
-    userWidget = new UserWidgets(user: widget.user);
+    userWidgetsModel = new UserWidgetsModel(user: widget.user);
   }
 
   Widget build(BuildContext context) {
@@ -31,14 +31,14 @@ class PrimaryWidgetAreaState extends State<PrimaryWidgetArea> {
         /*decoration: BoxDecoration(
             border: Border(
                 right: BorderSide(width: 1, color: Config.COLOR_))),*/
-        child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: Row(children: userWidget!.compileListOfWidgets())));
+        child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: Row(children: userWidgetsModel!.compileListOfWidgets())));
   }
 }
 
-class UserWidgets {
+class UserWidgetsModel {
   User user;
 
-  UserWidgets({required this.user});
+  UserWidgetsModel({required this.user});
 
   List<Widget> compileListOfWidgets() {
     List<Widget> finalList = [];

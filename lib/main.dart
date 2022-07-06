@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   bool _noteEditMode = false;
   User user = new User();
   bool correctPassword = true;
-  UserWidgets? userWidgets;
+  UserWidgetsModel? userWidgetsModel;
   //authentication
 
   //App Wide
@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     _animationController.reset();
     _animationController.forward();
     setNote(Config.OVI_NOTE_ID);
-    userWidgets = new UserWidgets(user: this.user);
+    userWidgetsModel = new UserWidgetsModel(user: this.user);
     setNoteString();
   }
 
@@ -255,7 +255,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         decoration: BoxDecoration(color: Colors.white),
                         child: Column(children: [
                           Text("Your Widgets"),
-                          Wrap(children: userWidgets!.compileListOfWidgets()),
+                          Wrap(children: userWidgetsModel!.compileListOfWidgets()),
                         ]),
                       )),
 
