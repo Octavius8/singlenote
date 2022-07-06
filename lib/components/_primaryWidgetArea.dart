@@ -68,7 +68,7 @@ class UserWidgetsModel {
     });
 
     //New Icon
-    finalList.add(Icon(Icons.add_box_outlined));
+    finalList.add(Icon(Icons.add_box_outlined, size: Config.Widget_WIDTH));
     return finalList;
   }
 }
