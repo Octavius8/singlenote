@@ -74,6 +74,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   bool _noteEditMode = false;
   User user = new User();
   bool correctPassword = true;
+  UserWidgets? userWidgets;
   //authentication
 
   //App Wide
@@ -85,6 +86,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     _animationController.reset();
     _animationController.forward();
     setNote(Config.OVI_NOTE_ID);
+    userWidgets = new UserWidgets(user: this.user);
     setNoteString();
   }
 
@@ -251,7 +253,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         margin: EdgeInsets.only(left: Config.MENU_WIDTH),
                         padding: EdgeInsets.all(Config.PADDING_DEFAULT),
                         decoration: BoxDecoration(color: Colors.white),
-                        child: Text("Your Widgets"),
+                        child: Column(children: [
+                          Text("Your Widgets"),
+                          Wrap(children: userWidgets!.compileListOfWidgets()),
+                        ]),
                       )),
 
                   //Side Menu

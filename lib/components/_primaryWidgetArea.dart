@@ -17,37 +17,51 @@ class PrimaryWidgetArea extends StatefulWidget {
 }
 
 class PrimaryWidgetAreaState extends State<PrimaryWidgetArea> {
+  UserWidgets? userWidget;
+
+  @override
+  void initState() {
+    super.initState();
+    userWidget = new UserWidgets(user: widget.user);
+  }
+
   Widget build(BuildContext context) {
     return Container(
         width: Config.WIDGET_NUMBER_TO_DISPLAY * Config.WIDGET_WIDTH,
         /*decoration: BoxDecoration(
             border: Border(
                 right: BorderSide(width: 1, color: Config.COLOR_))),*/
-        child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: Row(children: compileListOfWidgets())));
+        child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: Row(children: userWidget!.compileListOfWidgets())));
   }
+}
+
+class UserWidgets {
+  User user;
+
+  UserWidgets({required this.user});
 
   List<Widget> compileListOfWidgets() {
     List<Widget> finalList = [];
     int index = 0;
-    widget.user.data?['primaryWidgets'].forEach((minwidget) {
+    user.data?['primaryWidgets'].forEach((minwidget) {
       //International Clock Widgets
       if (minwidget["type"] == "international_clock") {
-        finalList.add(InternationalClock(city: minwidget["city"], user: widget.user));
+        finalList.add(InternationalClock(city: minwidget["city"], user: user));
       }
 
       //White Noise Widgets
       if (minwidget["type"] == "white_noise") {
-        finalList.add(WhiteNoise(user: widget.user, audioFile: minwidget["audioFile"], narration: minwidget["narration"]));
+        finalList.add(WhiteNoise(user: user, audioFile: minwidget["audioFile"], narration: minwidget["narration"]));
       }
 
       //Counter Widget
       if (minwidget["type"] == "counter") {
-        finalList.add(Counter(index: index, narration: minwidget["narration"], count: int.parse(minwidget["count"]), user: widget.user));
+        finalList.add(Counter(index: index, narration: minwidget["narration"], count: int.parse(minwidget["count"]), user: user));
       }
 
       //Count Down Widget
       if (minwidget["type"] == "countdown") {
-        finalList.add(CountDown(index: index, narration: minwidget["narration"], seconds: int.parse(minwidget["seconds"]), user: widget.user, voicePrompt: minwidget["voicePrompt"] == "true" ? true : false));
+        finalList.add(CountDown(index: index, narration: minwidget["narration"], seconds: int.parse(minwidget["seconds"]), user: user, voicePrompt: minwidget["voicePrompt"] == "true" ? true : false));
       }
 
       index++;
