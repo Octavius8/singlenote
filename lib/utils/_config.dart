@@ -9,6 +9,9 @@ class Config {
   static final Color COLOR_LIGHTGRAY = Color(0xFF898989);
   static final Color COLOR_DARKGRAY = Color(0xFF888888);
 
+  //Padding
+  static final double PADDING_DEFAULT = 10;
+
   //Toast Narrations
   static final String TOAST_NARRATION_EDITMODE = "Edit Mode";
   static final String TOAST_NARRATION_NOTESAVED = "Saved!";
