@@ -251,7 +251,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         margin: EdgeInsets.only(left: Config.MENU_WIDTH),
                         padding: EdgeInsets.all(Config.PADDING_DEFAULT),
                         decoration: BoxDecoration(color: Colors.white),
-                        child: Text("Hey Nigger.."),
+                        child: Text("Your Widgets"),
                       )),
 
                   //Side Menu
