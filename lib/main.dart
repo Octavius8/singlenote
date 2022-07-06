@@ -255,7 +255,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         decoration: BoxDecoration(color: Colors.white),
                         child: Column(children: [
                           Text("Your Widgets"),
-                          Wrap(children: userWidgetsModel!.compileListOfWidgets()),
+                          Wrap(spacing: 2, children: userWidgetsModel!.compileListOfWidgets()),
                         ]),
                       )),
 
