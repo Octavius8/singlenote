@@ -68,7 +68,7 @@ class UserWidgetsModel {
     });
 
     //New Icon
-    finalList.add(Icon(Icons.add_to_photos_rounded, size: Config.WIDGET_WIDTH / 2));
+    finalList.add(Padding(padding: EdgeInsets.all(Config.WIDGET_WIDTH / 4), child: Icon(Icons.add_to_photos_rounded, size: Config.WIDGET_WIDTH / 2)));
     return finalList;
   }
 }
