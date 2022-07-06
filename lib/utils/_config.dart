@@ -32,6 +32,7 @@ class Config {
   static final int MENU_NOTEINDEX = 0;
   static final int MENU_JOURNALINDEX = 1;
   static final int MENU_SHORTCUTSINDEX = 2;
+  static final double MENU_WIDTH = 40;
 
   //Logs
   static final bool LOG_DEBUG_ENABLED = true;

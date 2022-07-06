@@ -248,6 +248,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       width: MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width / 3),
                       left: _displaySettings ? 0 : -MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width / 3),
                       child: Container(
+                        margin: EdgeInsets.only(left: Config.MENU_WIDTH),
                         decoration: BoxDecoration(color: Colors.white),
                         child: Text("Hey Nigger.."),
                       )),
@@ -266,8 +267,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   //Fingerprint Scanner
                   AnimatedPositioned(
                     duration: Duration(milliseconds: 500),
-                    width: _lockedScreen ? MediaQuery.of(context).size.width : 40,
-                    height: _lockedScreen ? MediaQuery.of(context).size.height : 40,
+                    width: _lockedScreen ? MediaQuery.of(context).size.width : Config.MENU_WIDTH,
+                    height: _lockedScreen ? MediaQuery.of(context).size.height : Config.MENU_WIDTH,
                     bottom: _lockedScreen ? 0 : 50,
                     left: 0,
                     child: GestureDetector(
