@@ -254,7 +254,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         padding: EdgeInsets.all(Config.PADDING_DEFAULT),
                         decoration: BoxDecoration(color: Colors.white),
                         child: Column(children: [
-                          Text("Your Widgets"),
+                          Padding(padding: EdgeInsets.only(top: 10, bottom: 10), child: Text("Your Widgets")),
                           Wrap(spacing: 5, children: userWidgetsModel!.compileListOfWidgets()),
                         ]),
                       )),
