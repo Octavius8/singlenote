@@ -66,6 +66,9 @@ class UserWidgetsModel {
 
       index++;
     });
+
+    //New Icon
+    finalList.add(Icon(Icons.add_box_outlined));
     return finalList;
   }
 }
