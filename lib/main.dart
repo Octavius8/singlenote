@@ -248,7 +248,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       width: MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width / 3),
                       left: _displaySettings ? 0 : -MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width / 3),
                       child: Container(
-                        margin: EdgeInsets.only(left: Config.MENU_WIDTH + Config.PADDING_DEFAULT),
+                        margin: EdgeInsets.only(left: Config.MENU_WIDTH),
+                        padding: EdgeInsets.all(Config.PADDING_DEFAULT),
                         decoration: BoxDecoration(color: Colors.white),
                         child: Text("Hey Nigger.."),
                       )),
