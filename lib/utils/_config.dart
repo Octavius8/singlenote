@@ -26,7 +26,7 @@ class Config {
   static final String OVI_USER_ID = "1";
   static final String OVI_NOTE_ID = "590";
   static final String OVI_JOURNAL_ID = "591";
-  static final String OVI_SHORTCUTS_ID = "592";
+  static final String OVI_SHORTCUTS_ID = "860";
 
   //Weather API
   static final String WEATHER_KEY = "9bc6faa8afe24d1d992111550222405";

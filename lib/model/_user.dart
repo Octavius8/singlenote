@@ -9,7 +9,8 @@ class User {
   Log log = new Log();
   Map<String, dynamic>? data;
   //String testContent = '{ "name": "Boss","password":"d93591bdf7860e1e4ee2fca799911215","color_highlight":"62d9b5","primaryWidgets": [{"type": "international_clock", "city": "Lusaka" },{ "type": "countdown", "narration":"Coffee", "seconds":"10","voicePrompt":"true"},{ "type": "countdown", "narration":"Coffee", "seconds":"240"},{ "type": "countdown", "narration":"Timer", "seconds":"300"}]}';
-  String testContent = '{"name": "Boss","password":"d93591bdf7860e1e4ee2fca799911215", "color_highlight": "62d9b5", "note":"", "Journal":"", "primaryWidgets": [{ "type": "international_clock", "city": "Lusaka" }, { "type": "international_clock", "city": "Mumbai" }, { "type": "white_noise", "audioFile": "ship", "narration": "White Noise" }, { "type": "countdown", "narration": "Coffee", "seconds": "300","voicePrompt":"false"}, { "type": "international_clock", "city": "Kyoto" }] }';
+  String testContent =
+      '{"name": "Boss","password":"d93591bdf7860e1e4ee2fca799911215", "color_highlight": "62d9b5", "note":"", "Journal":"", "primaryWidgets": [{ "type": "international_clock", "city": "Lusaka" }, { "type": "international_clock", "city": "Mumbai" }, { "type": "white_noise", "audioFile": "ship", "narration": "White Noise" }, { "type": "countdown", "narration": "Coffee", "seconds": "300","voicePrompt":"false"}, { "type": "international_clock", "city": "Kyoto" }, { "type": "white_noise", "audioFile": "forest", "narration": "Observatory" }] }';
   User() {
     log.debug("User | Constructor", "Starting Constructor");
     readUserData();
@@ -41,7 +42,8 @@ class User {
 
     try {
       if (!kIsWeb) {
-        log.debug(logPrefix, "This is not a browser. Proceeding to read file Data.");
+        log.debug(
+            logPrefix, "This is not a browser. Proceeding to read file Data.");
         final directory = await getApplicationSupportDirectory();
         String path = directory.path;
         //final file = await File('$path/userprofile.txt');
@@ -54,7 +56,8 @@ class User {
         data = json.decode(contents.trim());
         log.debug(logPrefix, "Test, name is " + data?['name']);
       } else {
-        log.debug(logPrefix, "This is a browser. Proceeding to load test data.");
+        log.debug(
+            logPrefix, "This is a browser. Proceeding to load test data.");
         contents = testContent;
         data = json.decode(contents.trim());
       }
