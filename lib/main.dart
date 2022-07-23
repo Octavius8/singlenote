@@ -225,11 +225,14 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                               setState(() {});
                                             }
                                           },
-                                          child: Icon(Icons.edit_note_rounded,
+                                          child: Icon(
+                                              _noteEditMode
+                                                  ? Icons.save_as
+                                                  : Icons.edit_note_rounded,
                                               color: _noteEditMode
                                                   ? Config.COLOR_LIGHTGRAY
                                                   : null,
-                                              size: 32)),
+                                              size: _noteEditMode ? 30 : 32)),
 
                                       //Save Button
                                     ],
