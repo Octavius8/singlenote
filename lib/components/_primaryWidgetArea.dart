@@ -31,7 +31,9 @@ class PrimaryWidgetAreaState extends State<PrimaryWidgetArea> {
         /*decoration: BoxDecoration(
             border: Border(
                 right: BorderSide(width: 1, color: Config.COLOR_))),*/
-        child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: Row(children: userWidgetsModel!.compileListOfWidgets())));
+        child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(children: userWidgetsModel!.compileListOfWidgets())));
   }
 }
 
@@ -51,24 +53,51 @@ class UserWidgetsModel {
 
       //White Noise Widgets
       if (minwidget["type"] == "white_noise") {
-        finalList.add(WhiteNoise(user: user, audioFile: minwidget["audioFile"], narration: minwidget["narration"]));
+        finalList.add(WhiteNoise(
+            user: user,
+            audioFile: minwidget["audioFile"],
+            narration: minwidget["narration"]));
       }
 
       //Counter Widget
       if (minwidget["type"] == "counter") {
-        finalList.add(Counter(index: index, narration: minwidget["narration"], count: int.parse(minwidget["count"]), user: user));
+        finalList.add(Counter(
+            index: index,
+            narration: minwidget["narration"],
+            count: int.parse(minwidget["count"]),
+            user: user));
       }
 
       //Count Down Widget
       if (minwidget["type"] == "countdown") {
-        finalList.add(CountDown(index: index, narration: minwidget["narration"], seconds: int.parse(minwidget["seconds"]), user: user, voicePrompt: minwidget["voicePrompt"] == "true" ? true : false));
+        finalList.add(CountDown(
+            index: index,
+            narration: minwidget["narration"],
+            seconds: int.parse(minwidget["seconds"]),
+            user: user,
+            voicePrompt: minwidget["voicePrompt"] == "true" ? true : false));
       }
 
       index++;
     });
 
     //New Icon
-    finalList.add(Draggable<String>(data: 'red', child: Padding(padding: EdgeInsets.all(Config.WIDGET_WIDTH / 3), child: Icon(Icons.add_to_photos_rounded, color: Color(int.parse("FF" + user.data?["color_highlight"], radix: 16)), size: Config.WIDGET_WIDTH / 4)), feedback: Padding(padding: EdgeInsets.all(Config.WIDGET_WIDTH / 3), child: Icon(Icons.add_to_photos_rounded, color: Color(int.parse("FF" + user.data?["color_highlight"], radix: 16)), size: Config.WIDGET_WIDTH / 4))));
+    finalList.add(Draggable<String>(
+        data: 'red',
+        child: Padding(
+            padding: EdgeInsets.all(Config.WIDGET_WIDTH / 3),
+            child: Icon(Icons.add_to_photos_rounded,
+                color: Color(int.parse(
+                    "FF" + (user.data?["color_highlight"] ?? "000000"),
+                    radix: 16)),
+                size: Config.WIDGET_WIDTH / 4)),
+        feedback: Padding(
+            padding: EdgeInsets.all(Config.WIDGET_WIDTH / 3),
+            child: Icon(Icons.add_to_photos_rounded,
+                color: Color(int.parse(
+                    "FF" + (user.data?["color_highlight"] ?? "000000"),
+                    radix: 16)),
+                size: Config.WIDGET_WIDTH / 4))));
     return finalList;
   }
 }

@@ -18,9 +18,14 @@ class NoteTextArea extends StatefulWidget {
   }
 }
 
+//State
 class NoteTextAreaState extends State<NoteTextArea> {
   bool _keyboardVisible = false;
   late StreamSubscription<bool> keyboardSubscription;
+  ScrollController _scrollControllerView = new ScrollController();
+  ScrollController _scrollControllerEdit = new ScrollController();
+  double currentScrollPosition = 0;
+
   Log log = new Log();
 
   //Copy/Upload Popup
@@ -29,25 +34,61 @@ class NoteTextAreaState extends State<NoteTextArea> {
   String _copyString = "";
   bool _copyPopupVisible = false;
 
-  void showCopyPopup(TapDownDetails details) {
-    log.info("NoteTextArea | showCopyPopup()", "Initial (Raw) Y value=" + details.globalPosition.dy.toString() + " | X value=" + details.globalPosition.dx.toString());
-    _copyPopupX = details.globalPosition.dx - 40;
-    _copyPopupY = details.globalPosition.dy - 110;
-    _copyPopupVisible = true;
-    if (_copyPopupY < 0) _copyPopupY = (_copyPopupY * -1) - 16;
-    if (_copyPopupX > MediaQuery.of(context).size.width - 175) _copyPopupX = MediaQuery.of(context).size.width - 175;
-    log.info("NoteTextArea | showCopyPopup()", "Y value=" + _copyPopupY.toString() + " | X value=" + _copyPopupX.toString());
-
-    setState(() {});
-  }
-
   @override
   void initState() {
     var keyboardVisibilityController = KeyboardVisibilityController();
     _keyboardVisible = keyboardVisibilityController.isVisible;
-    keyboardSubscription = keyboardVisibilityController.onChange.listen((bool visible) {
+    keyboardSubscription =
+        keyboardVisibilityController.onChange.listen((bool visible) {
       _keyboardVisible = visible;
     });
+
+    _scrollControllerEdit.addListener(editScrollListener);
+    _scrollControllerView.addListener(viewScrollListener);
+  }
+
+  @override
+  void dispose() {
+    _scrollControllerView.removeListener(viewScrollListener);
+    _scrollControllerEdit.removeListener(editScrollListener);
+    super.dispose();
+  }
+
+  void viewScrollListener() {
+    currentScrollPosition = _scrollControllerView.position.pixels + 80;
+    _scrollControllerEdit =
+        new ScrollController(initialScrollOffset: currentScrollPosition);
+    _scrollControllerEdit.addListener(editScrollListener);
+  }
+
+  void editScrollListener() {
+    currentScrollPosition = _scrollControllerEdit.position.pixels - 80;
+    _scrollControllerView =
+        new ScrollController(initialScrollOffset: currentScrollPosition);
+    _scrollControllerView.addListener(viewScrollListener);
+  }
+
+  void showCopyPopup(TapDownDetails details) {
+    log.info(
+        "NoteTextArea | showCopyPopup()",
+        "Initial (Raw) Y value=" +
+            details.globalPosition.dy.toString() +
+            " | X value=" +
+            details.globalPosition.dx.toString());
+    _copyPopupX = details.globalPosition.dx - 40;
+    _copyPopupY = details.globalPosition.dy - 110;
+    _copyPopupVisible = true;
+    if (_copyPopupY < 0) _copyPopupY = (_copyPopupY * -1) - 16;
+    if (_copyPopupX > MediaQuery.of(context).size.width - 175)
+      _copyPopupX = MediaQuery.of(context).size.width - 175;
+    log.info(
+        "NoteTextArea | showCopyPopup()",
+        "Y value=" +
+            _copyPopupY.toString() +
+            " | X value=" +
+            _copyPopupX.toString());
+
+    setState(() {});
   }
 
   void closePopups() {
@@ -68,19 +109,33 @@ class NoteTextAreaState extends State<NoteTextArea> {
       !widget.editMode
           ?
           //Viewing Screen
-          Container(width: double.infinity, padding: EdgeInsets.only(top: 10, left: 15, right: 10), height: MediaQuery.of(context).size.height - 100, child: SingleChildScrollView(child: RichText(text: TextSpan(style: TextStyle(color: Config.COLOR_PRIMARY), children: stringToTextSpanList(widget.textController.text)))))
+          Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(top: 10, left: 15, right: 10),
+              height: MediaQuery.of(context).size.height - 100,
+              child: SingleChildScrollView(
+                  controller: _scrollControllerView,
+                  child: RichText(
+                      text: TextSpan(
+                          style: TextStyle(color: Config.COLOR_PRIMARY),
+                          children: stringToTextSpanList(
+                              widget.textController.text)))))
           :
 
           //Editing Screen
           SingleChildScrollView(
               child: Container(
                   padding: EdgeInsets.only(top: 10, left: 15, right: 10),
-                  height: _keyboardVisible ? 400 : MediaQuery.of(context).size.height - 100,
+                  height: _keyboardVisible
+                      ? 400
+                      : MediaQuery.of(context).size.height - 100,
                   child: TextField(
                     decoration: null,
                     maxLines: null,
                     minLines: 60,
-                    style: TextStyle(fontSize: 13, color: Config.COLOR_LIGHTGRAY),
+                    scrollController: _scrollControllerEdit,
+                    style:
+                        TextStyle(fontSize: 13, color: Config.COLOR_LIGHTGRAY),
                     keyboardType: TextInputType.multiline,
                     controller: widget.textController,
                   ))),
@@ -115,23 +170,27 @@ class NoteTextAreaState extends State<NoteTextArea> {
                                   closePopups();
                                   toast("Openning ...");
                                 },
-                                child: Icon(Icons.open_in_browser, size: 18, color: Config.COLOR_LIGHTGRAY)))),
+                                child: Icon(Icons.open_in_browser,
+                                    size: 18, color: Config.COLOR_LIGHTGRAY)))),
                     Expanded(
                         child: Container(
                             child: GestureDetector(
                                 onTap: () {
-                                  Clipboard.setData(ClipboardData(text: _copyString));
+                                  Clipboard.setData(
+                                      ClipboardData(text: _copyString));
                                   closePopups();
                                   toast("Copied to Clipboard ... ");
                                 },
-                                child: Icon(Icons.copy, size: 18, color: Config.COLOR_LIGHTGRAY)))),
+                                child: Icon(Icons.copy,
+                                    size: 18, color: Config.COLOR_LIGHTGRAY)))),
                     Expanded(
                         child: Container(
                             child: GestureDetector(
                                 onTap: () {
                                   closePopups();
                                 },
-                                child: Icon(Icons.close, size: 18, color: Config.COLOR_LIGHTGRAY))))
+                                child: Icon(Icons.close,
+                                    size: 18, color: Config.COLOR_LIGHTGRAY))))
                   ])))
           : SizedBox.shrink(),
     ]);
@@ -176,7 +235,8 @@ class NoteTextAreaState extends State<NoteTextArea> {
             showCopyPopup(details);
           },
         text: word + " ",
-        style: TextStyle(fontWeight: FontWeight.bold, color: Config.COLOR_HYPERLINK));
+        style: TextStyle(
+            fontWeight: FontWeight.bold, color: Config.COLOR_HYPERLINK));
   }
 
   void _launchUrl(String _url) async {

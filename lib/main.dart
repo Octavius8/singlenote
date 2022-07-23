@@ -41,14 +41,15 @@ class MyApp extends StatelessWidget {
         // you want
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Clicker Counter Home Page'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  final String title;
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -168,6 +169,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           // center the children vertically; the main axis here is the vertical
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
+
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
@@ -205,7 +207,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                       //Spacer
                                       Expanded(flex: 1, child: Text("")),
 
-                                      //Reload
+                                      //Save
                                       GestureDetector(
                                           onTap: () async {
                                             if (_noteEditMode) {
@@ -490,28 +492,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               child: Column(children: menuItems)),
 
           //Assistant
-
-          GestureDetector(
-            onTap: () async {
-              String url = "https://telegram.me/Ovidbot";
-              print("launchingUrl: $url");
-              if (await canLaunch(url)) {
-                await launch(url);
-              }
-            },
-            child: Container(
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Config.COLOR_PRIMARY, width: 3)),
-                padding: EdgeInsets.all(2),
-                margin: EdgeInsets.only(top: 8, left: 2),
-                child: _lockedScreen
-                    ? SizedBox.shrink()
-                    : Image.asset('assets/img/support.png',
-                        width:
-                            16) //Icon(Icons.support_agent, color: Config.COLOR_PRIMARY, size: 20),
-                ),
-          )
         ]),
         //Selector
         AnimatedPositioned(
