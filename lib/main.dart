@@ -250,8 +250,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black,
-                                spreadRadius: 5,
-                                blurRadius: 7,
+                                spreadRadius: 2,
+                                blurRadius: 3,
                                 offset: Offset(0, 3), // changes position of shadow
                               ),
                             ],
