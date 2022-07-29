@@ -411,7 +411,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
     notesList.forEach((note) {
       String content = note.noteContent;
-      content = content.substring(0, 50).toString() + " ...";
+      content = content.substring(0, 80).toString() + " ...";
       finalList.add(GestureDetector(
           onTap: () {
             _currentView = Config.VIEW_SHOWNOTE;
@@ -426,6 +426,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             margin: EdgeInsets.only(top: 10),
             height: 100,
             padding: EdgeInsets.all(10),
+            clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Config.COLOR_PRIMARY,
