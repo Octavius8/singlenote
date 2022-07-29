@@ -238,13 +238,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     child: Container(
                       width: MediaQuery.of(context).size.width - (Config.MENU_WIDTH + 10),
                       height: MediaQuery.of(context).size.height - 120,
+                      padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(color: Config.COLOR_PRIMARY, borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0))),
                       child: Column(children: [
                         //Notes
                         Container(
                           width: double.infinity,
                           height: 50,
-                          padding: EdgeInsets.all(20),
                           decoration: BoxDecoration(
                             color: Colors.blue,
                             boxShadow: [
