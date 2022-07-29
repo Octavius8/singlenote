@@ -77,6 +77,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   User user = new User();
   bool correctPassword = true;
   UserWidgetsModel? userWidgetsModel;
+  List<Note>? notesList;
   //authentication
 
   //App Wide
@@ -90,6 +91,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     setNote(Config.OVI_NOTE_ID);
     userWidgetsModel = new UserWidgetsModel(user: this.user);
     setNoteString();
+    setNotesList();
   }
 
   String getMd5(String input) {
@@ -117,6 +119,20 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     noteString = await note.getNote();
     _noteTextController.text = noteString; // + "\nLog:\n" + log.logString;
     setState(() {});
+  }
+
+  void setNotesList() async {
+    Note note1 = new Note(Config.OVI_NOTE_ID);
+    note1.getNote();
+    notesList?.add(note1);
+
+    Note note2 = new Note(Config.OVI_JOURNAL_ID);
+    note2.getNote();
+    notesList?.add(note2);
+
+    Note note3 = new Note(Config.OVI_SHORTCUTS_ID);
+    note2.getNote();
+    notesList?.add(note2);
   }
 
   @override
@@ -230,9 +246,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       )),
 
                   //Note LIst
-                  Positioned(
+                  AnimatedPositioned(
                     top: 120,
                     right: 0,
+                    duration: Duration(milliseconds: 500),
                     width: MediaQuery.of(context).size.width - (Config.MENU_WIDTH + 10),
                     height: MediaQuery.of(context).size.height - 120,
                     child: Container(
