@@ -246,6 +246,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                           height: 50,
                           padding: EdgeInsets.all(20),
                           decoration: BoxDecoration(
+                            color: Colors.blue,
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.5),
