@@ -16,6 +16,10 @@ class Config {
   static final String TOAST_NARRATION_EDITMODE = "Edit Mode";
   static final String TOAST_NARRATION_NOTESAVED = "Saved!";
 
+  // Screen View Mode
+  static final int VIEW_LISTNOTES = 0;
+  static final int VIEW_SHOWNOTE = 1;
+
   //Cities
   static final String MAINCITY = "Lusaka";
   static final String ALTCITY1 = "Mumbai";

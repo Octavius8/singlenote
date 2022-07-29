@@ -78,6 +78,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   bool correctPassword = true;
   UserWidgetsModel? userWidgetsModel;
   Future<List<Widget>>? widgetsListNotes;
+  int _currentView = Config.VIEW_LISTNOTES;
   //authentication
 
   //App Wide
@@ -234,7 +235,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   //Note LIst
                   AnimatedPositioned(
                     top: 120,
-                    right: 0,
+                    right: _currentView == Config.VIEW_LISTNOTES ? 0 : -MediaQuery.of(context).size.width,
                     duration: Duration(milliseconds: 500),
                     width: MediaQuery.of(context).size.width - (Config.MENU_WIDTH + 10),
                     height: MediaQuery.of(context).size.height - 120,
@@ -426,8 +427,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               ),
             ]),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text("Title:" + note1.noteTitle, style: TextStyle(color: Colors.white)),
-          Text(note1.noteContent.substring(0, 20), style: TextStyle(color: Config.COLOR_LIGHTGRAY))
+          Text("Title:" + note.noteTitle, style: TextStyle(color: Colors.white)),
+          Text(note.noteContent.substring(0, 20) + " ...", style: TextStyle(color: Config.COLOR_LIGHTGRAY))
         ]),
       ));
     });
