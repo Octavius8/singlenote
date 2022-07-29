@@ -463,35 +463,35 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     double identifierLocation = (((index + 1) * (menuHeight / itemList.length.round()).toDouble()) - ((menuHeight / itemList.length.round()).toDouble()) / 2) - (index * 20);
 
     itemList.asMap().forEach((itemIndex, itemName) {
-      menuItems.add(Container(
-          padding: EdgeInsets.only(right: 5),
-          height: (menuHeight / itemList.length.round()).toDouble() - 10,
-          width: 40,
-          child: Align(
-              alignment: Alignment.center,
-              child: RotatedBox(
-                  quarterTurns: -1,
-                  child: GestureDetector(
-                      onTap: () {
-                        String logPrefix = "SideMenu | onTap()";
-                        String noteID = "";
+      menuItems.add(GestureDetector(
+          onTap: () {
+            String logPrefix = "SideMenu | onTap()";
+            String noteID = "";
 
-                        if (itemIndex == Config.MENU_NOTEINDEX) {
-                          _currentView = Config.VIEW_LISTNOTES;
-                          noteID = Config.OVI_NOTE_ID;
-                          widgetsListNotes = widgetListNotes();
-                        }
-                        if (itemIndex == Config.MENU_JOURNALINDEX) noteID = Config.OVI_JOURNAL_ID;
-                        if (itemIndex == Config.MENU_SHORTCUTSINDEX) noteID = Config.OVI_SHORTCUTS_ID;
+            if (itemIndex == Config.MENU_NOTEINDEX) {
+              _currentView = Config.VIEW_LISTNOTES;
+              noteID = Config.OVI_NOTE_ID;
+              widgetsListNotes = widgetListNotes();
+            }
+            if (itemIndex == Config.MENU_JOURNALINDEX) noteID = Config.OVI_JOURNAL_ID;
+            if (itemIndex == Config.MENU_SHORTCUTSINDEX) noteID = Config.OVI_SHORTCUTS_ID;
 
-                        log.info(logPrefix, "_menuIndex=$_menuIndex, noteID=$noteID");
-                        setNote(noteID);
-                        setNoteString();
+            log.info(logPrefix, "_menuIndex=$_menuIndex, noteID=$noteID");
+            setNote(noteID);
+            setNoteString();
 
-                        _noteEditMode = false;
-                        _menuIndex = itemIndex;
-                        setState(() {});
-                      },
+            _noteEditMode = false;
+            _menuIndex = itemIndex;
+            setState(() {});
+          },
+          child: Container(
+              padding: EdgeInsets.only(right: 5),
+              height: (menuHeight / itemList.length.round()).toDouble() - 10,
+              width: 40,
+              child: Align(
+                  alignment: Alignment.center,
+                  child: RotatedBox(
+                      quarterTurns: -1,
                       child: Text(
                         itemName,
                         style: TextStyle(fontSize: 12, color: itemIndex == index ? Colors.white : Color(0xFFbbbbbb)),
