@@ -396,19 +396,22 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
     Note note1 = new Note(Config.OVI_NOTE_ID);
     String note1text = await note1.getNote();
+    note1.noteContent = note1text;
     notesList.add(note1);
 
     Note note2 = new Note(Config.OVI_JOURNAL_ID);
     String note2text = await note2.getNote();
+    note2.noteContent = note2text;
     notesList.add(note2);
 
     Note note3 = new Note(Config.OVI_SHORTCUTS_ID);
     String note3text = await note3.getNote();
+    note3.noteContent = note3text;
     notesList.add(note3);
 
     notesList.forEach((note) {
-      String content = note1text;
-      content = content.substring(0, 50).toString() + " ...";
+      String content = note.noteContent;
+      content = content.substring(0, 70).toString() + " ...";
       finalList.add(GestureDetector(
           onTap: () {
             _currentView = Config.VIEW_SHOWNOTE;
