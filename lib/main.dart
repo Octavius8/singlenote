@@ -252,7 +252,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                   AsyncSnapshot<List<Widget>> snapshot,
                                 ) {
                                   if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) return Column(children: snapshot.data ?? []);
-                                  if (snapshot.connectionState == ConnectionState.waiting) return SizedBox(width: 50, height: 50, child: CircularProgressIndicator(color: Colors.white));
+                                  if (snapshot.connectionState == ConnectionState.waiting) return Container(width: 50, height: 50, child: CircularProgressIndicator(color: Colors.white));
                                   return Text("");
                                 }))),
                   ),
@@ -443,9 +443,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     offset: Offset(0, 3), // changes position of shadow
                   ),
                 ]),
-            child: Wrap(children: [
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(note.noteTitle, style: TextStyle(color: Colors.white)),
-              Text(content, style: TextStyle(color: Config.COLOR_LIGHTGRAY))
+              Wrap(children: [
+                Text(content, style: TextStyle(color: Config.COLOR_LIGHTGRAY))
+              ])
             ]),
           )));
     });
