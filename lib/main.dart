@@ -77,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   User user = new User();
   bool correctPassword = true;
   UserWidgetsModel? userWidgetsModel;
-  List<Note>? notesList;
+  Future<List<Widget>>? widgetsListNotes;
   //authentication
 
   //App Wide
@@ -91,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     setNote(Config.OVI_NOTE_ID);
     userWidgetsModel = new UserWidgetsModel(user: this.user);
     setNoteString();
-    setNotesList();
+    widgetsListNotes = widgetListNotes();
   }
 
   String getMd5(String input) {
@@ -119,20 +119,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     noteString = await note.getNote();
     _noteTextController.text = noteString; // + "\nLog:\n" + log.logString;
     setState(() {});
-  }
-
-  void setNotesList() async {
-    Note note1 = new Note(Config.OVI_NOTE_ID);
-    note1.getNote();
-    notesList?.add(note1);
-
-    Note note2 = new Note(Config.OVI_JOURNAL_ID);
-    note2.getNote();
-    notesList?.add(note2);
-
-    Note note3 = new Note(Config.OVI_SHORTCUTS_ID);
-    note2.getNote();
-    notesList?.add(note2);
   }
 
   @override
@@ -253,33 +239,19 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     width: MediaQuery.of(context).size.width - (Config.MENU_WIDTH + 10),
                     height: MediaQuery.of(context).size.height - 120,
                     child: Container(
-                      width: MediaQuery.of(context).size.width - (Config.MENU_WIDTH + 10),
-                      height: MediaQuery.of(context).size.height - 120,
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(color: Config.COLOR_PRIMARY, borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0))),
-                      child: Column(children: [
-                        //Notes
-                        Container(
-                          width: double.infinity,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Config.COLOR_PRIMARY,
-                            border: Border.all(
-                              color: Config.COLOR_LIGHTGRAY,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black,
-                                spreadRadius: 2,
-                                blurRadius: 3,
-                                offset: Offset(0, 3), // changes position of shadow
-                              ),
-                            ],
-                          ),
-                        )
-                      ]),
-                    ),
+                        width: MediaQuery.of(context).size.width - (Config.MENU_WIDTH + 10),
+                        height: MediaQuery.of(context).size.height - 120,
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(color: Config.COLOR_PRIMARY, borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0))),
+                        child: FutureBuilder<List<Widget>>(
+                            future: widgetsListNotes,
+                            builder: (
+                              BuildContext context,
+                              AsyncSnapshot<List<Widget>> snapshot,
+                            ) {
+                              if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) return Column(children: snapshot.data);
+                              return Text("");
+                            })),
                   ),
 
                   //Settings
@@ -414,6 +386,50 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         ),
       ),
     );
+  }
+
+//Notes List Widget
+  Future<List<Widget>> widgetListNotes() async {
+    List<Widget> finalList = [];
+    List<Note> notesList = [];
+
+    Note note1 = new Note(Config.OVI_NOTE_ID);
+    await note1.getNote();
+    notesList.add(note1);
+
+    Note note2 = new Note(Config.OVI_JOURNAL_ID);
+    await note2.getNote();
+    notesList.add(note2);
+
+    Note note3 = new Note(Config.OVI_SHORTCUTS_ID);
+    await note2.getNote();
+    notesList.add(note2);
+
+    notesList.forEach((note) {
+      finalList.add(Container(
+        width: double.infinity,
+        height: 100,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Config.COLOR_PRIMARY,
+            border: Border.all(
+              color: Config.COLOR_LIGHTGRAY,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black,
+                spreadRadius: 2,
+                blurRadius: 3,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ]),
+        child: Column(children: [
+          Text(note.noteTitle)
+        ]),
+      ));
+    });
+
+    return finalList;
   }
 
 //Side Menu
