@@ -231,13 +231,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
                   //Note LIst
                   Positioned(
-                    top: 50,
+                    top: 120,
                     right: 0,
                     width: MediaQuery.of(context).size.width - Config.MENU_WIDTH,
-                    height: MediaQuery.of(context).size.height - 50,
+                    height: MediaQuery.of(context).size.height - 1250,
                     child: Container(
                       width: MediaQuery.of(context).size.width - Config.MENU_WIDTH,
-                      height: MediaQuery.of(context).size.height - 50,
+                      height: MediaQuery.of(context).size.height - 120,
                       decoration: BoxDecoration(color: Config.COLOR_PRIMARY),
                     ),
                   ),
