@@ -244,15 +244,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         height: MediaQuery.of(context).size.height - 100,
                         padding: EdgeInsets.all(20),
                         decoration: BoxDecoration(color: Config.COLOR_PRIMARY, borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0))),
-                        child: FutureBuilder<List<Widget>>(
-                            future: widgetsListNotes,
-                            builder: (
-                              BuildContext context,
-                              AsyncSnapshot<List<Widget>> snapshot,
-                            ) {
-                              if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) return Column(children: snapshot.data ?? []);
-                              return Text("");
-                            })),
+                        child: SingleChildScrollView(
+                            child: FutureBuilder<List<Widget>>(
+                                future: widgetsListNotes,
+                                builder: (
+                                  BuildContext context,
+                                  AsyncSnapshot<List<Widget>> snapshot,
+                                ) {
+                                  if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) return Column(children: snapshot.data ?? []);
+                                  return Text("");
+                                }))),
                   ),
 
                   //Settings
