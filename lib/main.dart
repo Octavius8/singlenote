@@ -435,6 +435,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     offset: Offset(0, 3), // changes position of shadow
                   ),
                 ]),
+            child: Column(children: [
+              Text("Title:"),
+            ]),
           )));
     });
 
