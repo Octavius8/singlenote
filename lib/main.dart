@@ -407,7 +407,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     notesList.add(note3);
 
     notesList.forEach((note) {
-      String content = "Lorem Ipsum, Ribababa";
+      String content = note.getNote();
       content = content.substring(0, 20).toString();
       finalList.add(GestureDetector(
           onTap: () {
@@ -438,8 +438,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   ),
                 ]),
             child: Column(children: [
-              Text("Title:" + note.noteID),
-              Text(content)
+              Text("Title:" + note.noteID, style: TextStyle(color: Colors.white)),
+              Text(content, style: TextStyle(color: Config.COLOR_LIGHTGRAY))
             ]),
           )));
     });
