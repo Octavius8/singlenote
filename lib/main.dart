@@ -234,7 +234,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     top: 120,
                     right: 0,
                     width: MediaQuery.of(context).size.width - Config.MENU_WIDTH,
-                    height: MediaQuery.of(context).size.height - 1250,
+                    height: MediaQuery.of(context).size.height - 120,
                     child: Container(
                       width: MediaQuery.of(context).size.width - Config.MENU_WIDTH,
                       height: MediaQuery.of(context).size.height - 120,
