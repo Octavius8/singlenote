@@ -407,7 +407,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     notesList.add(note3);
 
     notesList.forEach((note) {
-      String content = "Lorem Ipsum, ribababa"; //note.noteContent;
+      String content = note.noteContent;
       content = content.substring(0, 20).toString() + " ...";
       finalList.add(GestureDetector(
           onTap: () {
