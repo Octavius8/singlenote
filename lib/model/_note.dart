@@ -5,18 +5,15 @@ import '../utils/_config.dart';
 import '../utils/_log.dart';
 
 class Note {
-  String errorMessage = "",
-      noteTags = "",
-      noteTitle = "",
-      noteContent = "",
-      noteID = "";
+  String errorMessage = "", noteTags = "", noteTitle = "", noteContent = "", noteID = "";
 
   Log log = new Log();
 
-  Note(String noteID) {
+  Note(String _noteID) {
     noteTags = "";
     noteTitle = "";
     noteContent = "";
+    noteID = _noteID;
   }
 
   Future<String> getNote() async {
@@ -90,8 +87,7 @@ class Note {
 
       Map<String, dynamic> jsontemp = jsonDecode(response.body);
       if (response.statusCode == 200) finalString = true;
-      errorMessage =
-          formattedDate + "-" + response.body + response.statusCode.toString();
+      errorMessage = formattedDate + "-" + response.body + response.statusCode.toString();
     } catch (ex) {
       this.errorMessage = formattedDate + "-" + ex.toString();
     }
