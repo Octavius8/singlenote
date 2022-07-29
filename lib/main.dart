@@ -407,6 +407,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     notesList.add(note3);
 
     notesList.forEach((note) {
+      String content = note.noteContent.substring(0, 20);
       finalList.add(GestureDetector(
           onTap: () {
             _currentView = Config.VIEW_SHOWNOTE;
@@ -437,7 +438,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 ]),
             child: Column(children: [
               Text("Title:" + note.noteID),
-              Text(note.noteContent?.substring(0, 20))
+              Text(content)
             ]),
           )));
     });
