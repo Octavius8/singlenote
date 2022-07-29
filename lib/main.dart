@@ -400,11 +400,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     String note1text = await note1.getNote();
     note1.noteContent = note1text;
     notesList.add(note1);
-    notesList.add(note1);
-    notesList.add(note1);
-    notesList.add(note1);
-    notesList.add(note1);
-    notesList.add(note1);
 
     Note note2 = new Note(Config.OVI_JOURNAL_ID);
     String note2text = await note2.getNote();
