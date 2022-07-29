@@ -252,7 +252,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                   AsyncSnapshot<List<Widget>> snapshot,
                                 ) {
                                   if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) return Column(children: snapshot.data ?? []);
-                                  if (snapshot.connectionState == ConnectionState.waiting) return Container(child: CircularProgressIndicator(size: 20, color: Colors.white));
+                                  if (snapshot.connectionState == ConnectionState.waiting) return Container(width: 50, height: 50, child: CircularProgressIndicator(color: Colors.white));
                                   return Text("");
                                 }))),
                   ),
