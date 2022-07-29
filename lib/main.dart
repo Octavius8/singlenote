@@ -438,7 +438,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   ),
                 ]),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(note.noteID, style: TextStyle(color: Colors.white)),
+              Text(note.noteTitle, style: TextStyle(color: Colors.white)),
               Text(content, style: TextStyle(color: Config.COLOR_LIGHTGRAY))
             ]),
           )));
