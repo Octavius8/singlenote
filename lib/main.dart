@@ -411,7 +411,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
     notesList.forEach((note) {
       String content = note.noteContent;
-      content = content.substring(0, 70).toString() + " ...";
+      content = content.substring(0, 50).toString() + " ...";
       finalList.add(GestureDetector(
           onTap: () {
             _currentView = Config.VIEW_SHOWNOTE;
