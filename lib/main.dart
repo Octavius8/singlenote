@@ -420,7 +420,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             width: double.infinity,
             margin: EdgeInsets.only(top: 10),
             height: 100,
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Config.COLOR_PRIMARY,
@@ -436,7 +436,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   ),
                 ]),
             child: Column(children: [
-              Text("Title:"),
+              Text("Title:" + note1.noteID),
             ]),
           )));
     });
