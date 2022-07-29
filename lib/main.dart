@@ -436,7 +436,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   ),
                 ]),
             child: Column(children: [
-              Text("Title:" + note1.noteID),
+              Text("Title:" + note.noteID),
             ]),
           )));
     });
