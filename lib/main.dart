@@ -407,39 +407,30 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     notesList.add(note3);
 
     notesList.forEach((note) {
-      finalList.add(GestureDetector(
-          onTap: () {
-            _currentView = Config.VIEW_SHOWNOTE;
-            setNote(note.noteID);
-            setNoteString();
-            _noteEditMode = false;
-            _menuIndex = Config.MENU_NOTEINDEX;
-            setState(() {});
-          },
-          child: Container(
-            width: double.infinity,
-            margin: EdgeInsets.only(top: 10),
-            height: 100,
-            padding: EdgeInsets.all(20),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Config.COLOR_PRIMARY,
-                border: Border.all(
-                  color: Config.COLOR_LIGHTGRAY,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black,
-                    spreadRadius: 2,
-                    blurRadius: 3,
-                    offset: Offset(0, 3), // changes position of shadow
-                  ),
-                ]),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text("Title:" + note.noteTitle, style: TextStyle(color: Colors.white)),
-              Text(note.noteContent.substring(0, 20) + " ...", style: TextStyle(color: Config.COLOR_LIGHTGRAY))
+      finalList.add(Container(
+        width: double.infinity,
+        margin: EdgeInsets.only(top: 10),
+        height: 100,
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Config.COLOR_PRIMARY,
+            border: Border.all(
+              color: Config.COLOR_LIGHTGRAY,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black,
+                spreadRadius: 2,
+                blurRadius: 3,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
             ]),
-          )));
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text("Title:" + note.noteTitle, style: TextStyle(color: Colors.white)),
+          Text(note.noteContent.substring(0, 20) + " ...", style: TextStyle(color: Config.COLOR_LIGHTGRAY))
+        ]),
+      ));
     });
 
     return finalList;
