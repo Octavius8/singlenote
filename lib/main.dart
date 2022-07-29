@@ -237,10 +237,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     top: 100,
                     right: _currentView == Config.VIEW_LISTNOTES ? 0 : -MediaQuery.of(context).size.width,
                     duration: Duration(milliseconds: 500),
-                    width: MediaQuery.of(context).size.width - (Config.MENU_WIDTH + 10),
+                    width: MediaQuery.of(context).size.width - (Config.MENU_WIDTH + 5),
                     height: MediaQuery.of(context).size.height - 100,
                     child: Container(
-                        width: MediaQuery.of(context).size.width - (Config.MENU_WIDTH + 10),
+                        width: MediaQuery.of(context).size.width - (Config.MENU_WIDTH + 5),
                         height: MediaQuery.of(context).size.height - 100,
                         padding: EdgeInsets.all(20),
                         decoration: BoxDecoration(color: Config.COLOR_PRIMARY, borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0))),
@@ -292,7 +292,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
                   Column(children: [
                     SideMenu(items: [
-                      "NOTE",
+                      "NOTES",
                       "JOURNAL",
                       "SCROLL II",
                       "ASSISTANT"
