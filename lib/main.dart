@@ -255,7 +255,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                               }
 
                               if (snapshot.connectionState == ConnectionState.waiting) {
-                                return Row(children: [
+                                return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                                   Container(width: 50, height: 50, child: CircularProgressIndicator(color: Colors.white))
                                 ]);
                               }
