@@ -408,6 +408,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     notesList.forEach((note) {
       finalList.add(Container(
         width: double.infinity,
+        margin: EdgeInsets.only(top: 10),
         height: 100,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
