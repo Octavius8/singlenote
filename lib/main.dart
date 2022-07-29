@@ -408,7 +408,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
     notesList.forEach((note) {
       String content = note1text;
-      content = content.substring(0, 20).toString() + " ...";
+      content = content.substring(0, 50).toString() + " ...";
       finalList.add(GestureDetector(
           onTap: () {
             _currentView = Config.VIEW_SHOWNOTE;
@@ -471,6 +471,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         if (itemIndex == Config.MENU_NOTEINDEX) {
                           _currentView = Config.VIEW_LISTNOTES;
                           noteID = Config.OVI_NOTE_ID;
+                          widgetsListNotes = widgetListNotes();
                         }
                         if (itemIndex == Config.MENU_JOURNALINDEX) noteID = Config.OVI_JOURNAL_ID;
                         if (itemIndex == Config.MENU_SHORTCUTSINDEX) noteID = Config.OVI_SHORTCUTS_ID;
