@@ -402,14 +402,15 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     notesList.add(note2);
 
     Note note3 = new Note(Config.OVI_SHORTCUTS_ID);
-    await note2.getNote();
-    notesList.add(note2);
+    await note3.getNote();
+    notesList.add(note3);
 
     notesList.forEach((note) {
       finalList.add(Container(
         width: double.infinity,
         margin: EdgeInsets.only(top: 10),
         height: 100,
+        padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Config.COLOR_PRIMARY,
@@ -425,7 +426,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               ),
             ]),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text("Title:" + note.noteTitle, style: TextStyle(color: Config.COLOR_LIGHTGRAY))
+          Text("Title:" + note1.noteTitle, style: TextStyle(color: Colors.white)),
+          Text(note1.noteContent.substring(0, 20), style: TextStyle(color: Config.COLOR_LIGHTGRAY))
         ]),
       ));
     });
