@@ -233,12 +233,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   Positioned(
                     top: 120,
                     right: 0,
-                    width: MediaQuery.of(context).size.width - Config.MENU_WIDTH,
+                    width: MediaQuery.of(context).size.width - (Config.MENU_WIDTH + 10),
                     height: MediaQuery.of(context).size.height - 120,
                     child: Container(
-                      width: MediaQuery.of(context).size.width - Config.MENU_WIDTH,
+                      width: MediaQuery.of(context).size.width - (Config.MENU_WIDTH + 10),
                       height: MediaQuery.of(context).size.height - 120,
-                      decoration: BoxDecoration(color: Config.COLOR_PRIMARY),
+                      decoration: BoxDecoration(color: Config.COLOR_PRIMARY, borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0))),
                     ),
                   ),
 
