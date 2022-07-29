@@ -426,10 +426,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 offset: Offset(0, 3), // changes position of shadow
               ),
             ]),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text("Title:" + note.noteTitle, style: TextStyle(color: Colors.white)),
-          Text(note.noteContent.substring(0, 20) + " ...", style: TextStyle(color: Config.COLOR_LIGHTGRAY))
-        ]),
       ));
     });
 
