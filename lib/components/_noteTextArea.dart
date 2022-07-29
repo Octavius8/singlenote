@@ -206,12 +206,42 @@ class NoteTextAreaState extends State<NoteTextArea> {
       //Default
       TextSpan finalTextSpan = TextSpan(text: word + " ");
 
+      //Check if web image
+      if (isWebImage(word))
+        finalTextSpan = getWebImageTextSpan(word);
+      else
       //Check if its a website
       if (isWebsite(word)) finalTextSpan = getWebsiteTextSpan(word);
 
       finalList.add(finalTextSpan);
     });
     return finalList;
+  }
+
+//Web Image Processing
+  bool isWebImage(String word) {
+    String logPrefix = "NoteTextArea | isWebImage()";
+    /*final websiteCheck = RegExp(
+        r'^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$');*/
+    final websiteCheck =
+        RegExp(r'^((http[s]?:\/{2})|(^www))(\S*|.*)(.jpg|.gif|.png|.jpeg)');
+    /*log.debug(
+        logPrefix,
+        "word is: $word. isWebsite response is " +
+            websiteCheck.hasMatch(word).toString());*/
+    return websiteCheck.hasMatch(word);
+  }
+
+  TextSpan getWebImageTextSpan(String word) {
+    return TextSpan(
+        recognizer: TapGestureRecognizer()
+          ..onTapDown = (TapDownDetails details) {
+            _copyString = word;
+            showCopyPopup(details);
+          },
+        text: word + " ",
+        style: TextStyle(
+            fontWeight: FontWeight.bold, color: Config.COLOR_HYPERLINK));
   }
 
   //Website Processing
