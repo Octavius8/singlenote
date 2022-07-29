@@ -468,7 +468,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         String logPrefix = "SideMenu | onTap()";
                         String noteID = "";
 
-                        if (itemIndex == Config.MENU_NOTEINDEX) noteID = Config.OVI_NOTE_ID;
+                        if (itemIndex == Config.MENU_NOTEINDEX) {
+                          _currentView = Config.VIEW_LISTNOTES;
+                          noteID = Config.OVI_NOTE_ID;
+                        }
                         if (itemIndex == Config.MENU_JOURNALINDEX) noteID = Config.OVI_JOURNAL_ID;
                         if (itemIndex == Config.MENU_SHORTCUTSINDEX) noteID = Config.OVI_SHORTCUTS_ID;
 
