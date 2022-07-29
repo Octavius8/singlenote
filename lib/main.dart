@@ -234,14 +234,14 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
                   //Note LIst
                   AnimatedPositioned(
-                    top: 120,
+                    top: 100,
                     right: _currentView == Config.VIEW_LISTNOTES ? 0 : -MediaQuery.of(context).size.width,
                     duration: Duration(milliseconds: 500),
                     width: MediaQuery.of(context).size.width - (Config.MENU_WIDTH + 10),
-                    height: MediaQuery.of(context).size.height - 120,
+                    height: MediaQuery.of(context).size.height - 100,
                     child: Container(
                         width: MediaQuery.of(context).size.width - (Config.MENU_WIDTH + 10),
-                        height: MediaQuery.of(context).size.height - 120,
+                        height: MediaQuery.of(context).size.height - 100,
                         padding: EdgeInsets.all(20),
                         decoration: BoxDecoration(color: Config.COLOR_PRIMARY, borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0))),
                         child: FutureBuilder<List<Widget>>(
@@ -437,8 +437,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     offset: Offset(0, 3), // changes position of shadow
                   ),
                 ]),
-            child: Column(children: [
-              Text("Title:" + note.noteID, style: TextStyle(color: Colors.white)),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(note.noteID, style: TextStyle(color: Colors.white)),
               Text(content, style: TextStyle(color: Config.COLOR_LIGHTGRAY))
             ]),
           )));
