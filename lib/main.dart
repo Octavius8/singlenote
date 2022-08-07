@@ -11,13 +11,13 @@ import 'dart:async';
 import 'dart:io';
 import 'utils/_log.dart';
 import 'model/_note.dart';
-import 'model/_user.dart';
 import 'components/_primaryWidgetArea.dart';
 import 'utils/_config.dart';
 import 'components/_noteTextArea.dart';
 import 'package:crypto/crypto.dart' as crypto;
 import 'dart:convert' show utf8;
 import 'package:url_launcher/url_launcher.dart';
+import 'model/_userData.dart';
 
 //widgets
 
@@ -69,11 +69,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   TextEditingController _journalTextController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
   late final AnimationController _animationController;
-  Note note = new Note(Config.OVI_NOTE_ID);
+  Note? note;
   String noteString = "";
   bool _anistart = true;
   bool _noteEditMode = false;
-  User user = new User();
+  UserData user = new UserData();
+
   bool correctPassword = true;
   UserWidgetsModel? userWidgetsModel;
   Future<List<Widget>>? widgetsListNotes;
@@ -88,9 +89,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     _animationController.duration = Duration(milliseconds: 2000);
     _animationController.reset();
     _animationController.forward();
-    setNote(Config.OVI_NOTE_ID);
     userWidgetsModel = new UserWidgetsModel(user: this.user);
-    setNoteString();
     widgetsListNotes = widgetListNotes();
   }
 
@@ -120,14 +119,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     return false;
   }
 
-  void setNote(note_id) {
-    note.noteID = note_id;
+  void getNote(int note_id) {
+    note = user.getNote(note_id);
     setState(() {});
   }
 
   void setNoteString() async {
-    noteString = await note.getNote();
-    _noteTextController.text = noteString; // + "\nLog:\n" + log.logString;
+    _noteTextController.text = note?.noteContent ?? "";
     setState(() {});
   }
 
@@ -214,8 +212,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                           onTap: () async {
                                             if (_noteEditMode) {
                                               toast("Saving...");
-                                              bool status = await note.saveNote(
-                                                  _noteTextController.text);
+                                              note?.noteContent =
+                                                  _noteTextController.text;
+                                              bool status =
+                                                  await user.saveNote(note);
                                               if (status) {
                                                 _noteEditMode = false;
                                                 setState(() {});
@@ -485,22 +485,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 //Notes List Widget
   Future<List<Widget>> widgetListNotes() async {
     List<Widget> finalList = [];
-    List<Note> notesList = [];
-
-    Note note1 = new Note(Config.OVI_NOTE_ID);
-    String note1text = await note1.getNote();
-    note1.noteContent = note1text;
-    notesList.add(note1);
-
-    Note note2 = new Note(Config.OVI_JOURNAL_ID);
-    String note2text = await note2.getNote();
-    note2.noteContent = note2text;
-    notesList.add(note2);
-
-    Note note3 = new Note(Config.OVI_SHORTCUTS_ID);
-    String note3text = await note3.getNote();
-    note3.noteContent = note3text;
-    notesList.add(note3);
+    List<Note> notesList = user.getAllNotes();
 
     notesList.forEach((note) {
       String content = note.noteContent;
@@ -508,7 +493,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       finalList.add(GestureDetector(
           onTap: () {
             _currentView = Config.VIEW_SHOWNOTE;
-            setNote(note.noteID);
+            getNote(int.parse(note.noteID));
             setNoteString();
             _noteEditMode = false;
             _menuIndex = Config.MENU_NOTEINDEX;
@@ -573,7 +558,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               noteID = Config.OVI_SHORTCUTS_ID;
 
             log.info(logPrefix, "_menuIndex=$_menuIndex, noteID=$noteID");
-            setNote(noteID);
+            getNote(int.parse(noteID));
             setNoteString();
 
             _noteEditMode = false;

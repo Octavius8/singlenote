@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import '../model/_user.dart';
 import 'widgets/international_clock/international_clock.dart';
 import 'widgets/white_noise/white_noise.dart';
 import 'widgets/counter/counter.dart';
 import '../utils/_config.dart';
 import 'dart:async';
 import 'widgets/countdown/countdown.dart';
+import '../model/_userData.dart';
 
 class PrimaryWidgetArea extends StatefulWidget {
-  User user;
+  UserData user;
   PrimaryWidgetArea({required this.user});
   @override
   State<StatefulWidget> createState() {
@@ -38,23 +38,29 @@ class PrimaryWidgetAreaState extends State<PrimaryWidgetArea> {
 }
 
 class UserWidgetsModel {
-  User user;
+  UserData user;
 
   UserWidgetsModel({required this.user});
 
   List<Widget> compileListOfWidgets() {
     List<Widget> finalList = [];
     int index = 0;
-    user.data?['primaryWidgets'].forEach((minwidget) {
+    user.data?['mobile_app']['primaryWidgets'].forEach((minwidget) {
       //International Clock Widgets
       if (minwidget["type"] == "international_clock") {
-        finalList.add(InternationalClock(city: minwidget["city"], user: user));
+        finalList.add(InternationalClock(
+            city: minwidget["city"],
+            highlightColor: Color(int.parse(
+                "FF" + user.data?['mobile_app']['highlightColor'],
+                radix: 16))));
       }
 
       //White Noise Widgets
       if (minwidget["type"] == "white_noise") {
         finalList.add(WhiteNoise(
-            user: user,
+            highlightColor: Color(int.parse(
+                "FF" + user.data?['mobile_app']['highlightColor'],
+                radix: 16)),
             audioFile: minwidget["audioFile"],
             narration: minwidget["narration"]));
       }
@@ -65,7 +71,9 @@ class UserWidgetsModel {
             index: index,
             narration: minwidget["narration"],
             count: int.parse(minwidget["count"]),
-            user: user));
+            highlightColor: Color(int.parse(
+                "FF" + user.data?['mobile_app']['highlightColor'],
+                radix: 16))));
       }
 
       //Count Down Widget
@@ -74,7 +82,9 @@ class UserWidgetsModel {
             index: index,
             narration: minwidget["narration"],
             seconds: int.parse(minwidget["seconds"]),
-            user: user,
+            highlightColor: Color(int.parse(
+                "FF" + user.data?['mobile_app']['highlightColor'],
+                radix: 16)),
             voicePrompt: minwidget["voicePrompt"] == "true" ? true : false));
       }
 

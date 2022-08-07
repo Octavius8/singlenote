@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import '../../../utils/_config.dart';
 import '../../../utils/_log.dart';
-import '../../../model/_user.dart';
+import '../../../model/_userData.dart';
 import 'package:just_audio/just_audio.dart';
 import 'dart:async';
 
 class WhiteNoise extends StatefulWidget {
   String narration;
   String audioFile;
-  User user;
+  Color highlightColor;
 
   //Constructor
-  WhiteNoise({this.audioFile = "", this.narration = "White Noise", required this.user});
+  WhiteNoise(
+      {this.audioFile = "",
+      this.narration = "White Noise",
+      required this.highlightColor});
 
   @override
   WhiteNoiseState createState() => WhiteNoiseState();
@@ -53,7 +56,8 @@ class WhiteNoiseState extends State<WhiteNoise> {
 
   void toggleState() async {
     String logPrefix = "WhiteNoise | toggleState";
-    log.info(logPrefix, "Entered toggle state function. Current Playing State:${player.playing.toString()}");
+    log.info(logPrefix,
+        "Entered toggle state function. Current Playing State:${player.playing.toString()}");
 
     try {
       if (player.playing)
@@ -64,7 +68,8 @@ class WhiteNoiseState extends State<WhiteNoise> {
       log.error(logPrefix, "Something went wrong:" + ex.toString());
     }
 
-    log.debug(logPrefix, "Attempting to Change the color of the icon. Current state is ${player.playing.toString()}.");
+    log.debug(logPrefix,
+        "Attempting to Change the color of the icon. Current state is ${player.playing.toString()}.");
     setState(() {});
   }
 
@@ -78,8 +83,15 @@ class WhiteNoiseState extends State<WhiteNoise> {
             width: Config.WIDGET_WIDTH,
             height: Config.WIDGET_HEIGHT,
             child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-              Expanded(flex: 2, child: Icon(Icons.multitrack_audio_outlined, size: Config.WIDGET_ICONSIZE, color: player.playing ? Color(int.parse("FF" + widget.user.data?["color_highlight"], radix: 16)) : null)),
-              Text(widget.narration, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE, color: player.playing ? Color(int.parse("FF" + widget.user.data?["color_highlight"], radix: 16)) : null))
+              Expanded(
+                  flex: 2,
+                  child: Icon(Icons.multitrack_audio_outlined,
+                      size: Config.WIDGET_ICONSIZE,
+                      color: player.playing ? widget.highlightColor : null)),
+              Text(widget.narration,
+                  style: TextStyle(
+                      fontSize: Config.WIDGET_FONTSIZE,
+                      color: player.playing ? widget.highlightColor : null))
             ])));
   }
 }

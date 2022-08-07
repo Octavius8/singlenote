@@ -51,6 +51,7 @@ flutter:
   - assets/fingerprint.json
   - assets/savebutton.json
   - assets/ca/lets-encrypt-r3.pem
+  - assets/data_template.json
   # assets/widgets/white_noise/fan.mp3
   # assets/widgets/white_noise/waves.mp3
   # The following line ensures that the Material Icons font is

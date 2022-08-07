@@ -1,0 +1,49 @@
+{
+    "notes": [
+        {
+            "title:": "note",
+            "content": "# You can choose what to desire."
+        },
+        {
+            "title": "Journal",
+            "content": "# 2nd August, 2022"
+        }
+    ],
+    "app": {
+        "name": "Boss",
+        "password": "d93591bdf7860e1e4ee2fca799911215",
+        "color_highlight": "62d9b5",
+        "primaryWidgets": [
+            {
+                "type": "international_clock",
+                "city": "Lusaka"
+            },
+            {
+                "type": "international_clock",
+                "city": "Mumbai"
+            },
+            {
+                "type": "white_noise",
+                "audioFile": "ship",
+                "narration": "White Noise"
+            },
+            {
+                "type": "countdown",
+                "narration": "Coffee",
+                "seconds": "300",
+                "voicePrompt": "false"
+            },
+            {
+                "type": "international_clock",
+                "city": "Kyoto"
+            },
+            {
+                "type": "white_noise",
+                "audioFile": "forest",
+                "narration": "Observatory"
+            }
+        ]
+    },
+    "bot": {},
+    "files": {}
+}

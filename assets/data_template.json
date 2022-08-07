@@ -1,0 +1,14 @@
+{
+    "name": "Boss",
+    "password": "d93591bdf7860e1e4ee2fca799911215",
+    "mobile_app":{
+        "highlightColor": "62d9b5",
+    "primaryWidgets": [
+        {
+            "type": "white_noise",
+            "audioFile": "ship",
+            "narration": "White Noise"
+        }
+    ]
+}
+}

@@ -12,10 +12,15 @@ class CountDown extends StatefulWidget {
   int index;
   String narration;
   int seconds;
-  User user;
+  Color highlightColor;
   bool voicePrompt;
 
-  CountDown({this.index = 0, this.narration = "Count Down", this.seconds = 0, required this.user, this.voicePrompt = false});
+  CountDown(
+      {this.index = 0,
+      this.narration = "Count Down",
+      this.seconds = 0,
+      required this.highlightColor,
+      this.voicePrompt = false});
 
   @override
   CountDownState createState() => CountDownState();
@@ -36,7 +41,9 @@ class CountDownState extends State<CountDown> {
   void initState() {
     super.initState();
     currentCount = widget.seconds;
-    narrationTime = (widget.seconds / 60).floor().toString().padLeft(2, "0") + ":" + (widget.seconds % 60).toString().padLeft(2, "0");
+    narrationTime = (widget.seconds / 60).floor().toString().padLeft(2, "0") +
+        ":" +
+        (widget.seconds % 60).toString().padLeft(2, "0");
   }
 
   void decrementCounter() async {
@@ -44,7 +51,9 @@ class CountDownState extends State<CountDown> {
       currentCount = currentCount - 1;
       int minutes = (currentCount / 60).floor();
       int seconds = (currentCount % 60);
-      narrationTime = minutes.toString().padLeft(2, "0") + ":" + seconds.toString().padLeft(2, "0");
+      narrationTime = minutes.toString().padLeft(2, "0") +
+          ":" +
+          seconds.toString().padLeft(2, "0");
       log.debug("CountDown | decrementCounter()", narrationTime);
     } else {
       timer?.cancel();
@@ -55,17 +64,18 @@ class CountDownState extends State<CountDown> {
       if (widget.voicePrompt) {
         late FlutterTts flutterTts = new FlutterTts();
         flutterTts.setSpeechRate(0.5);
-        flutterTts.setVoice({
-          "name": "Google UK English Female",
-          "locale": "en-GB"
-        });
+        flutterTts
+            .setVoice({"name": "Google UK English Female", "locale": "en-GB"});
         flutterTts.setPitch(1.0);
-        var value = await flutterTts.speak("Excuse me sir. " + widget.narration + " countdown Complete.");
+        var value = await flutterTts.speak(
+            "Excuse me sir. " + widget.narration + " countdown Complete.");
       }
 
       var _type = FeedbackType.impact;
       Vibrate.feedback(_type);
-      narrationTime = (widget.seconds / 60).floor().toString().padLeft(2, "0") + ":" + (widget.seconds % 60).toString().padLeft(2, "0");
+      narrationTime = (widget.seconds / 60).floor().toString().padLeft(2, "0") +
+          ":" +
+          (widget.seconds % 60).toString().padLeft(2, "0");
     }
     setState(() {});
   }
@@ -81,7 +91,8 @@ class CountDownState extends State<CountDown> {
           } else {
             currentCount = widget.seconds;
             countingDown = true;
-            timer = Timer.periodic(Duration(seconds: 1), (Timer t) => decrementCounter());
+            timer = Timer.periodic(
+                Duration(seconds: 1), (Timer t) => decrementCounter());
           }
           setState(() {});
         },
@@ -89,9 +100,17 @@ class CountDownState extends State<CountDown> {
             width: Config.WIDGET_WIDTH,
             height: Config.WIDGET_HEIGHT,
             child: Column(children: [
-              Text(narrationTime, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE, color: countingDown ? Color(int.parse("FF" + widget.user.data?["color_highlight"], radix: 16)) : null)),
-              Expanded(flex: 2, child: Icon(Icons.av_timer, size: Config.WIDGET_ICONSIZE, color: countingDown ? Color(int.parse("FF" + widget.user.data?["color_highlight"], radix: 16)) : null)),
-              Text(widget.narration, style: TextStyle(fontSize: Config.WIDGET_FONTSIZE)),
+              Text(narrationTime,
+                  style: TextStyle(
+                      fontSize: Config.WIDGET_FONTSIZE,
+                      color: countingDown ? widget.highlightColor : null)),
+              Expanded(
+                  flex: 2,
+                  child: Icon(Icons.av_timer,
+                      size: Config.WIDGET_ICONSIZE,
+                      color: countingDown ? widget.highlightColor : null)),
+              Text(widget.narration,
+                  style: TextStyle(fontSize: Config.WIDGET_FONTSIZE)),
             ])));
   }
 }
