@@ -92,22 +92,19 @@ class UserWidgetsModel {
     });
 
     //New Icon
-    finalList.add(Draggable<String>(
-        data: 'red',
-        child: Padding(
-            padding: EdgeInsets.all(Config.WIDGET_WIDTH / 3),
-            child: Icon(Icons.add_to_photos_rounded,
-                color: Color(int.parse(
-                    "FF" + (user.data?["color_highlight"] ?? "000000"),
-                    radix: 16)),
-                size: Config.WIDGET_WIDTH / 4)),
-        feedback: Padding(
-            padding: EdgeInsets.all(Config.WIDGET_WIDTH / 3),
-            child: Icon(Icons.add_to_photos_rounded,
-                color: Color(int.parse(
-                    "FF" + (user.data?["color_highlight"] ?? "000000"),
-                    radix: 16)),
-                size: Config.WIDGET_WIDTH / 4))));
+    finalList.add(
+      Padding(
+          padding: EdgeInsets.all(Config.WIDGET_WIDTH / 3),
+          child: GestureDetector(
+              onTap: () {
+                user.resetData();
+              },
+              child: Icon(Icons.add_to_photos_rounded,
+                  color: Color(int.parse(
+                      "FF" + (user.data?["color_highlight"] ?? "000000"),
+                      radix: 16)),
+                  size: Config.WIDGET_WIDTH / 4))),
+    );
     return finalList;
   }
 }

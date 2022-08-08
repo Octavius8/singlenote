@@ -12,6 +12,7 @@ import 'dart:io';
 import 'utils/_log.dart';
 import 'model/_note.dart';
 import 'components/_primaryWidgetArea.dart';
+import 'components/_noteList.dart';
 import 'utils/_config.dart';
 import 'components/_noteTextArea.dart';
 import 'package:crypto/crypto.dart' as crypto;
@@ -77,7 +78,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   bool correctPassword = true;
   UserWidgetsModel? userWidgetsModel;
-  Future<List<Widget>>? widgetsListNotes;
   int _currentView = Config.VIEW_LISTNOTES;
   //authentication
 
@@ -90,7 +90,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     _animationController.reset();
     _animationController.forward();
     userWidgetsModel = new UserWidgetsModel(user: this.user);
-    widgetsListNotes = widgetListNotes();
+    user.addListener(() {
+      log.info("Main | initState()", "Updated listener");
+      setState(() {});
+    });
   }
 
   String getMd5(String input) {
@@ -264,43 +267,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     width: MediaQuery.of(context).size.width -
                         (Config.MENU_WIDTH + 5),
                     height: MediaQuery.of(context).size.height - 100,
-                    child: Container(
-                        width: MediaQuery.of(context).size.width -
-                            (Config.MENU_WIDTH + 5),
-                        height: MediaQuery.of(context).size.height - 100,
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                            color: Config.COLOR_PRIMARY,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(40.0))),
-                        child: FutureBuilder<List<Widget>>(
-                            future: widgetsListNotes,
-                            builder: (
-                              BuildContext context,
-                              AsyncSnapshot<List<Widget>> snapshot,
-                            ) {
-                              if (snapshot.hasData &&
-                                  snapshot.connectionState ==
-                                      ConnectionState.done) {
-                                return SingleChildScrollView(
-                                    child:
-                                        Column(children: snapshot.data ?? []));
-                              }
-
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                          width: 50,
-                                          height: 50,
-                                          child: CircularProgressIndicator(
-                                              color: Colors.white))
-                                    ]);
-                              }
-                              return Text("");
-                            })),
+                    child: NoteList(user: user, context: context),
                   ),
 
                   //Settings
@@ -482,55 +449,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     );
   }
 
-//Notes List Widget
-  Future<List<Widget>> widgetListNotes() async {
-    List<Widget> finalList = [];
-    List<Note> notesList = user.getAllNotes();
-
-    notesList.forEach((note) {
-      String content = note.noteContent;
-      content = content.substring(0, 80).toString() + " ...";
-      finalList.add(GestureDetector(
-          onTap: () {
-            _currentView = Config.VIEW_SHOWNOTE;
-            getNote(int.parse(note.noteID));
-            setNoteString();
-            _noteEditMode = false;
-            _menuIndex = Config.MENU_NOTEINDEX;
-            setState(() {});
-          },
-          child: Container(
-            width: double.infinity,
-            margin: EdgeInsets.only(top: 10),
-            height: 100,
-            padding: EdgeInsets.all(10),
-            clipBehavior: Clip.hardEdge,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Config.COLOR_PRIMARY,
-                border: Border.all(
-                  color: Config.COLOR_LIGHTGRAY,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black,
-                    spreadRadius: 2,
-                    blurRadius: 3,
-                    offset: Offset(0, 3), // changes position of shadow
-                  ),
-                ]),
-            child: Wrap(children: [
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(note.noteTitle, style: TextStyle(color: Colors.white)),
-                Text(content, style: TextStyle(color: Config.COLOR_LIGHTGRAY))
-              ])
-            ]),
-          )));
-    });
-
-    return finalList;
-  }
-
 //Side Menu
   Widget SideMenu({items, index = 0}) {
     List<String> itemList = items;
@@ -550,7 +468,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             if (itemIndex == Config.MENU_NOTEINDEX) {
               _currentView = Config.VIEW_LISTNOTES;
               noteID = Config.OVI_NOTE_ID;
-              widgetsListNotes = widgetListNotes();
             }
             if (itemIndex == Config.MENU_JOURNALINDEX)
               noteID = Config.OVI_JOURNAL_ID;

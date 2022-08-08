@@ -11,4 +11,15 @@ class Note {
       required this.noteContent,
       required this.noteTags,
       required this.noteTitle});
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> finalMap = {
+      "noteID": this.noteID,
+      "noteContent": noteContent,
+      "noteTags": noteTags,
+      "noteTitle": noteTitle
+    };
+
+    return finalMap;
+  }
 }

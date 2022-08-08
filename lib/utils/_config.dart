@@ -50,4 +50,7 @@ class Config {
   static final double WIDGET_HEIGHT = 40;
   static final double WIDGET_ICONSIZE = 14;
   static final int WIDGET_NUMBER_TO_DISPLAY = 3;
+
+  //Data
+  static final String DATA_TEMPLATE_FILE = 'assets/data_template.json';
 }
