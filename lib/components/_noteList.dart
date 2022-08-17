@@ -7,8 +7,13 @@ import '../utils/_log.dart';
 class NoteList extends StatefulWidget {
   UserData user;
   BuildContext context;
+  Function onSelect;
 
-  NoteList({Key? key, required this.user, required this.context})
+  NoteList(
+      {Key? key,
+      required this.user,
+      required this.context,
+      required this.onSelect})
       : super(key: key);
 
   @override
@@ -42,7 +47,7 @@ class _NoteListState extends State<NoteList> {
     return Container(
       width: MediaQuery.of(context).size.width - (Config.MENU_WIDTH + 5),
       height: MediaQuery.of(context).size.height - 100,
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.only(left: 20, right: 20, top: 20),
       decoration: BoxDecoration(
           color: Config.COLOR_PRIMARY,
           borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0))),
@@ -67,8 +72,10 @@ class _NoteListState extends State<NoteList> {
             ) {
               if (snapshot.hasData &&
                   snapshot.connectionState == ConnectionState.done) {
-                return SingleChildScrollView(
-                    child: Column(children: snapshot.data ?? []));
+                return Container(
+                    height: MediaQuery.of(context).size.height - 140,
+                    child: SingleChildScrollView(
+                        child: Column(children: snapshot.data ?? [])));
               }
 
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -104,12 +111,7 @@ class _NoteListState extends State<NoteList> {
           content = content.substring(0, 80).toString() + " ...";
         finalList.add(GestureDetector(
             onTap: () {
-              /* _currentView = Config.VIEW_SHOWNOTE;
-            getNote(int.parse(note.noteID));
-            setNoteString();
-            _noteEditMode = false;
-            _menuIndex = Config.MENU_NOTEINDEX;
-            setState(() {});*/
+              widget.onSelect(int.parse(note.noteID));
             },
             child: Container(
               width: double.infinity,

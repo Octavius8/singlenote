@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   bool correctPassword = true;
   UserWidgetsModel? userWidgetsModel;
-  int _currentView = Config.VIEW_LISTNOTES;
+  int _currentView = Config.VIEW_HOMEDASHBOARD;
   //authentication
 
   //App Wide
@@ -217,6 +217,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                               toast("Saving...");
                                               note?.noteContent =
                                                   _noteTextController.text;
+
+                                              log.debug("Main",
+                                                  "Saving note. noteID ${note?.noteID}");
                                               bool status =
                                                   await user.saveNote(note);
                                               if (status) {
@@ -260,14 +263,24 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   //Note LIst
                   AnimatedPositioned(
                     top: 100,
-                    right: _currentView == Config.VIEW_LISTNOTES
+                    right: _currentView == Config.VIEW_HOMEDASHBOARD
                         ? 0
                         : -MediaQuery.of(context).size.width,
                     duration: Duration(milliseconds: 500),
                     width: MediaQuery.of(context).size.width -
                         (Config.MENU_WIDTH + 5),
                     height: MediaQuery.of(context).size.height - 100,
-                    child: NoteList(user: user, context: context),
+                    child: NoteList(
+                        onSelect: (int noteID) {
+                          _currentView = Config.VIEW_SHOWNOTE;
+                          getNote(noteID);
+                          setNoteString();
+                          _noteEditMode = false;
+                          _menuIndex = Config.MENU_NOTEINDEX;
+                          setState(() {});
+                        },
+                        user: user,
+                        context: context),
                   ),
 
                   //Settings
@@ -320,9 +333,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   //Side Menu
 
                   Column(children: [
-                    SideMenu(
-                        items: ["NOTES", "JOURNAL", "SCROLL II", "ASSISTANT"],
-                        index: _menuIndex)
+                    SideMenu(items: [
+                      "HOME",
+                      "NOTES",
+                      "JOURNAL",
+                      "ASSISTANT",
+                    ], index: _menuIndex)
                   ]),
 
                   //Fingerprint Scanner
@@ -465,8 +481,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             String logPrefix = "SideMenu | onTap()";
             String noteID = "";
 
-            if (itemIndex == Config.MENU_NOTEINDEX) {
-              _currentView = Config.VIEW_LISTNOTES;
+            if (itemIndex == Config.MENU_HOMEINDEX ||
+                itemIndex == Config.MENU_NOTEINDEX) {
+              _currentView = Config.VIEW_HOMEDASHBOARD;
               noteID = Config.OVI_NOTE_ID;
             }
             if (itemIndex == Config.MENU_JOURNALINDEX)

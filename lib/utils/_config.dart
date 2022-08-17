@@ -17,7 +17,7 @@ class Config {
   static final String TOAST_NARRATION_NOTESAVED = "Saved!";
 
   // Screen View Mode
-  static final int VIEW_LISTNOTES = 0;
+  static final int VIEW_HOMEDASHBOARD = 0;
   static final int VIEW_SHOWNOTE = 1;
 
   //Cities
@@ -36,9 +36,10 @@ class Config {
   static final String WEATHER_KEY = "9bc6faa8afe24d1d992111550222405";
 
   //SideMenu
-  static final int MENU_NOTEINDEX = 0;
-  static final int MENU_JOURNALINDEX = 1;
-  static final int MENU_SHORTCUTSINDEX = 2;
+  static final int MENU_HOMEINDEX = 0;
+  static final int MENU_NOTEINDEX = 1;
+  static final int MENU_JOURNALINDEX = 2;
+  static final int MENU_SHORTCUTSINDEX = 3;
   static final double MENU_WIDTH = 40;
 
   //Logs

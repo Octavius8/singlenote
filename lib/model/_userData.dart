@@ -102,7 +102,18 @@ class UserData with ChangeNotifier {
 
   bool saveNote(Note? note) {
     bool status = false;
-
+    log.info("User | saveNote",
+        "Started saveNote function. Note ID is ${note?.noteID}");
+    try {
+      List<Map<String, dynamic>> notesList = List.castFrom(data?["notes"]);
+      notesList.removeWhere((item) => item['noteID'] == note!.noteID);
+      notesList.add(note!.toMap());
+      data?["notes"] = notesList;
+      saveData();
+      status = true;
+    } catch (ex) {
+      log.error("User | SaveNote", "Something went wrong: " + ex.toString());
+    }
     return status;
   }
 
