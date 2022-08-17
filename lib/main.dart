@@ -67,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   //Note
   TextEditingController _noteTextController = new TextEditingController();
+  TextEditingController _noteTitleController = new TextEditingController();
   TextEditingController _journalTextController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
   late final AnimationController _animationController;
@@ -129,6 +130,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   void setNoteString() async {
     _noteTextController.text = note?.noteContent ?? "";
+    _noteTitleController.text = note?.noteTitle ?? "";
     setState(() {});
   }
 
@@ -217,6 +219,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                               toast("Saving...");
                                               note?.noteContent =
                                                   _noteTextController.text;
+                                              note?.noteTitle =
+                                                  _noteTitleController.text;
 
                                               log.debug("Main",
                                                   "Saving note. noteID ${note?.noteID}");
@@ -254,6 +258,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                           setState(() {});
                                         },
                                         child: NoteTextArea(
+                                            titleController:
+                                                _noteTitleController,
                                             textController: _noteTextController,
                                             editMode: _noteEditMode))
                                   ])

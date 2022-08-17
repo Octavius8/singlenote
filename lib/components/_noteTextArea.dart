@@ -9,9 +9,13 @@ import 'package:flutter/services.dart';
 
 class NoteTextArea extends StatefulWidget {
   TextEditingController textController;
+  TextEditingController titleController;
   bool editMode;
 
-  NoteTextArea({required this.textController, this.editMode = false});
+  NoteTextArea(
+      {required this.textController,
+      required this.titleController,
+      this.editMode = false});
   @override
   State<StatefulWidget> createState() {
     return new NoteTextAreaState();
@@ -109,26 +113,44 @@ class NoteTextAreaState extends State<NoteTextArea> {
       !widget.editMode
           ?
           //Viewing Screen
-          Container(
-              width: double.infinity,
-              padding: EdgeInsets.only(top: 10, left: 15, right: 10),
-              height: MediaQuery.of(context).size.height - 100,
-              child: SingleChildScrollView(
-                  controller: _scrollControllerView,
-                  child: RichText(
-                      text: TextSpan(
-                          style: TextStyle(color: Config.COLOR_PRIMARY),
-                          children: stringToTextSpanList(
-                              widget.textController.text)))))
+          Column(children: [
+              Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.only(top: 10, left: 15, right: 10),
+                  child: Text(widget.titleController.text,
+                      style: TextStyle(fontWeight: FontWeight.bold))),
+              Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.only(top: 10, left: 15, right: 10),
+                  height: MediaQuery.of(context).size.height - 170,
+                  child: SingleChildScrollView(
+                      controller: _scrollControllerView,
+                      child: RichText(
+                          text: TextSpan(
+                              style: TextStyle(color: Config.COLOR_PRIMARY),
+                              children: stringToTextSpanList(
+                                  widget.textController.text)))))
+            ])
           :
 
           //Editing Screen
           SingleChildScrollView(
-              child: Container(
+              child: Column(children: [
+              Container(
+                  padding: EdgeInsets.only(top: 10, left: 15, right: 10),
+                  child: TextField(
+                    decoration: null,
+                    controller: widget.titleController,
+                    style: TextStyle(
+                        fontSize: 13,
+                        color: Config.COLOR_LIGHTGRAY,
+                        fontWeight: FontWeight.bold),
+                  )),
+              Container(
                   padding: EdgeInsets.only(top: 10, left: 15, right: 10),
                   height: _keyboardVisible
-                      ? 400
-                      : MediaQuery.of(context).size.height - 100,
+                      ? 380
+                      : MediaQuery.of(context).size.height - 170,
                   child: TextField(
                     decoration: null,
                     maxLines: null,
@@ -138,7 +160,8 @@ class NoteTextAreaState extends State<NoteTextArea> {
                         TextStyle(fontSize: 13, color: Config.COLOR_LIGHTGRAY),
                     keyboardType: TextInputType.multiline,
                     controller: widget.textController,
-                  ))),
+                  ))
+            ])),
 
       //Link Copy vs Launch
 

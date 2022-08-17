@@ -65,6 +65,8 @@ class UserData with ChangeNotifier {
           log.debug("UserData | getAllNotes()", "New Note being added...");
         }
       });
+
+      finalList.sort((a, b) => b.noteID.compareTo(a.noteID));
     } catch (e) {
       log.error("UserData | getAllNotes()", "Failure: ${e.toString()}");
     }
