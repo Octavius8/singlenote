@@ -80,6 +80,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   bool correctPassword = true;
   UserWidgetsModel? userWidgetsModel;
   int _currentView = Config.VIEW_HOMEDASHBOARD;
+
+  bool _draggingWidget = false;
   //authentication
 
   //App Wide
@@ -313,7 +315,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       duration: Duration(milliseconds: 300),
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width -
-                          (MediaQuery.of(context).size.width / 3),
+                          (MediaQuery.of(context).size.width / 7),
                       left: _displaySettings
                           ? 0
                           : -MediaQuery.of(context).size.width -
@@ -325,15 +327,77 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             right: Config.PADDING_DEFAULT,
                             top: 30),
                         decoration: BoxDecoration(color: Colors.white),
-                        child: Column(children: [
-                          Padding(
-                              padding: EdgeInsets.only(top: 10, bottom: 10),
-                              child: Text("Your Widgets")),
-                          Wrap(
-                              spacing: 5,
-                              children:
-                                  userWidgetsModel!.compileListOfWidgets()),
-                        ]),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              //Users Widgets
+                              Container(
+                                  height:
+                                      MediaQuery.of(context).size.height / 2,
+                                  child: Column(children: [
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 10, bottom: 10),
+                                        child: Text("Your Widgets")),
+                                    Expanded(
+                                        child: Stack(children: [
+                                      Wrap(
+                                          spacing: 5,
+                                          children: userWidgetsModel!
+                                              .compileListOfWidgets()),
+                                      _draggingWidget
+                                          ? Container(
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xbbaaaaaa),
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(20))),
+                                              child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Center(
+                                                        child:
+                                                            Column(children: [
+                                                      Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  bottom: 10),
+                                                          child: Icon(
+                                                              Icons.library_add,
+                                                              color: Colors
+                                                                  .white)),
+                                                      Text(
+                                                          "Drag Here to Add Widget",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white))
+                                                    ]))
+                                                  ]))
+                                          : SizedBox.shrink(),
+                                    ]))
+                                  ])),
+
+                              //Divider
+                              Divider(),
+
+                              //Widget Catalogue
+                              Container(
+                                  margin: EdgeInsets.only(bottom: 50),
+                                  height:
+                                      MediaQuery.of(context).size.height / 3,
+                                  child: Column(children: [
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 10, bottom: 10),
+                                        child: Text("Available Widgets")),
+                                    Wrap(
+                                        spacing: 5,
+                                        runSpacing: 20,
+                                        children: userWidgetsModel!
+                                            .getWidgetCatalogue())
+                                  ])),
+                            ]),
                       )),
 
                   //Side Menu

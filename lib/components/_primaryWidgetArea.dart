@@ -6,6 +6,8 @@ import '../utils/_config.dart';
 import 'dart:async';
 import 'widgets/countdown/countdown.dart';
 import '../model/_userData.dart';
+import 'package:screenshot/screenshot.dart';
+import '../utils/_log.dart';
 
 class PrimaryWidgetArea extends StatefulWidget {
   UserData user;
@@ -92,7 +94,7 @@ class UserWidgetsModel {
     });
 
     //New Icon
-    finalList.add(
+    /*finalList.add(
       Padding(
           padding: EdgeInsets.all(Config.WIDGET_WIDTH / 3),
           child: GestureDetector(
@@ -104,7 +106,52 @@ class UserWidgetsModel {
                       "FF" + (user.data?["color_highlight"] ?? "000000"),
                       radix: 16)),
                   size: Config.WIDGET_WIDTH / 4))),
-    );
+    );*/
+    return finalList;
+  }
+
+  List<Widget> getWidgetCatalogue() {
+    List<Widget> finalList = [];
+
+    //International Clock Widgets
+    ScreenshotController internationalClockScreenshotController =
+        ScreenshotController();
+    finalList.add(Draggable<String>(
+        data: '2',
+        child: InternationalClock(
+            city: 'Kyoto',
+            highlightColor: Color(int.parse(
+                "FF" + user.data?['mobile_app']['highlightColor'],
+                radix: 16))),
+        feedback: Icon(Icons.library_add, color: Config.COLOR_LIGHTGRAY)));
+
+    //White Noise Widgets
+    finalList.add(WhiteNoise(
+        highlightColor: Color(int.parse(
+            "FF" + user.data?['mobile_app']['highlightColor'],
+            radix: 16)),
+        audioFile: 'ship',
+        narration: 'White Noise'));
+
+    //Counter Widget
+    finalList.add(Counter(
+        index: 0,
+        narration: "Counter",
+        count: 30,
+        highlightColor: Color(int.parse(
+            "FF" + user.data?['mobile_app']['highlightColor'],
+            radix: 16))));
+
+    //Count Down Widget
+    finalList.add(CountDown(
+        index: 0,
+        narration: "Count Down Timer",
+        seconds: 300,
+        highlightColor: Color(int.parse(
+            "FF" + user.data?['mobile_app']['highlightColor'],
+            radix: 16)),
+        voicePrompt: false));
+
     return finalList;
   }
 }
