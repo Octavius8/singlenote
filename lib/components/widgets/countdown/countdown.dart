@@ -18,7 +18,7 @@ class CountDown extends StatefulWidget {
   CountDown(
       {this.index = 0,
       this.narration = "Count Down",
-      this.seconds = 0,
+      this.seconds = 300,
       required this.highlightColor,
       this.voicePrompt = false});
 

@@ -9,10 +9,12 @@ class WhiteNoise extends StatefulWidget {
   String narration;
   String audioFile;
   Color highlightColor;
+  String defaultAudioFile = Config.WIDGET_WHITENOISE_DEFAULT_FILE;
+  String defaultNarration = Config.WIDGET_WHITENOISE_DEFAULT_NARRATION;
 
   //Constructor
   WhiteNoise(
-      {this.audioFile = "",
+      {this.audioFile = "ship",
       this.narration = "White Noise",
       required this.highlightColor});
 
@@ -32,6 +34,8 @@ class WhiteNoiseState extends State<WhiteNoise> {
   @override
   void initState() {
     super.initState();
+    if (widget.audioFile == "") widget.audioFile = widget.defaultAudioFile;
+    if (widget.narration == "") widget.narration = widget.defaultNarration;
     setAudioWeb();
   }
 

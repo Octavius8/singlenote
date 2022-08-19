@@ -51,6 +51,9 @@ class Config {
   static final double WIDGET_HEIGHT = 40;
   static final double WIDGET_ICONSIZE = 14;
   static final int WIDGET_NUMBER_TO_DISPLAY = 3;
+  static final String WIDGET_INTERNATIONAL_CLOCK_DEFAULT_CITY = "Lusaka";
+  static final String WIDGET_WHITENOISE_DEFAULT_FILE = "ship";
+  static final String WIDGET_WHITENOISE_DEFAULT_NARRATION = "White Noise";
 
   //Data
   static final String DATA_TEMPLATE_FILE = 'assets/data_template.json';

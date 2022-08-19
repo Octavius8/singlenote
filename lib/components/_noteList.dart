@@ -56,8 +56,12 @@ class _NoteListState extends State<NoteList> {
           Expanded(child: SizedBox.shrink()),
           Padding(
               padding: EdgeInsets.only(right: 10),
-              child:
-                  Icon(Icons.search, color: Config.COLOR_LIGHTGRAY, size: 20)),
+              child: GestureDetector(
+                  onTap: () {
+                    widget.user.resetData();
+                  },
+                  child: Icon(Icons.search,
+                      color: Config.COLOR_LIGHTGRAY, size: 20))),
           GestureDetector(
               onTap: () {
                 _displayNewNoteDialog(widget.context);

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'widgets/international_clock/international_clock.dart';
 import 'widgets/white_noise/white_noise.dart';
 import 'widgets/counter/counter.dart';
+import 'widgets/countdown/countdown.dart';
+import '../model/_userWidget.dart';
 import '../utils/_config.dart';
 import 'dart:async';
-import 'widgets/countdown/countdown.dart';
 import '../model/_userData.dart';
 import 'package:screenshot/screenshot.dart';
 import '../utils/_log.dart';
@@ -20,10 +21,17 @@ class PrimaryWidgetArea extends StatefulWidget {
 
 class PrimaryWidgetAreaState extends State<PrimaryWidgetArea> {
   UserWidgetsModel? userWidgetsModel;
+  Log log = new Log();
 
   @override
   void initState() {
     super.initState();
+    widget.user.addListener(() {
+      log.debug(
+          "NoteList | initState()", "NoteList received notification of change");
+
+      setState(() {});
+    });
     userWidgetsModel = new UserWidgetsModel(user: widget.user);
   }
 
@@ -35,100 +43,66 @@ class PrimaryWidgetAreaState extends State<PrimaryWidgetArea> {
                 right: BorderSide(width: 1, color: Config.COLOR_))),*/
         child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(children: userWidgetsModel!.compileListOfWidgets())));
+            child: Row(children: userWidgetsModel!.getFlutterWidgets())));
   }
 }
 
 class UserWidgetsModel {
   UserData user;
+  Log log = new Log();
 
   UserWidgetsModel({required this.user});
 
-  List<Widget> compileListOfWidgets() {
+  List<Widget> getFlutterWidgets() {
     List<Widget> finalList = [];
-    int index = 0;
-    user.data?['mobile_app']['primaryWidgets'].forEach((minwidget) {
-      //International Clock Widgets
-      if (minwidget["type"] == "international_clock") {
-        finalList.add(InternationalClock(
-            city: minwidget["city"],
-            highlightColor: Color(int.parse(
-                "FF" + user.data?['mobile_app']['highlightColor'],
-                radix: 16))));
+    List<UserWidget> userWidgetList = user.getAllUserWidgets();
+    userWidgetList.forEach((userWidget) {
+      try {
+        finalList.add(userWidget.toFlutterWidget());
+      } catch (ex) {
+        log.error("UserWidgetModel | getFlutterWidgets()",
+            "Failure:" + ex.toString());
       }
-
-      //White Noise Widgets
-      if (minwidget["type"] == "white_noise") {
-        finalList.add(WhiteNoise(
-            highlightColor: Color(int.parse(
-                "FF" + user.data?['mobile_app']['highlightColor'],
-                radix: 16)),
-            audioFile: minwidget["audioFile"],
-            narration: minwidget["narration"]));
-      }
-
-      //Counter Widget
-      if (minwidget["type"] == "counter") {
-        finalList.add(Counter(
-            index: index,
-            narration: minwidget["narration"],
-            count: int.parse(minwidget["count"]),
-            highlightColor: Color(int.parse(
-                "FF" + user.data?['mobile_app']['highlightColor'],
-                radix: 16))));
-      }
-
-      //Count Down Widget
-      if (minwidget["type"] == "countdown") {
-        finalList.add(CountDown(
-            index: index,
-            narration: minwidget["narration"],
-            seconds: int.parse(minwidget["seconds"]),
-            highlightColor: Color(int.parse(
-                "FF" + user.data?['mobile_app']['highlightColor'],
-                radix: 16)),
-            voicePrompt: minwidget["voicePrompt"] == "true" ? true : false));
-      }
-
-      index++;
     });
+    log.info("UserWidgetsModel | getFlutterWidgets",
+        "Total user widgets: " + finalList.length.toString());
 
-    //New Icon
-    /*finalList.add(
-      Padding(
-          padding: EdgeInsets.all(Config.WIDGET_WIDTH / 3),
-          child: GestureDetector(
-              onTap: () {
-                user.resetData();
-              },
-              child: Icon(Icons.add_to_photos_rounded,
-                  color: Color(int.parse(
-                      "FF" + (user.data?["color_highlight"] ?? "000000"),
-                      radix: 16)),
-                  size: Config.WIDGET_WIDTH / 4))),
-    );*/
     return finalList;
   }
 
-  List<Widget> getWidgetCatalogue() {
+  List<Widget> getWidgetCatalogue(
+      Function dragFunction, Function dropFunction) {
     List<Widget> finalList = [];
 
     //International Clock Widgets
     ScreenshotController internationalClockScreenshotController =
         ScreenshotController();
-    finalList.add(Draggable<String>(
+
+    UserWidget internationalClock =
+        new UserWidget(type: "international_clock", highlightColor: Colors.red);
+
+    finalList.add(internationalClock.toFlutterWidget());
+    /*finalList.add(Draggable<String>(
         data: '2',
         child: InternationalClock(
+            narration: 'Kyoto',
             city: 'Kyoto',
             highlightColor: Color(int.parse(
-                "FF" + user.data?['mobile_app']['highlightColor'],
+                "FF" + user.data?['mobileApp']['highlightColor'],
                 radix: 16))),
-        feedback: Icon(Icons.library_add, color: Config.COLOR_LIGHTGRAY)));
+        feedback: Icon(Icons.library_add, color: Config.COLOR_LIGHTGRAY),
+        onDragStarted: () {
+          dragFunction.call();
+        },
+        onDragEnd: (DraggableDetails) {
+          dropFunction.call();
+        }));
+
 
     //White Noise Widgets
     finalList.add(WhiteNoise(
         highlightColor: Color(int.parse(
-            "FF" + user.data?['mobile_app']['highlightColor'],
+            "FF" + user.data?['mobileApp']['highlightColor'],
             radix: 16)),
         audioFile: 'ship',
         narration: 'White Noise'));
@@ -139,7 +113,7 @@ class UserWidgetsModel {
         narration: "Counter",
         count: 30,
         highlightColor: Color(int.parse(
-            "FF" + user.data?['mobile_app']['highlightColor'],
+            "FF" + user.data?['mobileApp']['highlightColor'],
             radix: 16))));
 
     //Count Down Widget
@@ -150,7 +124,7 @@ class UserWidgetsModel {
         highlightColor: Color(int.parse(
             "FF" + user.data?['mobile_app']['highlightColor'],
             radix: 16)),
-        voicePrompt: false));
+        voicePrompt: false));*/
 
     return finalList;
   }

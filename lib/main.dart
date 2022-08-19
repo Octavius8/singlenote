@@ -26,11 +26,13 @@ void main() async {
   /*WidgetsFlutterBinding.ensureInitialized();
   ByteData data = await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
   SecurityContext.defaultContext.setTrustedCertificatesBytes(data.buffer.asUint8List());*/
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,7 +49,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({
+  MyHomePage({
     Key? key,
   }) : super(key: key);
 
@@ -75,26 +77,31 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   String noteString = "";
   bool _anistart = true;
   bool _noteEditMode = false;
-  UserData user = new UserData();
-
+  UserData user = UserData();
   bool correctPassword = true;
   UserWidgetsModel? userWidgetsModel;
   int _currentView = Config.VIEW_HOMEDASHBOARD;
 
   bool _draggingWidget = false;
+  bool _userDataLoaded = false;
   //authentication
 
   //App Wide
 
   void initState() {
     super.initState();
+
     _animationController = AnimationController(vsync: this);
     _animationController.duration = Duration(milliseconds: 2000);
     _animationController.reset();
     _animationController.forward();
-    userWidgetsModel = new UserWidgetsModel(user: this.user);
-    user.addListener(() {
-      log.info("Main | initState()", "Updated listener");
+    user.loadData().then((status) {
+      _userDataLoaded = true;
+      userWidgetsModel = new UserWidgetsModel(user: this.user);
+      user.addListener(() {
+        log.info("Main | initState()", "Updated listener");
+        setState(() {});
+      });
       setState(() {});
     });
   }
@@ -105,11 +112,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   }
 
   bool validatePassword() {
-    log.debug("Pass", "Started validation function ");
+    log.debug("Main | validatePassword", "Started validation function ");
     String password = _passwordController.text;
     if (getMd5(password) == user.data?['password']) {
       log.debug(
-          "Pass",
+          "Main | validatePassword",
           "Correct password. Password entered is " +
               getMd5(password) +
               " instead of" +
@@ -163,375 +170,417 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     // than having to individually change instances of widgets.
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
+      body: !_userDataLoaded
+          ? Container(child: Center(child: CircularProgressIndicator()))
+          : Center(
+              // Center is a layout widget. It takes a single child and positions it
+              // in the middle of the parent.
+              child: Column(
+                // Column is also a layout widget. It takes a list of children and
+                // arranges them vertically. By default, it sizes itself to fit its
+                // children horizontally, and tries to be as tall as its parent.
+                //
+                // Column has various properties to control how it sizes itself and
+                // how it positions its children. Here we use mainAxisAlignment to
+                // center the children vertically; the main axis here is the vertical
+                // axis because Columns are vertical (the cross axis would be
+                // horizontal).
 
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Stack(
-                children: [
-                  //Notepad
-                  Positioned(
-                      right: 10,
-                      child: SingleChildScrollView(
-                        child: Container(
-                            height: MediaQuery.of(context).size.height,
-                            margin: EdgeInsets.only(top: 30),
-                            constraints: BoxConstraints(
-                              maxHeight: MediaQuery.of(context).size.height,
-                            ),
-                            width: MediaQuery.of(context).size.width - 50,
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Row(
-                                    children: [
-                                      //Widget Menu
-                                      GestureDetector(
-                                          onTap: () {
-                                            _displaySettings = true;
-                                            setState(() {});
-                                          },
-                                          child: Icon(Icons.more_vert,
-                                              color: Config.COLOR_LIGHTGRAY)),
-                                      //Primary Widget Area
-                                      PrimaryWidgetArea(user: user),
-
-                                      //Spacer
-                                      Expanded(flex: 1, child: Text("")),
-
-                                      //Save
-                                      GestureDetector(
-                                          onTap: () async {
-                                            if (_noteEditMode) {
-                                              toast("Saving...");
-                                              note?.noteContent =
-                                                  _noteTextController.text;
-                                              note?.noteTitle =
-                                                  _noteTitleController.text;
-
-                                              log.debug("Main",
-                                                  "Saving note. noteID ${note?.noteID}");
-                                              bool status =
-                                                  await user.saveNote(note);
-                                              if (status) {
-                                                _noteEditMode = false;
-                                                setState(() {});
-                                              }
-                                            } else {
-                                              _noteEditMode = true;
-                                              toast(Config
-                                                  .TOAST_NARRATION_EDITMODE);
-                                              setState(() {});
-                                            }
-                                          },
-                                          child: Icon(Icons.edit_note_rounded,
-                                              color: _noteEditMode
-                                                  ? Config.COLOR_LIGHTGRAY
-                                                  : null,
-                                              size: 32)),
-
-                                      //Save Button
-                                    ],
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: Stack(
+                      children: [
+                        //Notepad
+                        Positioned(
+                            right: 10,
+                            child: SingleChildScrollView(
+                              child: Container(
+                                  height: MediaQuery.of(context).size.height,
+                                  margin: EdgeInsets.only(top: 30),
+                                  constraints: BoxConstraints(
+                                    maxHeight:
+                                        MediaQuery.of(context).size.height,
                                   ),
+                                  width: MediaQuery.of(context).size.width - 50,
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            //Widget Menu
+                                            GestureDetector(
+                                                onTap: () {
+                                                  _displaySettings = true;
+                                                  setState(() {});
+                                                },
+                                                child: Icon(Icons.more_vert,
+                                                    color: Config
+                                                        .COLOR_LIGHTGRAY)),
+                                            //Primary Widget Area
+                                            PrimaryWidgetArea(user: user),
 
-                                  // Text Area
-                                  Stack(children: [
-                                    //Note Area
-                                    GestureDetector(
-                                        onDoubleTap: () {
-                                          _noteEditMode = true;
-                                          toast(
-                                              Config.TOAST_NARRATION_EDITMODE);
-                                          setState(() {});
-                                        },
-                                        child: NoteTextArea(
-                                            titleController:
-                                                _noteTitleController,
-                                            textController: _noteTextController,
-                                            editMode: _noteEditMode))
-                                  ])
-                                ])),
-                      )),
+                                            //Spacer
+                                            Expanded(flex: 1, child: Text("")),
 
-                  //Note LIst
-                  AnimatedPositioned(
-                    top: 100,
-                    right: _currentView == Config.VIEW_HOMEDASHBOARD
-                        ? 0
-                        : -MediaQuery.of(context).size.width,
-                    duration: Duration(milliseconds: 500),
-                    width: MediaQuery.of(context).size.width -
-                        (Config.MENU_WIDTH + 5),
-                    height: MediaQuery.of(context).size.height - 100,
-                    child: NoteList(
-                        onSelect: (int noteID) {
-                          _currentView = Config.VIEW_SHOWNOTE;
-                          getNote(noteID);
-                          setNoteString();
-                          _noteEditMode = false;
-                          _menuIndex = Config.MENU_NOTEINDEX;
-                          setState(() {});
-                        },
-                        user: user,
-                        context: context),
-                  ),
+                                            //Save
+                                            GestureDetector(
+                                                onTap: () async {
+                                                  if (_noteEditMode) {
+                                                    toast("Saving...");
+                                                    note?.noteContent =
+                                                        _noteTextController
+                                                            .text;
+                                                    note?.noteTitle =
+                                                        _noteTitleController
+                                                            .text;
 
-                  //Settings
-                  //Black screen
-                  Positioned(
-                      //duration: Duration(milliseconds: 300),
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      top: _displaySettings
-                          ? 0
-                          : -(MediaQuery.of(context).size.height),
-                      child: GestureDetector(
-                          onTap: () {
-                            _displaySettings = false;
-                            setState(() {});
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(color: Color(0x77000000)),
-                            child: Text("Hey Nigger.."),
-                          ))),
+                                                    log.debug("Main",
+                                                        "Saving note. noteID ${note?.noteID}");
+                                                    bool status = await user
+                                                        .saveNote(note);
+                                                    if (status) {
+                                                      _noteEditMode = false;
+                                                      setState(() {});
+                                                    }
+                                                  } else {
+                                                    _noteEditMode = true;
+                                                    toast(Config
+                                                        .TOAST_NARRATION_EDITMODE);
+                                                    setState(() {});
+                                                  }
+                                                },
+                                                child: Icon(
+                                                    Icons.edit_note_rounded,
+                                                    color: _noteEditMode
+                                                        ? Config.COLOR_LIGHTGRAY
+                                                        : null,
+                                                    size: 32)),
 
-                  //Settings Menu
-                  AnimatedPositioned(
-                      duration: Duration(milliseconds: 300),
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width -
-                          (MediaQuery.of(context).size.width / 7),
-                      left: _displaySettings
-                          ? 0
-                          : -MediaQuery.of(context).size.width -
-                              (MediaQuery.of(context).size.width / 3),
-                      child: Container(
-                        margin: EdgeInsets.only(left: Config.MENU_WIDTH),
-                        padding: EdgeInsets.only(
-                            left: Config.PADDING_DEFAULT,
-                            right: Config.PADDING_DEFAULT,
-                            top: 30),
-                        decoration: BoxDecoration(color: Colors.white),
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              //Users Widgets
-                              Container(
-                                  height:
-                                      MediaQuery.of(context).size.height / 2,
-                                  child: Column(children: [
-                                    Padding(
-                                        padding: EdgeInsets.only(
-                                            top: 10, bottom: 10),
-                                        child: Text("Your Widgets")),
-                                    Expanded(
-                                        child: Stack(children: [
-                                      Wrap(
-                                          spacing: 5,
-                                          children: userWidgetsModel!
-                                              .compileListOfWidgets()),
-                                      _draggingWidget
-                                          ? Container(
-                                              decoration: BoxDecoration(
-                                                  color: Color(0xbbaaaaaa),
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(20))),
-                                              child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Center(
-                                                        child:
-                                                            Column(children: [
-                                                      Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  bottom: 10),
-                                                          child: Icon(
-                                                              Icons.library_add,
-                                                              color: Colors
-                                                                  .white)),
-                                                      Text(
-                                                          "Drag Here to Add Widget",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white))
-                                                    ]))
-                                                  ]))
-                                          : SizedBox.shrink(),
-                                    ]))
-                                  ])),
+                                            //Save Button
+                                          ],
+                                        ),
 
-                              //Divider
-                              Divider(),
+                                        // Text Area
+                                        Stack(children: [
+                                          //Note Area
+                                          GestureDetector(
+                                              onDoubleTap: () {
+                                                _noteEditMode = true;
+                                                toast(Config
+                                                    .TOAST_NARRATION_EDITMODE);
+                                                setState(() {});
+                                              },
+                                              child: NoteTextArea(
+                                                  titleController:
+                                                      _noteTitleController,
+                                                  textController:
+                                                      _noteTextController,
+                                                  editMode: _noteEditMode))
+                                        ])
+                                      ])),
+                            )),
 
-                              //Widget Catalogue
-                              Container(
-                                  margin: EdgeInsets.only(bottom: 50),
-                                  height:
-                                      MediaQuery.of(context).size.height / 3,
-                                  child: Column(children: [
-                                    Padding(
-                                        padding: EdgeInsets.only(
-                                            top: 10, bottom: 10),
-                                        child: Text("Available Widgets")),
-                                    Wrap(
-                                        spacing: 5,
-                                        runSpacing: 20,
-                                        children: userWidgetsModel!
-                                            .getWidgetCatalogue())
-                                  ])),
-                            ]),
-                      )),
+                        //Note LIst
+                        AnimatedPositioned(
+                          top: 100,
+                          right: _currentView == Config.VIEW_HOMEDASHBOARD
+                              ? 0
+                              : -MediaQuery.of(context).size.width,
+                          duration: Duration(milliseconds: 500),
+                          width: MediaQuery.of(context).size.width -
+                              (Config.MENU_WIDTH + 5),
+                          height: MediaQuery.of(context).size.height - 100,
+                          child: NoteList(
+                              onSelect: (int noteID) {
+                                _currentView = Config.VIEW_SHOWNOTE;
+                                getNote(noteID);
+                                setNoteString();
+                                _noteEditMode = false;
+                                _menuIndex = Config.MENU_NOTEINDEX;
+                                setState(() {});
+                              },
+                              user: user,
+                              context: context),
+                        ),
 
-                  //Side Menu
+                        //Settings
+                        //Black screen
+                        Positioned(
+                            //duration: Duration(milliseconds: 300),
+                            height: MediaQuery.of(context).size.height,
+                            width: MediaQuery.of(context).size.width,
+                            top: _displaySettings
+                                ? 0
+                                : -(MediaQuery.of(context).size.height),
+                            child: GestureDetector(
+                                onTap: () {
+                                  _displaySettings = false;
+                                  setState(() {});
+                                },
+                                child: Container(
+                                  decoration:
+                                      BoxDecoration(color: Color(0x77000000)),
+                                  child: Text("Hey Nigger.."),
+                                ))),
 
-                  Column(children: [
-                    SideMenu(items: [
-                      "HOME",
-                      "NOTES",
-                      "JOURNAL",
-                      "ASSISTANT",
-                    ], index: _menuIndex)
-                  ]),
+                        //Settings Menu
+                        AnimatedPositioned(
+                            duration: Duration(milliseconds: 300),
+                            height: MediaQuery.of(context).size.height,
+                            width: MediaQuery.of(context).size.width -
+                                (MediaQuery.of(context).size.width / 7),
+                            left: _displaySettings
+                                ? 0
+                                : -MediaQuery.of(context).size.width -
+                                    (MediaQuery.of(context).size.width / 3),
+                            child: Container(
+                              margin: EdgeInsets.only(left: Config.MENU_WIDTH),
+                              padding: EdgeInsets.only(
+                                  left: Config.PADDING_DEFAULT,
+                                  right: Config.PADDING_DEFAULT,
+                                  top: 30),
+                              decoration: BoxDecoration(color: Colors.white),
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    //Users Widgets
+                                    Container(
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                2,
+                                        child: Column(children: [
+                                          Padding(
+                                              padding: EdgeInsets.only(
+                                                  top: 10, bottom: 10),
+                                              child: Text("Your Widgets")),
+                                          Expanded(
+                                              child: Stack(children: [
+                                            DragTarget(builder: (context,
+                                                List<Object?> candidateData,
+                                                rejectedData) {
+                                              return Wrap(
+                                                  spacing: 5,
+                                                  children: userWidgetsModel!
+                                                      .getFlutterWidgets());
+                                            }),
+                                            AnimatedOpacity(
+                                              duration:
+                                                  Duration(milliseconds: 200),
+                                              opacity: _draggingWidget ? 1 : 0,
+                                              child: Container(
+                                                  decoration: BoxDecoration(
+                                                      color: Color(0xccaaaaaa),
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  20))),
+                                                  child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Center(
+                                                            child: Column(
+                                                                children: [
+                                                              Padding(
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          bottom:
+                                                                              10),
+                                                                  child: Icon(
+                                                                      Icons
+                                                                          .library_add,
+                                                                      color: Colors
+                                                                          .white)),
+                                                              Text(
+                                                                  "Drag Here to Add Widget",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white))
+                                                            ]))
+                                                      ])),
+                                            ),
+                                          ]))
+                                        ])),
 
-                  //Fingerprint Scanner
-                  AnimatedPositioned(
-                    duration: Duration(milliseconds: 500),
-                    width: _lockedScreen
-                        ? MediaQuery.of(context).size.width
-                        : Config.MENU_WIDTH,
-                    height: _lockedScreen
-                        ? MediaQuery.of(context).size.height
-                        : Config.MENU_WIDTH,
-                    bottom: _lockedScreen ? 0 : 50,
-                    left: 0,
-                    child: GestureDetector(
-                      onTap: () {
-                        if (!_lockedScreen) _lockedScreen = true;
-                        setState(() {});
-                      },
-                      child: Container(
-                          width: double.infinity,
-                          height: MediaQuery.of(context).size.height,
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                // _lockedScreen ? Text("NOTE | 29", style: TextStyle(fontSize: 32, color: Config.COLOR_DARKGRAY)) : SizedBox.shrink(),
+                                    //Divider
+                                    Divider(),
 
-                                //Password
-                                _lockedScreen
-                                    ? Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 20),
-                                        child: SizedBox(
-                                            width: 130,
-                                            child: TextField(
-                                                cursorColor: correctPassword
-                                                    ? Config.COLOR_DARKGRAY
-                                                    : Colors.red,
-                                                controller: _passwordController,
-                                                maxLength: 4,
-                                                obscureText: true,
-                                                autocorrect: false,
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    color: correctPassword
-                                                        ? Config.COLOR_DARKGRAY
-                                                        : Colors.red,
-                                                    letterSpacing: 14),
-                                                decoration: InputDecoration(
-                                                    focusedBorder:
-                                                        UnderlineInputBorder(
-                                                      borderSide: BorderSide(
+                                    //Widget Catalogue
+                                    Container(
+                                        margin: EdgeInsets.only(bottom: 50),
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                3,
+                                        child: Column(children: [
+                                          Padding(
+                                              padding: EdgeInsets.only(
+                                                  top: 10, bottom: 10),
+                                              child: Text("Available Widgets")),
+                                          Wrap(
+                                              spacing: 5,
+                                              runSpacing: 20,
+                                              children: userWidgetsModel!
+                                                  .getWidgetCatalogue(() {
+                                                setState(() {
+                                                  _draggingWidget = true;
+                                                });
+                                              }, () {
+                                                setState(() {
+                                                  _draggingWidget = false;
+                                                });
+                                              }))
+                                        ])),
+                                  ]),
+                            )),
+
+                        //Side Menu
+
+                        Column(children: [
+                          SideMenu(items: [
+                            "HOME",
+                            "NOTES",
+                            "JOURNAL",
+                            "ASSISTANT",
+                          ], index: _menuIndex)
+                        ]),
+
+                        //Fingerprint Scanner
+                        AnimatedPositioned(
+                          duration: Duration(milliseconds: 500),
+                          width: _lockedScreen
+                              ? MediaQuery.of(context).size.width
+                              : Config.MENU_WIDTH,
+                          height: _lockedScreen
+                              ? MediaQuery.of(context).size.height
+                              : Config.MENU_WIDTH,
+                          bottom: _lockedScreen ? 0 : 50,
+                          left: 0,
+                          child: GestureDetector(
+                            onTap: () {
+                              if (!_lockedScreen) _lockedScreen = true;
+                              setState(() {});
+                            },
+                            child: Container(
+                                width: double.infinity,
+                                height: MediaQuery.of(context).size.height,
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      // _lockedScreen ? Text("NOTE | 29", style: TextStyle(fontSize: 32, color: Config.COLOR_DARKGRAY)) : SizedBox.shrink(),
+
+                                      //Password
+                                      _lockedScreen
+                                          ? Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 20),
+                                              child: SizedBox(
+                                                  width: 130,
+                                                  child: TextField(
+                                                      cursorColor:
+                                                          correctPassword
+                                                              ? Config
+                                                                  .COLOR_DARKGRAY
+                                                              : Colors.red,
+                                                      controller:
+                                                          _passwordController,
+                                                      maxLength: 4,
+                                                      obscureText: true,
+                                                      autocorrect: false,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
                                                           color: correctPassword
                                                               ? Config
                                                                   .COLOR_DARKGRAY
-                                                              : Colors.red),
-                                                    ),
-                                                    /*hintText: "****", hintStyle: TextStyle(color: Colors.white),*/ counterText:
-                                                        "" /*, enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0), borderSide: BorderSide(color: Config.COLOR_DARKGRAY))*/,
-                                                    fillColor: Colors.white,
-                                                    filled: true))))
-                                    : SizedBox.shrink(),
+                                                              : Colors.red,
+                                                          letterSpacing: 14),
+                                                      decoration:
+                                                          InputDecoration(
+                                                              focusedBorder:
+                                                                  UnderlineInputBorder(
+                                                                borderSide: BorderSide(
+                                                                    color: correctPassword
+                                                                        ? Config
+                                                                            .COLOR_DARKGRAY
+                                                                        : Colors
+                                                                            .red),
+                                                              ),
+                                                              /*hintText: "****", hintStyle: TextStyle(color: Colors.white),*/ counterText:
+                                                                  "" /*, enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0), borderSide: BorderSide(color: Config.COLOR_DARKGRAY))*/,
+                                                              fillColor:
+                                                                  Colors.white,
+                                                              filled: true))))
+                                          : SizedBox.shrink(),
 
-                                //Text(_authorized),
-                                GestureDetector(
-                                    onTap: () {
-                                      //_authenticateWithBiometrics();
-                                      if (_lockedScreen) {
-                                        if (validatePassword()) {
-                                          _lockedScreen = false;
-                                          _passwordController.text = "";
-                                          correctPassword = true;
-                                        } else {
-                                          //Incorrect password
-                                          correctPassword = false;
-                                        }
-                                      } else
-                                        _lockedScreen = true;
-                                      setState(() {});
-                                    },
-                                    child: AnimatedContainer(
-                                      duration: Duration(milliseconds: 500),
-                                      margin: false
-                                          ? EdgeInsets.all(30)
-                                          : EdgeInsets.only(right: 5),
-                                      padding: _lockedScreen
-                                          ? EdgeInsets.all(30)
-                                          : EdgeInsets.all(2),
-                                      child: AnimatedSize(
-                                          duration: Duration(milliseconds: 600),
-                                          child: Icon(
-                                            Icons.lock,
-                                            color: _lockedScreen
-                                                ? correctPassword
-                                                    ? Config.COLOR_DARKGRAY
-                                                    : Colors.red
-                                                : Colors.white,
-                                            size: _lockedScreen ? 48 : 12,
-                                          )),
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                              color: correctPassword
-                                                  ? Config.COLOR_DARKGRAY
-                                                  : Colors.red)),
-                                      //: Lottie.asset('assets/fingerprint.json'),
-                                    ))
-                              ]),
-                          decoration: BoxDecoration(
-                              color: _lockedScreen
-                                  ? Color(0xFFffffff)
-                                  : Color(0xFF242728),
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(30),
-                                  bottomRight: Radius.circular(30)))),
+                                      //Text(_authorized),
+                                      GestureDetector(
+                                          onTap: () {
+                                            //_authenticateWithBiometrics();
+                                            if (_lockedScreen) {
+                                              if (validatePassword()) {
+                                                _lockedScreen = false;
+                                                _passwordController.text = "";
+                                                correctPassword = true;
+                                              } else {
+                                                //Incorrect password
+                                                correctPassword = false;
+                                              }
+                                            } else
+                                              _lockedScreen = true;
+                                            setState(() {});
+                                          },
+                                          child: AnimatedContainer(
+                                            duration:
+                                                Duration(milliseconds: 500),
+                                            margin: false
+                                                ? EdgeInsets.all(30)
+                                                : EdgeInsets.only(right: 5),
+                                            padding: _lockedScreen
+                                                ? EdgeInsets.all(30)
+                                                : EdgeInsets.all(2),
+                                            child: AnimatedSize(
+                                                duration:
+                                                    Duration(milliseconds: 600),
+                                                child: Icon(
+                                                  Icons.lock,
+                                                  color: _lockedScreen
+                                                      ? correctPassword
+                                                          ? Config
+                                                              .COLOR_DARKGRAY
+                                                          : Colors.red
+                                                      : Colors.white,
+                                                  size: _lockedScreen ? 48 : 12,
+                                                )),
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                border: Border.all(
+                                                    color: correctPassword
+                                                        ? Config.COLOR_DARKGRAY
+                                                        : Colors.red)),
+                                            //: Lottie.asset('assets/fingerprint.json'),
+                                          ))
+                                    ]),
+                                decoration: BoxDecoration(
+                                    color: _lockedScreen
+                                        ? Color(0xFFffffff)
+                                        : Color(0xFF242728),
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(30),
+                                        bottomRight: Radius.circular(30)))),
+                          ),
+                          //End of Container
+                        ),
+                      ],
                     ),
-                    //End of Container
                   ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 

@@ -1,14 +1,16 @@
 {
     "name": "Boss",
     "password": "d93591bdf7860e1e4ee2fca799911215",
-    "mobile_app":{
+    "notes":[{"noteID":"1","noteTitle":"Socks","noteContent":"Hehehe","noteTags":""}],
+    "files":[],
+    "mobileApp": {
         "highlightColor": "62d9b5",
-    "primaryWidgets": [
-        {
-            "type": "white_noise",
-            "audioFile": "ship",
-            "narration": "White Noise"
-        }
-    ]
-}
+        "primaryWidgets": [
+            {
+                "type": "white_noise",
+                "options":{"audioFile": "ship"},
+                "narration": "White Noise2"
+            }
+        ]
+    }
 }
