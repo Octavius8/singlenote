@@ -19,6 +19,7 @@ import 'package:crypto/crypto.dart' as crypto;
 import 'dart:convert' show utf8;
 import 'package:url_launcher/url_launcher.dart';
 import 'model/_userData.dart';
+import 'model/_userWidget.dart';
 
 //widgets
 
@@ -425,11 +426,24 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                               spacing: 5,
                                               runSpacing: 20,
                                               children: userWidgetsModel!
-                                                  .getWidgetCatalogue(() {
+                                                  .getWidgetCatalogue(
+                                                      dragFunction: () {
+                                                log.debug("Main",
+                                                    "Dragging widget started...");
                                                 setState(() {
                                                   _draggingWidget = true;
                                                 });
-                                              }, () {
+                                              }, dropFunction: (UserWidget
+                                                          userWidget) {
+                                                log.debug("Main",
+                                                    "Dragging widget stopped.");
+                                                showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          _buildPopupDialog(
+                                                              context),
+                                                );
                                                 setState(() {
                                                   _draggingWidget = false;
                                                 });
@@ -665,6 +679,28 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   //Tiny dot
                 )))
       ]),
+    );
+  }
+
+  Widget _buildPopupDialog(BuildContext context) {
+    return new AlertDialog(
+      title: const Text('New Widget'),
+      content: new Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text("Hello"),
+        ],
+      ),
+      actions: <Widget>[
+        new FlatButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          textColor: Theme.of(context).primaryColor,
+          child: const Text('Close'),
+        ),
+      ],
     );
   }
 }

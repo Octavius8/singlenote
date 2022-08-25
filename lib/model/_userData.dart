@@ -45,7 +45,8 @@ class UserData with ChangeNotifier {
     } catch (e) {
       // If encountering an error, return 0
       log.info("UserData", "Failed to open file: ${e.toString()}");
-
+      createDataFile();
+      loadData();
       return false;
     }
   }

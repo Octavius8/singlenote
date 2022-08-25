@@ -6,13 +6,13 @@ import '../../../model/_user.dart';
 import '../../../utils/_config.dart';
 
 class InternationalClock extends StatefulWidget {
-  String city;
+  String city = "Lusaka";
   Color highlightColor;
   String narration;
   String defaultCity = Config.WIDGET_INTERNATIONAL_CLOCK_DEFAULT_CITY;
 
   InternationalClock(
-      {required this.city,
+      { this.city="Lusaka",
       required this.narration,
       required this.highlightColor,
       Key? key})
@@ -33,7 +33,11 @@ class InternationalClockState extends State<InternationalClock> {
   @override
   void initState() {
     super.initState();
-    if (widget.city == "") widget.city = widget.defaultCity;
+    if (widget.city == "") {
+      widget.city = widget.defaultCity;
+      log.debug(
+          "InternationalClockState | initState", "City set is " + widget.city);
+    }
     weatherObject = new Weather(log: log);
     updateData();
     timer = Timer.periodic(Duration(minutes: 5), (Timer t) => updateData());

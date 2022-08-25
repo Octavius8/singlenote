@@ -34,7 +34,7 @@ class UserWidget {
       log.debug(
           "UserWidget | toFlutterWidget", "Widget is international_clock");
       widget = InternationalClock(
-          city: options?["city"] ?? "",
+          //city: options?["city"] ?? "",
           highlightColor: highlightColor,
           narration: narration ?? "");
     }

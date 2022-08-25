@@ -71,7 +71,7 @@ class UserWidgetsModel {
   }
 
   List<Widget> getWidgetCatalogue(
-      Function dragFunction, Function dropFunction) {
+      {required Function dragFunction, required Function dropFunction}) {
     List<Widget> finalList = [];
 
     //International Clock Widgets
@@ -81,7 +81,20 @@ class UserWidgetsModel {
     UserWidget internationalClock =
         new UserWidget(type: "international_clock", highlightColor: Colors.red);
 
-    finalList.add(internationalClock.toFlutterWidget());
+    Widget draggableInternationalClock = Draggable(
+        child: internationalClock.toFlutterWidget(),
+        feedback: Icon(Icons.add_box),
+        onDragStarted: () {
+          dragFunction();
+        },
+        onDragEnd: (DraggableDetails) {
+          dropFunction(internationalClock);
+        });
+
+    finalList.add(draggableInternationalClock);
+    log.debug("UserWidgetsModel | getWidgetCatalogue",
+        "Added one widget to the list.");
+
     /*finalList.add(Draggable<String>(
         data: '2',
         child: InternationalClock(
