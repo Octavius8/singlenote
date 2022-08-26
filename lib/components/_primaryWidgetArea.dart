@@ -73,6 +73,8 @@ class UserWidgetsModel {
 
   List<Widget> getWidgetCatalogue(
       {required Function dragFunction, required Function dropFunction}) {
+    Color highlightColor = Color(
+        int.parse("FF" + user.data?['mobileApp']['highlightColor'], radix: 16));
     List<Widget> finalList = [];
 
     //International Clock Widgets
@@ -84,7 +86,7 @@ class UserWidgetsModel {
         narration: "International Clock",
         widgetID: DateTime.now().millisecondsSinceEpoch.toString(),
         options: {"city": "Lusaka"},
-        highlightColor: Colors.red);
+        highlightColor: highlightColor);
 
     Widget draggableInternationalClock = Draggable(
         child: internationalClock.toFlutterWidget(),
@@ -109,7 +111,7 @@ class UserWidgetsModel {
         narration: "White Noise",
         widgetID: DateTime.now().millisecondsSinceEpoch.toString(),
         options: {"audioFile": "ship"},
-        highlightColor: Colors.red);
+        highlightColor: highlightColor);
 
     Widget draggableWhiteNoise = Draggable(
         child: whiteNoise.toFlutterWidget(),
@@ -133,7 +135,7 @@ class UserWidgetsModel {
         narration: "Counter",
         widgetID: DateTime.now().millisecondsSinceEpoch.toString(),
         options: {"count": "0"},
-        highlightColor: Colors.red);
+        highlightColor: highlightColor);
 
     Widget draggableCounter = Draggable(
         child: counter.toFlutterWidget(),
@@ -157,7 +159,7 @@ class UserWidgetsModel {
         narration: "Timer",
         widgetID: DateTime.now().millisecondsSinceEpoch.toString(),
         options: {"seconds": "300"},
-        highlightColor: Colors.red);
+        highlightColor: highlightColor);
 
     Widget draggableCountDown = Draggable(
         child: countDown.toFlutterWidget(),

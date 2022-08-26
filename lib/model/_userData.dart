@@ -142,7 +142,7 @@ class UserData with ChangeNotifier {
 
   List<UserWidget> getAllUserWidgets() {
     List<UserWidget> finalList = [];
-    Color highlist = Color(
+    Color highlightColor = Color(
         int.parse("FF" + data?['mobileApp']['highlightColor'], radix: 16));
 
     try {
@@ -154,7 +154,7 @@ class UserData with ChangeNotifier {
               type: widgetMap["type"],
               narration: widgetMap["narration"],
               options: Map.castFrom(widgetMap["options"]),
-              highlightColor: Colors.red);
+              highlightColor: highlightColor);
 
           finalList.add(userWidget);
           log.debug(
