@@ -9,6 +9,7 @@ import 'dart:async';
 import '../model/_userData.dart';
 import 'package:screenshot/screenshot.dart';
 import '../utils/_log.dart';
+import 'dart:io';
 
 class PrimaryWidgetArea extends StatefulWidget {
   UserData user;
@@ -78,8 +79,12 @@ class UserWidgetsModel {
     ScreenshotController internationalClockScreenshotController =
         ScreenshotController();
 
-    UserWidget internationalClock =
-        new UserWidget(type: "international_clock", highlightColor: Colors.red);
+    UserWidget internationalClock = new UserWidget(
+        type: "international_clock",
+        narration: "International Clock",
+        widgetID: DateTime.now().millisecondsSinceEpoch.toString(),
+        options: {"city": "Lusaka"},
+        highlightColor: Colors.red);
 
     Widget draggableInternationalClock = Draggable(
         child: internationalClock.toFlutterWidget(),
@@ -93,51 +98,80 @@ class UserWidgetsModel {
 
     finalList.add(draggableInternationalClock);
     log.debug("UserWidgetsModel | getWidgetCatalogue",
-        "Added one widget to the list.");
-
-    /*finalList.add(Draggable<String>(
-        data: '2',
-        child: InternationalClock(
-            narration: 'Kyoto',
-            city: 'Kyoto',
-            highlightColor: Color(int.parse(
-                "FF" + user.data?['mobileApp']['highlightColor'],
-                radix: 16))),
-        feedback: Icon(Icons.library_add, color: Config.COLOR_LIGHTGRAY),
-        onDragStarted: () {
-          dragFunction.call();
-        },
-        onDragEnd: (DraggableDetails) {
-          dropFunction.call();
-        }));
-
+        "Added one widget to the list. International Clock");
 
     //White Noise Widgets
-    finalList.add(WhiteNoise(
-        highlightColor: Color(int.parse(
-            "FF" + user.data?['mobileApp']['highlightColor'],
-            radix: 16)),
-        audioFile: 'ship',
-        narration: 'White Noise'));
+    ScreenshotController whiteNoiseScreenshotController =
+        ScreenshotController();
+
+    UserWidget whiteNoise = new UserWidget(
+        type: "white_noise",
+        narration: "White Noise",
+        widgetID: DateTime.now().millisecondsSinceEpoch.toString(),
+        options: {"audioFile": "ship"},
+        highlightColor: Colors.red);
+
+    Widget draggableWhiteNoise = Draggable(
+        child: whiteNoise.toFlutterWidget(),
+        feedback: Icon(Icons.add_box),
+        onDragStarted: () {
+          dragFunction();
+        },
+        onDragEnd: (DraggableDetails) {
+          dropFunction(whiteNoise);
+        });
+
+    finalList.add(draggableWhiteNoise);
+    log.debug("UserWidgetsModel | getWidgetCatalogue",
+        "Added one widget to the list. White List");
 
     //Counter Widget
-    finalList.add(Counter(
-        index: 0,
+    ScreenshotController counterScreenshotController = ScreenshotController();
+
+    UserWidget counter = new UserWidget(
+        type: "counter",
         narration: "Counter",
-        count: 30,
-        highlightColor: Color(int.parse(
-            "FF" + user.data?['mobileApp']['highlightColor'],
-            radix: 16))));
+        widgetID: DateTime.now().millisecondsSinceEpoch.toString(),
+        options: {"count": "0"},
+        highlightColor: Colors.red);
+
+    Widget draggableCounter = Draggable(
+        child: counter.toFlutterWidget(),
+        feedback: Icon(Icons.add_box),
+        onDragStarted: () {
+          dragFunction();
+        },
+        onDragEnd: (DraggableDetails) {
+          dropFunction(counter);
+        });
+
+    finalList.add(draggableCounter);
+    log.debug("UserWidgetsModel | getWidgetCatalogue",
+        "Added one widget to the list. Counter");
 
     //Count Down Widget
-    finalList.add(CountDown(
-        index: 0,
-        narration: "Count Down Timer",
-        seconds: 300,
-        highlightColor: Color(int.parse(
-            "FF" + user.data?['mobile_app']['highlightColor'],
-            radix: 16)),
-        voicePrompt: false));*/
+    ScreenshotController countDownScreenshotController = ScreenshotController();
+
+    UserWidget countDown = new UserWidget(
+        type: "countdown",
+        narration: "Timer",
+        widgetID: DateTime.now().millisecondsSinceEpoch.toString(),
+        options: {"seconds": "300"},
+        highlightColor: Colors.red);
+
+    Widget draggableCountDown = Draggable(
+        child: countDown.toFlutterWidget(),
+        feedback: Icon(Icons.add_box),
+        onDragStarted: () {
+          dragFunction();
+        },
+        onDragEnd: (DraggableDetails) {
+          dropFunction(countDown);
+        });
+
+    finalList.add(draggableCountDown);
+    log.debug("UserWidgetsModel | getWidgetCatalogue",
+        "Added one widget to the list. CountDown");
 
     return finalList;
   }

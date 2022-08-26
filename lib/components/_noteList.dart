@@ -58,7 +58,7 @@ class _NoteListState extends State<NoteList> {
               padding: EdgeInsets.only(right: 10),
               child: GestureDetector(
                   onTap: () {
-                    widget.user.resetData();
+                    showConfirmationResetDialog(this.context);
                   },
                   child: Icon(Icons.search,
                       color: Config.COLOR_LIGHTGRAY, size: 20))),
@@ -185,5 +185,39 @@ class _NoteListState extends State<NoteList> {
             ],
           );
         });
+  }
+
+  void showConfirmationResetDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text("Continue"),
+      onPressed: () {
+        widget.user.resetData();
+        Navigator.of(context).pop();
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Reset Data"),
+      content:
+          Text("Would you like to continue resetting the current user data?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

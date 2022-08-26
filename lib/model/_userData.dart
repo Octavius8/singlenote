@@ -177,6 +177,26 @@ class UserData with ChangeNotifier {
     return str;
   }
 
+  //Save Widget
+  bool saveWidget(UserWidget? userWidget) {
+    bool status = false;
+    log.info("User | saveNote",
+        "Started saveWidget function. Widget ID is ${userWidget?.widgetID}");
+    try {
+      List<Map<String, dynamic>> widgetList =
+          List.castFrom(data?["mobileApp"]["primaryWidgets"]);
+      widgetList
+          .removeWhere((item) => item['widgetID'] == userWidget!.widgetID);
+      widgetList.add(userWidget!.toMap());
+      data?["mobileApp"]["primaryWidgets"] = widgetList;
+      saveData();
+      status = true;
+    } catch (ex) {
+      log.error("User | SaveWidget", "Something went wrong: " + ex.toString());
+    }
+    return status;
+  }
+
   void saveData() async {
     bool status = false;
     String str = json.encode(data);

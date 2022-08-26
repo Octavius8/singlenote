@@ -8,6 +8,7 @@ import '../components/widgets/countdown/countdown.dart';
 
 class UserWidget {
   String type;
+  String widgetID = "";
   String? narration;
   Color highlightColor;
   Map<String, String>? options;
@@ -16,10 +17,12 @@ class UserWidget {
       {required this.type,
       this.narration,
       this.options,
+      this.widgetID = "",
       required this.highlightColor});
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> finalMap = new Map();
+    finalMap['widgetID'] = widgetID;
     finalMap['type'] = type;
     finalMap['narration'] = narration;
     finalMap['options'] = options;
@@ -34,7 +37,7 @@ class UserWidget {
       log.debug(
           "UserWidget | toFlutterWidget", "Widget is international_clock");
       widget = InternationalClock(
-          //city: options?["city"] ?? "",
+          city: options?["city"] ?? "",
           highlightColor: highlightColor,
           narration: narration ?? "");
     }

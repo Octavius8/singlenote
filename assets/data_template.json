@@ -1,16 +1,10 @@
 {
     "name": "Boss",
     "password": "d93591bdf7860e1e4ee2fca799911215",
-    "notes":[{"noteID":"1","noteTitle":"Socks","noteContent":"Hehehe","noteTags":""}],
+    "notes":[{"noteID":"1","noteTitle":"Note1","noteContent":"# Sample Note Data","noteTags":""}],
     "files":[],
     "mobileApp": {
         "highlightColor": "62d9b5",
-        "primaryWidgets": [
-            {
-                "type": "white_noise",
-                "options":{"audioFile": "ship"},
-                "narration": "White Noise2"
-            }
-        ]
+        "primaryWidgets": []
     }
 }

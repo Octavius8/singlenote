@@ -85,8 +85,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   bool _draggingWidget = false;
   bool _userDataLoaded = false;
-  //authentication
 
+  //Widgets
+  Map<String, TextEditingController> widgetTextController = {};
   //App Wide
 
   void initState() {
@@ -352,7 +353,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                     Container(
                                         height:
                                             MediaQuery.of(context).size.height /
-                                                2,
+                                                3,
                                         child: Column(children: [
                                           Padding(
                                               padding: EdgeInsets.only(
@@ -442,7 +443,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                                   builder:
                                                       (BuildContext context) =>
                                                           _buildPopupDialog(
-                                                              context),
+                                                              context,
+                                                              userWidget),
                                                 );
                                                 setState(() {
                                                   _draggingWidget = false;
@@ -682,15 +684,50 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildPopupDialog(BuildContext context) {
+  Widget _buildPopupDialog(BuildContext context, UserWidget userWidget) {
+    //Build list of widgets
+    List<Widget> fields = [];
+    fields.add(Text("Title:"));
+    widgetTextController["narration"] = new TextEditingController();
+    widgetTextController["narration"]?.text = userWidget.narration ?? "";
+    fields.add(TextField(
+        controller: widgetTextController["narration"],
+        decoration: InputDecoration(hintText: "Name")));
+    userWidget.options?.forEach((key, value) {
+      fields.add(Text(key + ":"));
+      widgetTextController[key] = new TextEditingController();
+      widgetTextController[key]?.text = value;
+      fields.add(TextField(
+          controller: widgetTextController[key],
+          decoration: InputDecoration(hintText: key)));
+      log.debug("Main | _buildPopupDialog()",
+          "Option turned to field:" + key + " : " + value);
+    });
+
+    //Save Button
+    fields.add(ElevatedButton(
+        child: Text("Save"),
+        onPressed: () {
+          userWidget.narration = widgetTextController["narration"]?.text;
+          userWidget.options?.forEach((key, value) {
+            log.debug("Main | New Widget Popup", "In the options loop...");
+            userWidget.options?[key] = widgetTextController[key]?.text ?? "";
+          });
+          user.saveWidget(userWidget);
+          Navigator.of(context).pop();
+        },
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.resolveWith((states) {
+          return Config.COLOR_PRIMARY;
+        }))));
+
+    //Final Render
     return new AlertDialog(
-      title: const Text('New Widget'),
+      title: Text(userWidget.type.replaceAll("_", " ").toUpperCase()),
       content: new Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text("Hello"),
-        ],
+        children: fields,
       ),
       actions: <Widget>[
         new FlatButton(
@@ -701,6 +738,35 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           child: const Text('Close'),
         ),
       ],
+    );
+  }
+
+  showConfirmationResetDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed: () {},
+    );
+    Widget continueButton = FlatButton(
+      child: Text("Continue"),
+      onPressed: () {},
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("AlertDialog"),
+      content: Text(
+          "Would you like to continue learning how to use Flutter alerts?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

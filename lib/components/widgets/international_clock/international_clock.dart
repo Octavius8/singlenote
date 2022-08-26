@@ -12,7 +12,7 @@ class InternationalClock extends StatefulWidget {
   String defaultCity = Config.WIDGET_INTERNATIONAL_CLOCK_DEFAULT_CITY;
 
   InternationalClock(
-      { this.city="Lusaka",
+      {this.city = "Lusaka",
       required this.narration,
       required this.highlightColor,
       Key? key})
@@ -76,6 +76,7 @@ class InternationalClockState extends State<InternationalClock> {
                   widget.narration == ""
                       ? "${widget.city[0].toUpperCase()}${widget.city.substring(1).toLowerCase()}"
                       : widget.narration,
+                  textAlign: TextAlign.center,
                   style: TextStyle(fontSize: Config.WIDGET_FONTSIZE)),
               Text(primaryTime,
                   style: TextStyle(
